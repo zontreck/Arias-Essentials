@@ -5,7 +5,9 @@ import java.util.UUID;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
+import dev.zontreck.essentials.Messages;
 import dev.zontreck.libzontreck.chat.ChatColor;
+import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -37,12 +39,12 @@ public class TPAcceptCommand {
                 ServerPlayer from = source.getServer().getPlayerList().getPlayer(cont.FromPlayer);
                 ServerPlayer to = source.getServer().getPlayerList().getPlayer(cont.ToPlayer);
 
-                Component comp = new TextComponent(OTEMod.OTEPrefix + " " + ChatColor.DARK_PURPLE+"Teleport request was accepted. Opening wormhole!");
+                Component comp = new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.DARK_PURPLE+"Teleport request was accepted. Opening wormhole!");
 
-                ChatServerOverride.broadcastTo(cont.FromPlayer, comp, source.getServer());
-                ChatServerOverride.broadcastTo(cont.ToPlayer, comp, source.getServer());
+                ChatHelpers.broadcastTo(cont.FromPlayer, comp, source.getServer());
+                ChatHelpers.broadcastTo(cont.ToPlayer, comp, source.getServer());
 
-                OTEMod.TeleportRegistry.remove(cont);
+                TeleportRegistry.get().remove(cont);
 
 
                 cont.PlayerInst = from;
@@ -58,7 +60,7 @@ public class TPAcceptCommand {
 
         Component comp = new TextComponent(ChatColor.DARK_RED+"The teleport was not found, perhaps the request expired or was already cancelled/denied");
 
-        ChatServerOverride.broadcastTo(play.getUUID(), comp, source.getServer());
+        ChatHelpers.broadcastTo(play.getUUID(), comp, source.getServer());
 
         return 0;
     }

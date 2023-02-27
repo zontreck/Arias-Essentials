@@ -1,13 +1,13 @@
-package dev.zontreck.otemod.commands.teleport;
+package dev.zontreck.essentials.commands.teleport;
 
 import java.util.UUID;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
+import dev.zontreck.essentials.Messages;
 import dev.zontreck.libzontreck.chat.ChatColor;
-import dev.zontreck.otemod.OTEMod;
-import dev.zontreck.otemod.chat.ChatServerOverride;
+import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -32,22 +32,22 @@ public class TPCancelCommand {
         UUID teleporter = UUID.fromString(TPID);
         ServerPlayer play = (ServerPlayer)source.getEntity();
 
-        for(TeleportContainer cont : OTEMod.TeleportRegistry){
+        for(TeleportContainer cont : TeleportRegistry.get()){
             if(cont.TeleportID.equals(teleporter)){
                 // Canceling!
-                Component comp = new TextComponent(OTEMod.OTEPrefix + " " + ChatColor.DARK_PURPLE+"Teleport request was cancelled");
+                Component comp = new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.DARK_PURPLE+"Teleport request was cancelled");
 
-                ChatServerOverride.broadcastTo(cont.FromPlayer, comp, source.getServer());
-                ChatServerOverride.broadcastTo(cont.ToPlayer, comp, source.getServer());
+                ChatHelpers.broadcastTo(cont.FromPlayer, comp, source.getServer());
+                ChatHelpers.broadcastTo(cont.ToPlayer, comp, source.getServer());
 
-                OTEMod.TeleportRegistry.remove(cont);
+                TeleportRegistry.get().remove(cont);
                 return 0;
             }
         }
 
         Component comp = new TextComponent(ChatColor.DARK_RED+"The teleport was not found, perhaps the request expired or was already cancelled");
 
-        ChatServerOverride.broadcastTo(play.getUUID(), comp, source.getServer());
+        ChatHelpers.broadcastTo(play.getUUID(), comp, source.getServer());
 
         return 0;
     }

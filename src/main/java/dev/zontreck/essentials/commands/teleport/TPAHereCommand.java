@@ -5,10 +5,9 @@ import com.mojang.brigadier.CommandDispatcher;
 import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.chat.Clickable;
 import dev.zontreck.libzontreck.chat.HoverTip;
-import dev.zontreck.otemod.OTEMod;
-import dev.zontreck.otemod.chat.ChatServerOverride;
-import dev.zontreck.otemod.implementation.profiles.Profile;
-import dev.zontreck.otemod.implementation.profiles.UserProfileNotYetExistsException;
+import dev.zontreck.libzontreck.profiles.Profile;
+import dev.zontreck.libzontreck.profiles.UserProfileNotYetExistsException;
+import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -39,21 +38,20 @@ public class TPAHereCommand {
             source.sendFailure(new TextComponent(ChatColor.DARK_RED+"Error: Player not found"));
             return 1;
         }
-        if(!OTEMod.DEVELOPER){
-            if(play.getUUID() == serverPlayer.getUUID()){
-                source.sendFailure(new TextComponent(ChatColor.DARK_RED+"You cannot teleport to yourself!"));
-                return 1;
-            }
+        if(play.getUUID() == serverPlayer.getUUID()){
+            source.sendFailure(new TextComponent(ChatColor.DARK_RED+"You cannot teleport to yourself!"));
+            return 1;
         }
+        
         TeleportContainer cont = new TeleportContainer(serverPlayer.getUUID(), play.getUUID());
 
-        for(TeleportContainer cont2 : OTEMod.TeleportRegistry){
+        for(TeleportContainer cont2 : TeleportRegistry.get()){
             if(cont2.compareTo(cont)==0){
-                ChatServerOverride.broadcastTo(cont.ToPlayer, new TextComponent(ChatColor.DARK_RED+ "You already have a TPA Request active, wait for it to expire, or use the cancel button/command"), source.getServer());
+                ChatHelpers.broadcastTo(cont.ToPlayer, new TextComponent(ChatColor.DARK_RED+ "You already have a TPA Request active, wait for it to expire, or use the cancel button/command"), source.getServer());
                 return 0;
             }else {
                 if(cont2.ToPlayer.equals(cont.ToPlayer)){
-                    ChatServerOverride.broadcastTo(cont.FromPlayer, new TextComponent(ChatColor.DARK_RED+ "You already have a TPA Request active, wait for it to expire, or use the cancel button/command"), source.getServer());
+                    ChatHelpers.broadcastTo(cont.FromPlayer, new TextComponent(ChatColor.DARK_RED+ "You already have a TPA Request active, wait for it to expire, or use the cancel button/command"), source.getServer());
                     return 0;
                 }
             }
@@ -66,7 +64,7 @@ public class TPAHereCommand {
         Style s = Style.EMPTY.withFont(Style.DEFAULT_FONT).withHoverEvent(he).withClickEvent(ce);
 
         // Send the alerts
-        ChatServerOverride.broadcastTo(cont.ToPlayer, new TextComponent(ChatColor.BOLD + ChatColor.DARK_GREEN +"TPA Request Sent! ").append(new TextComponent(ChatColor.BOLD+ChatColor.DARK_GRAY+"["+ChatColor.DARK_RED+"X"+ChatColor.DARK_GRAY+"]").setStyle(s)), serverPlayer.server);
+        ChatHelpers.broadcastTo(cont.ToPlayer, new TextComponent(ChatColor.BOLD + ChatColor.DARK_GREEN +"TPA Request Sent! ").append(new TextComponent(ChatColor.BOLD+ChatColor.DARK_GRAY+"["+ChatColor.DARK_RED+"X"+ChatColor.DARK_GRAY+"]").setStyle(s)), serverPlayer.server);
 
 
         ce = Clickable.command("/tpaccept "+cont.TeleportID.toString());
@@ -83,11 +81,11 @@ public class TPAHereCommand {
         } catch (UserProfileNotYetExistsException e) {
             return 1;
         }
-        ChatServerOverride.broadcastTo(cont.FromPlayer, new TextComponent(p.name_color+p.nickname + ChatColor.BOLD + ChatColor.DARK_PURPLE+" is requesting you to teleport to them\n \n").
+        ChatHelpers.broadcastTo(cont.FromPlayer, new TextComponent(p.name_color+p.nickname + ChatColor.BOLD + ChatColor.DARK_PURPLE+" is requesting you to teleport to them\n \n").
             append(new TextComponent(ChatColor.DARK_GRAY+"["+ChatColor.DARK_GREEN+"ACCEPT" + ChatColor.DARK_GRAY+"] ").setStyle(s)).
             append(new TextComponent(ChatColor.DARK_GRAY + "["+ChatColor.DARK_RED+"DENY"+ChatColor.DARK_GRAY+"]").setStyle(s2)), serverPlayer.server);
         
-        OTEMod.TeleportRegistry.add(cont);
+        TeleportRegistry.get().add(cont);
         return 0;
     }
 

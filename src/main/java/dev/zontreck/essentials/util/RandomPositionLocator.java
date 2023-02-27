@@ -1,20 +1,15 @@
-package dev.zontreck.otemod.commands.teleport;
+package dev.zontreck.essentials.util;
 
-import java.util.Iterator;
-import java.util.concurrent.ScheduledExecutorService;
-
+import dev.zontreck.essentials.AriasEssentials;
+import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.events.RTPEvent;
 import dev.zontreck.libzontreck.chat.ChatColor;
-import dev.zontreck.libzontreck.vectors.Vector3;
-import dev.zontreck.otemod.OTEMod;
-import dev.zontreck.otemod.chat.ChatServerOverride;
-import dev.zontreck.otemod.events.RTPEvent;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockPos.MutableBlockPos;
+import dev.zontreck.libzontreck.util.ChatHelpers;
+import dev.zontreck.libzontreck.util.DelayedExecutorService;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraftforge.common.MinecraftForge;
 
 /**
@@ -34,8 +29,8 @@ public class RandomPositionLocator implements Runnable
 
     @Override
     public void run() {
-        if(!OTEMod.ALIVE)return;
-        ChatServerOverride.broadcastTo(contain.container.PlayerInst.getUUID(), new TextComponent(OTEMod.OTEPrefix + ChatColor.doColors(" !Dark_Purple!Searching... Attempt "+String.valueOf(contain.tries)+"/30")), OTEMod.THE_SERVER);
+        if(!AriasEssentials.ALIVE)return;
+        ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors(" !Dark_Purple!Searching... Attempt "+String.valueOf(contain.tries)+"/30")), contain.container.PlayerInst.server);
 
         ServerLevel levl = contain.container.Dimension;
         ChunkAccess chunk  = levl.getChunk(contain.container.world_pos.Position.asBlockPos());
@@ -59,7 +54,7 @@ public class RandomPositionLocator implements Runnable
                 if(MinecraftForge.EVENT_BUS.post(new RTPEvent(contain.container.PlayerInst, contain.container.world_pos)))
                 {
                     contain.complete=false;
-                    ChatServerOverride.broadcastTo(contain.container.PlayerInst.getUUID(), new TextComponent(OTEMod.OTEPrefix + ChatColor.doColors(" !Dark_Red!Last position checked was probably claimed. Another mod has asked us not to send you to that location, continuing the search")), OTEMod.THE_SERVER);
+                    ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors(" !Dark_Red!Last position checked was probably claimed. Another mod has asked us not to send you to that location, continuing the search")), contain.container.PlayerInst.server);
 
                     break;
                 }
@@ -67,7 +62,7 @@ public class RandomPositionLocator implements Runnable
             }else {
                 curChecks++;
                 contain.move();
-                OTEMod.LOGGER.info("[DEBUG] "+ChatColor.doColors("!Dark_Red!Checking position: "+contain.container.world_pos.Position.toString()+"; "+contain.container.Dimension.getBlockState(contain.container.world_pos.Position.asBlockPos()).getBlock().toString()+"; "+contain.container.Dimension.getBlockState(contain.container.world_pos.Position.asBlockPos().below()).getBlock().toString()));
+                //AriasEssentials.LOGGER.info("[DEBUG] "+ChatColor.doColors("!Dark_Red!Checking position: "+contain.container.world_pos.Position.toString()+"; "+contain.container.Dimension.getBlockState(contain.container.world_pos.Position.asBlockPos()).getBlock().toString()+"; "+contain.container.Dimension.getBlockState(contain.container.world_pos.Position.asBlockPos().below()).getBlock().toString()));
             }
         }
         if(needsLoading)
@@ -78,14 +73,14 @@ public class RandomPositionLocator implements Runnable
         if(contain.tries > 30)
         {
             // Abort
-            ChatServerOverride.broadcastTo(contain.container.PlayerInst.getUUID(), new TextComponent(OTEMod.OTEPrefix + ChatColor.doColors(" !Dark_Red!Could not find a suitable location in 30 attempts")), OTEMod.THE_SERVER);
+            ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors(" !Dark_Red!Could not find a suitable location in 30 attempts")), contain.container.PlayerInst.server);
             contain.aborted=true;
             return;
         }else {
             // Schedule the task to execute
             //run();
             RandomPositionLocator next = new RandomPositionLocator(contain);
-            OTEMod.delayedExecutor.schedule(next, 2);
+            DelayedExecutorService.getInstance().schedule(next, 2);
         }
     }
     

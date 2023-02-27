@@ -1,7 +1,13 @@
 package dev.zontreck.essentials.commands.teleport;
 
 import com.mojang.brigadier.CommandDispatcher;
+
+import dev.zontreck.essentials.AriasEssentials;
+import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.util.RTPContainer;
+import dev.zontreck.essentials.util.RandomPositionFactory;
 import dev.zontreck.libzontreck.chat.ChatColor;
+import dev.zontreck.libzontreck.util.ChatHelpers;
 import dev.zontreck.libzontreck.vectors.Vector3;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -55,7 +61,7 @@ public class RTPCommand {
                 RTPContainer container = RandomPositionFactory.beginRTPSearch(pla, pos, pla.getRotationVector(), pla.getLevel());
                 while(!container.complete)
                 {
-                    if(!OTEMod.ALIVE)
+                    if(!AriasEssentials.ALIVE)
                     {
                         container.aborted=true;
                         container.containingThread.interrupt();
@@ -70,7 +76,7 @@ public class RTPCommand {
                 }
                 v = container.container.world_pos.Position;
         
-                ChatServerOverride.broadcastTo(pla.getUUID(), new TextComponent(ChatColor.DARK_GRAY + "["+ChatColor.DARK_GREEN + "OTEMOD" + ChatColor.DARK_GRAY + "] "+ChatColor.DARK_PURPLE+" A suitable location has been found. Wormhole opening now!"), OTEMod.THE_SERVER);
+                ChatHelpers.broadcastTo(pla.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.DARK_PURPLE+" A suitable location has been found. Wormhole opening now!"), pla.server);
         
                 // Apply the effect
                 TeleportActioner.ApplyTeleportEffect(pla);
