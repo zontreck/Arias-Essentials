@@ -1,4 +1,4 @@
-package dev.zontreck.otemod.commands.warps;
+package dev.zontreck.essentials.commands.warps;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,21 +10,21 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
+import dev.zontreck.essentials.AriasEssentials;
+import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.commands.teleport.TeleportActioner;
+import dev.zontreck.essentials.commands.teleport.TeleportContainer;
+import dev.zontreck.essentials.commands.teleport.TeleportDestination;
+import dev.zontreck.essentials.util.RTPContainer;
+import dev.zontreck.essentials.util.RandomPositionFactory;
+import dev.zontreck.essentials.warps.NoSuchWarpException;
+import dev.zontreck.essentials.warps.Warp;
+import dev.zontreck.essentials.warps.WarpsProvider;
 import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.chat.Clickable;
 import dev.zontreck.libzontreck.exceptions.InvalidSideException;
+import dev.zontreck.libzontreck.util.ChatHelpers;
 import dev.zontreck.libzontreck.vectors.Vector3;
-import dev.zontreck.otemod.OTEMod;
-import dev.zontreck.otemod.chat.ChatServerOverride;
-import dev.zontreck.otemod.commands.teleport.RTPCommand;
-import dev.zontreck.otemod.commands.teleport.RTPContainer;
-import dev.zontreck.otemod.commands.teleport.RandomPositionFactory;
-import dev.zontreck.otemod.commands.teleport.TeleportActioner;
-import dev.zontreck.otemod.commands.teleport.TeleportContainer;
-import dev.zontreck.otemod.database.TeleportDestination;
-import dev.zontreck.otemod.implementation.warps.NoSuchWarpException;
-import dev.zontreck.otemod.implementation.warps.Warp;
-import dev.zontreck.otemod.implementation.warps.WarpsProvider;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.nbt.NbtUtils;
@@ -64,10 +64,10 @@ public class WarpCommand {
 
             if(type == 1)
             {
-                ChatServerOverride.broadcastTo(p.getUUID(), new TextComponent(OTEMod.OTEPrefix+ ChatColor.doColors(" !Dark_Green!Attempting to locate a safe location. This may take a minute or two")), p.server);
+                ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX+ ChatColor.doColors(" !Dark_Green!Attempting to locate a safe location. This may take a minute or two")), p.server);
             }else{
                 
-                ChatServerOverride.broadcastTo(p.getUUID(), new TextComponent(OTEMod.OTEPrefix+ ChatColor.doColors(" !Dark_Purple!Warping!")), p.server);
+                ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX+ ChatColor.doColors(" !Dark_Purple!Warping!")), p.server);
             }
 
             Thread tx = new Thread(new Runnable(){
@@ -79,7 +79,7 @@ public class WarpCommand {
                             RTPContainer cont = RandomPositionFactory.beginRTPSearch(p, Vec3.ZERO, Vec2.ZERO, f_dim);
                             while(!cont.complete)
                             {
-                                if(!OTEMod.ALIVE)
+                                if(!AriasEssentials.ALIVE)
                                 {
                                     cont.aborted=true;
                                     cont.containingThread.interrupt();
@@ -93,7 +93,7 @@ public class WarpCommand {
                             dest.Position = cont.container.world_pos.Position;
                             
                             //RTPCommand.findPosition(source.getLevel(), false, p.getUUID());
-                            ChatServerOverride.broadcastTo(p.getUUID(), new TextComponent(OTEMod.OTEPrefix+ChatColor.doColors(" !Dark_Green!Location found, warping!")), p.server);
+                            ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX+ChatColor.doColors(" !Dark_Green!Location found, warping!")), p.server);
                         } catch (Exception e) {
                             e.printStackTrace();
                             return;
@@ -108,7 +108,7 @@ public class WarpCommand {
             tx.start();
         }catch(NoSuchWarpException e)
         {
-            ChatServerOverride.broadcastTo(source.getEntity().getUUID(), new TextComponent(ChatColor.DARK_RED+"No such warp"), source.getServer());
+            ChatHelpers.broadcastTo(source.getEntity().getUUID(), new TextComponent(ChatColor.DARK_RED+"No such warp"), source.getServer());
         } catch (CommandSyntaxException e) {
             e.printStackTrace();
         }
@@ -117,7 +117,7 @@ public class WarpCommand {
 
     private static int nowarp(CommandSourceStack source) {
         ServerPlayer p = (ServerPlayer)source.getEntity();
-        ChatServerOverride.broadcastTo(p.getUUID(), new TextComponent(ChatColor.DARK_RED + "You must supply the warp name. If you need to know what warps are available, please use the warps command, or click this message.").withStyle(Style.EMPTY.withFont(Style.DEFAULT_FONT).withClickEvent(Clickable.command("/warps"))), source.getServer());
+        ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatColor.DARK_RED + "You must supply the warp name. If you need to know what warps are available, please use the warps command, or click this message.").withStyle(Style.EMPTY.withFont(Style.DEFAULT_FONT).withClickEvent(Clickable.command("/warps"))), source.getServer());
         return 0;
     }
 

@@ -6,10 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import dev.zontreck.essentials.events.WarpCreatedEvent;
+import dev.zontreck.essentials.events.WarpDeletedEvent;
 import dev.zontreck.libzontreck.exceptions.InvalidDeserialization;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class Warps 
@@ -29,11 +32,14 @@ public class Warps
 
     public void add(Warp w)
     {
-        warps.put(w.WarpName,w);
-        WarpsProvider.updateFile();
 
         WarpCreatedEvent e = new WarpCreatedEvent(w);
-        OTEMod.bus.post(e);
+        if(!MinecraftForge.EVENT_BUS.post(e))
+        {
+
+            warps.put(w.WarpName,w);
+            WarpsProvider.updateFile();
+        }
     }
 
     public Map<String, Warp> get()
@@ -47,7 +53,7 @@ public class Warps
         WarpsProvider.updateFile();
 
         WarpDeletedEvent e = new WarpDeletedEvent(w);
-        OTEMod.bus.post(e);
+        MinecraftForge.EVENT_BUS.post(e);
     }
 
     public static Warps getNew()

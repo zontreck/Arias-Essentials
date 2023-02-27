@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
+import dev.zontreck.essentials.commands.CommandRegister;
 import dev.zontreck.essentials.homes.Homes;
 import dev.zontreck.essentials.homes.HomesProvider;
 import dev.zontreck.libzontreck.events.ProfileLoadedEvent;
@@ -33,6 +34,7 @@ public class AriasEssentials {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new CommandRegister());
     }
 
 

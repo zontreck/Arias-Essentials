@@ -1,9 +1,9 @@
-package dev.zontreck.otemod.implementation.warps;
+package dev.zontreck.essentials.warps;
 
 import java.util.UUID;
 
+import dev.zontreck.essentials.commands.teleport.TeleportDestination;
 import dev.zontreck.libzontreck.exceptions.InvalidDeserialization;
-import dev.zontreck.otemod.database.TeleportDestination;
 import net.minecraft.nbt.CompoundTag;
 
 public class Warp {

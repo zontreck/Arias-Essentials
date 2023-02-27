@@ -1,4 +1,4 @@
-package dev.zontreck.otemod.commands.warps;
+package dev.zontreck.essentials.commands.warps;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,14 +7,14 @@ import java.sql.SQLException;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
+import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.commands.teleport.TeleportDestination;
+import dev.zontreck.essentials.warps.Warp;
+import dev.zontreck.essentials.warps.WarpsProvider;
 import dev.zontreck.libzontreck.chat.ChatColor;
+import dev.zontreck.libzontreck.util.ChatHelpers;
 import dev.zontreck.libzontreck.vectors.Vector2;
 import dev.zontreck.libzontreck.vectors.Vector3;
-import dev.zontreck.otemod.OTEMod;
-import dev.zontreck.otemod.chat.ChatServerOverride;
-import dev.zontreck.otemod.database.TeleportDestination;
-import dev.zontreck.otemod.implementation.warps.Warp;
-import dev.zontreck.otemod.implementation.warps.WarpsProvider;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
@@ -48,7 +48,7 @@ public class RTPWarpCommand {
         WarpsProvider.WARPS_INSTANCE.add(warp);
 
 
-        ChatServerOverride.broadcastTo(p.getUUID(), new TextComponent(OTEMod.OTEPrefix+ChatColor.doColors(" !Dark_Green!Random Position Teleport (RTP) Warp created successfully")), p.server);
+        ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX+ChatColor.doColors(" !Dark_Green!Random Position Teleport (RTP) Warp created successfully")), p.server);
 
         return 0;
     }
