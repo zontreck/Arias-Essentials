@@ -1,9 +1,18 @@
 package dev.zontreck.essentials;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
+import dev.zontreck.essentials.homes.Homes;
+import dev.zontreck.essentials.homes.HomesProvider;
+import dev.zontreck.libzontreck.events.ProfileLoadedEvent;
+import dev.zontreck.libzontreck.events.ProfileUnloadedEvent;
+import dev.zontreck.libzontreck.profiles.Profile;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
@@ -17,6 +26,7 @@ public class AriasEssentials {
     public static final String MODID = "ariasessentials";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static boolean ALIVE;
+    public static Map<UUID, Homes> player_homes = new HashMap<>();
 
     public AriasEssentials()
     {
@@ -40,4 +50,15 @@ public class AriasEssentials {
     }
 
 
+    @SubscribeEvent
+    public void onProfileLoaded(ProfileLoadedEvent ev)
+    {
+        player_homes.put(UUID.fromString(ev.profile.user_id), HomesProvider.getHomesForPlayer(ev.profile.user_id));
+    }
+
+    @SubscribeEvent
+    public void onProfileUnloaded(ProfileUnloadedEvent ev)
+    {
+        player_homes.remove(UUID.fromString(ev.user_id));
+    }
 }

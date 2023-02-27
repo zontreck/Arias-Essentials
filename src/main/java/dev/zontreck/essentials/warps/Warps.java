@@ -1,4 +1,4 @@
-package dev.zontreck.otemod.implementation.warps;
+package dev.zontreck.essentials.warps;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,9 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import dev.zontreck.libzontreck.exceptions.InvalidDeserialization;
-import dev.zontreck.otemod.OTEMod;
-import dev.zontreck.otemod.implementation.events.WarpCreatedEvent;
-import dev.zontreck.otemod.implementation.events.WarpDeletedEvent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;

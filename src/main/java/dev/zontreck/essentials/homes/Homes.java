@@ -1,16 +1,16 @@
-package dev.zontreck.otemod.implementation.homes;
+package dev.zontreck.essentials.homes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import dev.zontreck.otemod.OTEMod;
-import dev.zontreck.otemod.implementation.events.HomeCreatedEvent;
-import dev.zontreck.otemod.implementation.events.HomeDeletedEvent;
+import dev.zontreck.essentials.events.HomeCreatedEvent;
+import dev.zontreck.essentials.events.HomeDeletedEvent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraftforge.common.MinecraftForge;
 
 public class Homes {
     private Map<String, Home> homes = new HashMap<>();
@@ -44,16 +44,16 @@ public class Homes {
         HomeDeletedEvent e = new HomeDeletedEvent(home);
         homes.remove(name);
         
-        OTEMod.bus.post(e);
+        MinecraftForge.EVENT_BUS.post(e);
         HomesProvider.commitHomes(this);
     }
 
     public void add(Home toAdd)
     {
         HomeCreatedEvent hce = new HomeCreatedEvent(toAdd);
-        OTEMod.bus.post(hce);
-
-        homes.put(toAdd.homeName, toAdd);
+        
+        if(!MinecraftForge.EVENT_BUS.post(hce))
+            homes.put(toAdd.homeName, toAdd);
 
         HomesProvider.commitHomes(this);
     }

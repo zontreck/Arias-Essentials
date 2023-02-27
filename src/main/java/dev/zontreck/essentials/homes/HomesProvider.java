@@ -1,10 +1,10 @@
-package dev.zontreck.otemod.implementation.homes;
+package dev.zontreck.essentials.homes;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.UUID;
 
-import dev.zontreck.otemod.implementation.profiles.Profile;
+import dev.zontreck.essentials.util.EssentialsDatastore;
 import net.minecraft.nbt.NbtIo;
 
 public class HomesProvider {
@@ -16,7 +16,7 @@ public class HomesProvider {
      */
     public static Homes getHomesForPlayer(String player)
     {
-        Path homesFile = Profile.BASE.resolve(player).resolve("homes.nbt");
+        Path homesFile = EssentialsDatastore.of(player).resolve("homes.nbt");
 
         Homes homes = new Homes(player);
         if(homesFile.toFile().exists())
@@ -37,7 +37,7 @@ public class HomesProvider {
     public static void commitHomes(Homes playerHomes)
     {
 
-        Path homesFile = Profile.BASE.resolve(playerHomes.playerID).resolve("homes.nbt");
+        Path homesFile = EssentialsDatastore.of(playerHomes.playerID).resolve("homes.nbt");
 
         try {
             NbtIo.write(playerHomes.serialize(), homesFile.toFile());

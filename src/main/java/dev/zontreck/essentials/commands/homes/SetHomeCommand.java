@@ -1,4 +1,4 @@
-package dev.zontreck.otemod.commands.homes;
+package dev.zontreck.essentials.commands.homes;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,17 +8,14 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
+import dev.zontreck.essentials.AriasEssentials;
+import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.commands.teleport.TeleportDestination;
+import dev.zontreck.essentials.homes.Home;
 import dev.zontreck.libzontreck.chat.ChatColor;
+import dev.zontreck.libzontreck.util.ChatHelpers;
 import dev.zontreck.libzontreck.vectors.Vector2;
 import dev.zontreck.libzontreck.vectors.Vector3;
-import dev.zontreck.otemod.OTEMod;
-import dev.zontreck.otemod.chat.ChatServerOverride;
-import dev.zontreck.otemod.database.TeleportDestination;
-import dev.zontreck.otemod.implementation.homes.Home;
-import dev.zontreck.otemod.implementation.homes.Homes;
-import dev.zontreck.otemod.implementation.homes.HomesProvider;
-import dev.zontreck.otemod.implementation.profiles.Profile;
-import dev.zontreck.otemod.implementation.profiles.UserProfileNotYetExistsException;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
@@ -55,18 +52,13 @@ public class SetHomeCommand {
             TeleportDestination dest = new TeleportDestination(new Vector3(position), new Vector2(rot), p.getLevel());
     
             Home newhome = new Home(p, homeName, dest);
-            Profile profile = Profile.get_profile_of(p.getStringUUID());
-            Homes homes = profile.player_homes;
-            homes.add(newhome);
+            AriasEssentials.player_homes.get(p.getUUID()).add(newhome);
             
                 
-            ChatServerOverride.broadcastTo(p.getUUID(), new TextComponent(OTEMod.OTEPrefix + ChatColor.doColors(" !dark_green!Home was created or updated successfully!")), ctx.getServer());
+            ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors(" !dark_green!Home was created or updated successfully!")), ctx.getServer());
         } catch (CommandSyntaxException e) {
             
-            ChatServerOverride.broadcastTo(ctx.getEntity().getUUID(), new TextComponent(OTEMod.OTEPrefix + ChatColor.doColors(" !dark_red!Home could not be created or updated!")), ctx.getServer());
-            e.printStackTrace();
-        } catch (UserProfileNotYetExistsException e) {
-            ChatServerOverride.broadcastTo(ctx.getEntity().getUUID(), new TextComponent(OTEMod.OTEPrefix + ChatColor.doColors(" !dark_red!Home could not be created or updated!")), ctx.getServer());
+            ChatHelpers.broadcastTo(ctx.getEntity().getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors(" !dark_red!Home could not be created or updated!")), ctx.getServer());
             e.printStackTrace();
         }
         

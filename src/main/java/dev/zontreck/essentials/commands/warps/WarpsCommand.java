@@ -1,4 +1,4 @@
-package dev.zontreck.otemod.commands.warps;
+package dev.zontreck.essentials.commands.warps;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,12 +13,6 @@ import com.mojang.brigadier.CommandDispatcher;
 import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.chat.Clickable;
 import dev.zontreck.libzontreck.chat.HoverTip;
-import dev.zontreck.otemod.OTEMod;
-import dev.zontreck.otemod.chat.ChatServerOverride;
-import dev.zontreck.otemod.implementation.profiles.Profile;
-import dev.zontreck.otemod.implementation.profiles.UserProfileNotYetExistsException;
-import dev.zontreck.otemod.implementation.warps.Warp;
-import dev.zontreck.otemod.implementation.warps.WarpsProvider;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.ClickEvent;

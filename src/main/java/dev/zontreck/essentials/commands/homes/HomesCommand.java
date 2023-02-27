@@ -1,4 +1,4 @@
-package dev.zontreck.otemod.commands.homes;
+package dev.zontreck.essentials.commands.homes;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,15 +11,14 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
+import dev.zontreck.essentials.AriasEssentials;
+import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.homes.Home;
+import dev.zontreck.essentials.homes.Homes;
 import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.chat.Clickable;
 import dev.zontreck.libzontreck.chat.HoverTip;
-import dev.zontreck.otemod.OTEMod;
-import dev.zontreck.otemod.chat.ChatServerOverride;
-import dev.zontreck.otemod.implementation.homes.Home;
-import dev.zontreck.otemod.implementation.homes.Homes;
-import dev.zontreck.otemod.implementation.profiles.Profile;
-import dev.zontreck.otemod.implementation.profiles.UserProfileNotYetExistsException;
+import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
@@ -39,24 +38,21 @@ public class HomesCommand {
         try{
             ServerPlayer player = ctx.getSource().getPlayerOrException();
 
-            Profile p = Profile.get_profile_of(player.getStringUUID());
-            Homes homes = p.player_homes;
+            Homes homes = AriasEssentials.player_homes.get(player.getUUID());
 
-            ChatServerOverride.broadcastTo(player.getUUID(), new TextComponent(OTEMod.OTEPrefix + ChatColor.doColors(" !Dark_Purple!There are !gold!"+String.valueOf(homes.count())+" !dark_purple!total homes.")), player.server);
+            ChatHelpers.broadcastTo(player.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors(" !Dark_Purple!There are !gold!"+String.valueOf(homes.count())+" !dark_purple!total homes.")), player.server);
 
             
             for (Home string : homes.getList()) {
                 Style st = Style.EMPTY.withFont(Style.DEFAULT_FONT).withHoverEvent(HoverTip.get(ChatColor.BOLD+ChatColor.DARK_GREEN+"Click here to go to this home")).withClickEvent(Clickable.command("/home "+string.homeName));
 
-                ChatServerOverride.broadcastTo(player.getUUID(), new TextComponent(ChatColor.BOLD + ChatColor.MINECOIN_GOLD+"["+ChatColor.resetChat()+ChatColor.UNDERLINE+ChatColor.BOLD+ChatColor.DARK_GREEN+"HOME"+ChatColor.resetChat()+ChatColor.BOLD+ChatColor.MINECOIN_GOLD+"] "+ChatColor.resetChat()+ChatColor.YELLOW+string).setStyle(st), ctx.getSource().getServer());
+                ChatHelpers.broadcastTo(player.getUUID(), new TextComponent(ChatColor.BOLD + ChatColor.MINECOIN_GOLD+"["+ChatColor.resetChat()+ChatColor.UNDERLINE+ChatColor.BOLD+ChatColor.DARK_GREEN+"HOME"+ChatColor.resetChat()+ChatColor.BOLD+ChatColor.MINECOIN_GOLD+"] "+ChatColor.resetChat()+ChatColor.YELLOW+string).setStyle(st), ctx.getSource().getServer());
                 
             }
         }catch(CommandSyntaxException ex)
         {
             ex.printStackTrace();
 
-        } catch (UserProfileNotYetExistsException e) {
-            e.printStackTrace();
         }
 
         return 0;

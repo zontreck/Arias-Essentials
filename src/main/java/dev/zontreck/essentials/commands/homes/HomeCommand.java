@@ -1,19 +1,19 @@
-package dev.zontreck.otemod.commands.homes;
+package dev.zontreck.essentials.commands.homes;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
+import dev.zontreck.essentials.AriasEssentials;
+import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.commands.teleport.TeleportActioner;
+import dev.zontreck.essentials.commands.teleport.TeleportContainer;
+import dev.zontreck.essentials.commands.teleport.TeleportDestination;
+import dev.zontreck.essentials.homes.Home;
+import dev.zontreck.essentials.homes.NoSuchHomeException;
 import dev.zontreck.libzontreck.chat.ChatColor;
-import dev.zontreck.otemod.OTEMod;
-import dev.zontreck.otemod.chat.ChatServerOverride;
-import dev.zontreck.otemod.commands.teleport.TeleportActioner;
-import dev.zontreck.otemod.commands.teleport.TeleportContainer;
-import dev.zontreck.otemod.database.TeleportDestination;
-import dev.zontreck.otemod.implementation.homes.Home;
-import dev.zontreck.otemod.implementation.homes.NoSuchHomeException;
-import dev.zontreck.otemod.implementation.profiles.Profile;
-import dev.zontreck.otemod.implementation.profiles.UserProfileNotYetExistsException;
+import dev.zontreck.libzontreck.profiles.UserProfileNotYetExistsException;
+import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
@@ -39,15 +39,14 @@ public class HomeCommand {
 //        if(homeName==null)return 0;
         try{
             ServerPlayer p = ctx.getPlayerOrException();
-            Profile prof = Profile.get_profile_of(p.getStringUUID());
-            Home home = prof.player_homes.get(homeName);
+            Home home = AriasEssentials.player_homes.get(p.getUUID()).get(homeName);
 
             TeleportDestination dest = home.destination;
             TeleportActioner.ApplyTeleportEffect(p);
             TeleportContainer cont = new TeleportContainer(p, dest.Position.asMinecraftVector(), dest.Rotation.asMinecraftVector(), dest.getActualDimension());
             TeleportActioner.PerformTeleport(cont);
 
-            ChatServerOverride.broadcastTo(p.getUUID(), new TextComponent(OTEMod.OTEPrefix + ChatColor.doColors(" !dark_green!Home found! Wormhole opening now...")), ctx.getServer());
+            ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors("!dark_green!Home found! Wormhole opening now...")), ctx.getServer());
         }catch(CommandSyntaxException e)
         {
             e.printStackTrace();
@@ -55,11 +54,8 @@ public class HomeCommand {
         }catch(NoSuchHomeException e)
         {
             
-            ChatServerOverride.broadcastTo(ctx.getEntity().getUUID(), new TextComponent(OTEMod.OTEPrefix + ChatColor.doColors(" !dark_red!Home not found. Maybe it does not exist?")), ctx.getServer());
+            ChatHelpers.broadcastTo(ctx.getEntity().getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors(" !dark_red!Home not found. Maybe it does not exist?")), ctx.getServer());
             return 0;
-        } catch (UserProfileNotYetExistsException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
         
 

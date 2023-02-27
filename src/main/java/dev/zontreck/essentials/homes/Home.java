@@ -2,6 +2,7 @@ package dev.zontreck.essentials.homes;
 
 import java.util.UUID;
 
+import dev.zontreck.essentials.commands.teleport.TeleportDestination;
 import dev.zontreck.libzontreck.exceptions.InvalidDeserialization;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;

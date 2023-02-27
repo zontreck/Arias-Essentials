@@ -1,4 +1,4 @@
-package dev.zontreck.otemod.implementation.homes;
+package dev.zontreck.essentials.homes;
 
 public class NoSuchHomeException extends Exception{
     

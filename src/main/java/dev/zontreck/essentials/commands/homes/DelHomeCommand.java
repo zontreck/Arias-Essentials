@@ -3,8 +3,11 @@ package dev.zontreck.essentials.commands.homes;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
+import dev.zontreck.essentials.AriasEssentials;
+import dev.zontreck.essentials.Messages;
 import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.profiles.Profile;
+import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,15 +33,16 @@ public class DelHomeCommand {
 //        if(homeName==null)return 0;
         try{
             ServerPlayer p = ctx.getPlayerOrException();
-            Profile prof = Profile.get_profile_of(p.getStringUUID());
-            prof.player_homes.delete(homeName);
+            
+            AriasEssentials.player_homes.get(p.getUUID()).delete(homeName);
 
-            ChatServerOverride.broadcastTo(p.getUUID(), new TextComponent(OTEMod.OTEPrefix + ChatColor.doColors("!dark_green! Home was deleted successfully")), ctx.getServer());
+
+            ChatHelpers.broadcastTo(p, new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors("!dark_green!Home was deleted successfully")), ctx.getServer());
         }catch(Exception e)
         {
             e.printStackTrace();
 
-            ChatServerOverride.broadcastTo(ctx.getEntity().getUUID(), new TextComponent(OTEMod.OTEPrefix + ChatColor.doColors("!dark_red! Home could not be deleted due to an unknown error")), ctx.getServer());
+            ChatHelpers.broadcastTo(ctx.getEntity().getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors("!dark_red!Home could not be deleted due to an unknown error")), ctx.getServer());
         }
         return 0;
     }

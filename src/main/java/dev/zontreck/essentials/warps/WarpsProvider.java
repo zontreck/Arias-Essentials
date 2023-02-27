@@ -1,13 +1,13 @@
-package dev.zontreck.otemod.implementation.warps;
+package dev.zontreck.essentials.warps;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import dev.zontreck.otemod.database.FileTreeDatastore;
+import dev.zontreck.essentials.util.EssentialsDatastore;
 import net.minecraft.nbt.NbtIo;
 
-public class WarpsProvider extends FileTreeDatastore
+public class WarpsProvider extends EssentialsDatastore
 {
     public static final Path BASE = of("warps");
     public static final Path WARPS_DATA = BASE.resolve("warps.nbt");
