@@ -80,6 +80,8 @@ public class RTPContainer {
     public void newPosition() {
         if(!AriasEssentials.ALIVE)return;
         containingThread=Thread.currentThread();
+        if(tries>=30)return;
+        AriasEssentials.LOGGER.info("RTPContainer starts looking for new position");
         Random rng = new Random(Instant.now().getEpochSecond());
         Vector3 pos = new Vector3(rng.nextDouble(0xFFFF), 0, rng.nextDouble(0xFFFF));
         BlockPos bpos = pos.asBlockPos();
@@ -107,6 +109,7 @@ public class RTPContainer {
         }
 
         tries++;
+        AriasEssentials.LOGGER.info("RTPContainer returns new position");
     }
 
     private void spiralPositions(Vector3 position)
@@ -133,8 +136,8 @@ public class RTPContainer {
         }
         newPosition();
     }
-
-    public boolean isSafe(BlockPos blockPos) {
+    private boolean safe(BlockPos blockPos)
+    {
         containingThread=Thread.currentThread();
         BlockState b = container.Dimension.getBlockState(blockPos);
         BlockState b2 = container.Dimension.getBlockState(blockPos.above());
@@ -151,5 +154,14 @@ public class RTPContainer {
         } else
             return false;
 
+    }
+    public boolean isSafe(BlockPos blockPos) {
+        boolean s = safe(blockPos);
+        if(s)
+        {
+            AriasEssentials.LOGGER.info("/!\\ SAFE /!\\");
+        }else AriasEssentials.LOGGER.info("/!\\ NOT SAFE /!\\");
+
+        return s;
     }
 }

@@ -46,7 +46,7 @@ public class HomesCommand {
             for (Home string : homes.getList()) {
                 Style st = Style.EMPTY.withFont(Style.DEFAULT_FONT).withHoverEvent(HoverTip.get(ChatColor.BOLD+ChatColor.DARK_GREEN+"Click here to go to this home")).withClickEvent(Clickable.command("/home "+string.homeName));
 
-                ChatHelpers.broadcastTo(player.getUUID(), new TextComponent(ChatColor.BOLD + ChatColor.MINECOIN_GOLD+"["+ChatColor.resetChat()+ChatColor.UNDERLINE+ChatColor.BOLD+ChatColor.DARK_GREEN+"HOME"+ChatColor.resetChat()+ChatColor.BOLD+ChatColor.MINECOIN_GOLD+"] "+ChatColor.resetChat()+ChatColor.YELLOW+string).setStyle(st), ctx.getSource().getServer());
+                ChatHelpers.broadcastTo(player.getUUID(), new TextComponent(ChatColor.BOLD + ChatColor.MINECOIN_GOLD+"["+ChatColor.resetChat()+ChatColor.UNDERLINE+ChatColor.BOLD+ChatColor.DARK_GREEN+"HOME"+ChatColor.resetChat()+ChatColor.BOLD+ChatColor.MINECOIN_GOLD+"] "+ChatColor.resetChat()+ChatColor.YELLOW+string.homeName).setStyle(st), ctx.getSource().getServer());
                 
             }
         }catch(CommandSyntaxException ex)

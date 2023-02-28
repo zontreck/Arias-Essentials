@@ -2,16 +2,9 @@ package dev.zontreck.essentials.commands.teleport;
 
 import com.mojang.brigadier.CommandDispatcher;
 
-import dev.zontreck.essentials.AriasEssentials;
-import dev.zontreck.essentials.Messages;
-import dev.zontreck.essentials.util.RTPContainer;
 import dev.zontreck.essentials.util.RandomPositionFactory;
-import dev.zontreck.libzontreck.chat.ChatColor;
-import dev.zontreck.libzontreck.util.ChatHelpers;
-import dev.zontreck.libzontreck.vectors.Vector3;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
@@ -44,7 +37,7 @@ public class RTPCommand {
         }
         final ServerPlayer pla = (ServerPlayer)source.getEntity();
         
-        final TeleportContainer cont = new TeleportContainer(pla, Vec3.ZERO, pla.getRotationVector(), source.getLevel());
+        //final TeleportContainer cont = new TeleportContainer(pla, Vec3.ZERO, pla.getRotationVector(), source.getLevel());
         
 
 
@@ -52,37 +45,15 @@ public class RTPCommand {
             @Override
             public void run(){
                 // We can now execute the loop to search for a safe spot!
-                Vector3 v = new Vector3();
+                //Vector3 v = new Vector3();
                 // RTP is not designed to be safe really, but we at least want to check if where we are putting the player is air
                 
                 Vec3 pos = pla.position();
                 
-                boolean found_place= false;
-                RTPContainer container = RandomPositionFactory.beginRTPSearch(pla, pos, pla.getRotationVector(), pla.getLevel());
-                while(!container.complete)
-                {
-                    if(!AriasEssentials.ALIVE)
-                    {
-                        container.aborted=true;
-                        container.containingThread.interrupt();
-                        return;
-                    }
-                    if(container.tries>30)
-                    {
-                        // abort!
-                        return;
-
-                    }
-                }
-                v = container.container.world_pos.Position;
-        
-                ChatHelpers.broadcastTo(pla.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.DARK_PURPLE+" A suitable location has been found. Wormhole opening now!"), pla.server);
-        
-                // Apply the effect
-                TeleportActioner.ApplyTeleportEffect(pla);
-                cont.Position=v.asMinecraftVector();
-        
-                TeleportActioner.PerformTeleport(cont);
+                //boolean found_place= false;
+                RandomPositionFactory.beginRTPSearch(pla, pos, pla.getRotationVector(), pla.getLevel());
+                return;
+                
         
             }
         });

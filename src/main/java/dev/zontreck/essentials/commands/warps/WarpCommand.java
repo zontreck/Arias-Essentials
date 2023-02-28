@@ -76,24 +76,8 @@ public class WarpCommand {
                     if(type==1){
                         try {
                             dest.Position =  Vector3.ZERO;
-                            RTPContainer cont = RandomPositionFactory.beginRTPSearch(p, Vec3.ZERO, Vec2.ZERO, f_dim);
-                            while(!cont.complete)
-                            {
-                                if(!AriasEssentials.ALIVE)
-                                {
-                                    cont.aborted=true;
-                                    cont.containingThread.interrupt();
-                                    return;
-                                }
-                                if(cont.tries>30)
-                                {
-                                    return;
-                                }
-                            }
-                            dest.Position = cont.container.world_pos.Position;
-                            
-                            //RTPCommand.findPosition(source.getLevel(), false, p.getUUID());
-                            ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX+ChatColor.doColors(" !Dark_Green!Location found, warping!")), p.server);
+                            RandomPositionFactory.beginRTPSearch(p, Vec3.ZERO, Vec2.ZERO, f_dim);
+                            return;
                         } catch (Exception e) {
                             e.printStackTrace();
                             return;

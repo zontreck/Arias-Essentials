@@ -15,6 +15,7 @@ import dev.zontreck.essentials.commands.CommandRegister;
 import dev.zontreck.essentials.homes.Homes;
 import dev.zontreck.essentials.homes.HomesProvider;
 import dev.zontreck.essentials.util.EssentialsDatastore;
+import dev.zontreck.essentials.util.ForgeEventsHandler;
 import dev.zontreck.libzontreck.events.ProfileLoadedEvent;
 import dev.zontreck.libzontreck.events.ProfileUnloadedEvent;
 import dev.zontreck.libzontreck.profiles.Profile;
@@ -24,6 +25,7 @@ import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(AriasEssentials.MODID)
@@ -36,10 +38,17 @@ public class AriasEssentials {
     public AriasEssentials()
     {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(this::setup);
 
         EssentialsDatastore.initialize();
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new CommandRegister());
+        MinecraftForge.EVENT_BUS.register(new ForgeEventsHandler());
+    }
+
+    public void setup(FMLCommonSetupEvent ev)
+    {
+
     }
 
 

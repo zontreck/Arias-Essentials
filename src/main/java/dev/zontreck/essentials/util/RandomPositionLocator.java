@@ -3,6 +3,7 @@ package dev.zontreck.essentials.util;
 import dev.zontreck.essentials.AriasEssentials;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.events.RTPEvent;
+import dev.zontreck.essentials.events.RTPNotCancelledEvent;
 import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import dev.zontreck.libzontreck.util.DelayedExecutorService;
@@ -43,7 +44,7 @@ public class RandomPositionLocator implements Runnable
             levl.setChunkForced(cpos.x, cpos.z, true);
 
         int curChecks=0;
-        while(curChecks<30)
+        while(curChecks<10)
         {
             if(contain.isSafe(contain.container.world_pos.Position.asBlockPos()))
             {
@@ -54,9 +55,13 @@ public class RandomPositionLocator implements Runnable
                 if(MinecraftForge.EVENT_BUS.post(new RTPEvent(contain.container.PlayerInst, contain.container.world_pos)))
                 {
                     contain.complete=false;
+                    contain.container.Position = contain.container.world_pos.Position.asMinecraftVector();
                     ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors(" !Dark_Red!Last position checked was probably claimed. Another mod has asked us not to send you to that location, continuing the search")), contain.container.PlayerInst.server);
 
                     break;
+                }else {
+                    AriasEssentials.LOGGER.info("RTP Not cancelled. Actioning");
+                    new RTPNotCancelledEvent(contain).send();
                 }
                 return;
             }else {
@@ -80,7 +85,8 @@ public class RandomPositionLocator implements Runnable
             // Schedule the task to execute
             //run();
             RandomPositionLocator next = new RandomPositionLocator(contain);
-            DelayedExecutorService.getInstance().schedule(next, 2);
+            DelayedExecutorService.getInstance().schedule(next, 1);
+            AriasEssentials.LOGGER.info("Giving up current RTP search. Scheduling another search in 1 second");
         }
     }
     
