@@ -16,7 +16,7 @@ public class HomesProvider {
      */
     public static Homes getHomesForPlayer(String player)
     {
-        Path homesFile = EssentialsDatastore.of(player).resolve("homes.nbt");
+        Path homesFile = EssentialsDatastore.of(player,true).resolve("homes.nbt");
 
         Homes homes = new Homes(player);
         if(homesFile.toFile().exists())
@@ -37,7 +37,7 @@ public class HomesProvider {
     public static void commitHomes(Homes playerHomes)
     {
 
-        Path homesFile = EssentialsDatastore.of(playerHomes.playerID).resolve("homes.nbt");
+        Path homesFile = EssentialsDatastore.of(playerHomes.playerID,true).resolve("homes.nbt");
 
         try {
             NbtIo.write(playerHomes.serialize(), homesFile.toFile());

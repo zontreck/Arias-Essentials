@@ -1,5 +1,8 @@
 package dev.zontreck.essentials;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -11,6 +14,7 @@ import com.mojang.logging.LogUtils;
 import dev.zontreck.essentials.commands.CommandRegister;
 import dev.zontreck.essentials.homes.Homes;
 import dev.zontreck.essentials.homes.HomesProvider;
+import dev.zontreck.essentials.util.EssentialsDatastore;
 import dev.zontreck.libzontreck.events.ProfileLoadedEvent;
 import dev.zontreck.libzontreck.events.ProfileUnloadedEvent;
 import dev.zontreck.libzontreck.profiles.Profile;
@@ -33,6 +37,7 @@ public class AriasEssentials {
     {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        EssentialsDatastore.initialize();
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new CommandRegister());
     }
@@ -52,15 +57,4 @@ public class AriasEssentials {
     }
 
 
-    @SubscribeEvent
-    public void onProfileLoaded(ProfileLoadedEvent ev)
-    {
-        player_homes.put(UUID.fromString(ev.profile.user_id), HomesProvider.getHomesForPlayer(ev.profile.user_id));
-    }
-
-    @SubscribeEvent
-    public void onProfileUnloaded(ProfileUnloadedEvent ev)
-    {
-        player_homes.remove(UUID.fromString(ev.user_id));
-    }
 }

@@ -10,6 +10,12 @@ import dev.zontreck.essentials.commands.teleport.TPAHereCommand;
 import dev.zontreck.essentials.commands.teleport.TPAcceptCommand;
 import dev.zontreck.essentials.commands.teleport.TPCancelCommand;
 import dev.zontreck.essentials.commands.teleport.TPDenyCommand;
+import dev.zontreck.essentials.commands.warps.DelWarpCommand;
+import dev.zontreck.essentials.commands.warps.RTPWarpCommand;
+import dev.zontreck.essentials.commands.warps.SetWarpCommand;
+import dev.zontreck.essentials.commands.warps.WarpCommand;
+import dev.zontreck.essentials.commands.warps.WarpsCommand;
+import dev.zontreck.essentials.warps.Warps;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -28,5 +34,11 @@ public class CommandRegister {
         TPACommand.register(ev.getDispatcher());
         TPCancelCommand.register(ev.getDispatcher());
         TPDenyCommand.register(ev.getDispatcher());
+
+        DelWarpCommand.register(ev.getDispatcher());
+        RTPWarpCommand.register(ev.getDispatcher());
+        SetWarpCommand.register(ev.getDispatcher());
+        WarpCommand.register(ev.getDispatcher());
+        WarpsCommand.register(ev.getDispatcher());
     }
 }
