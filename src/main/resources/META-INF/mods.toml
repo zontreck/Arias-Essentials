@@ -27,7 +27,7 @@ displayName="Aria's Essentials" #mandatory
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="essentials.png" #optional
+logoFile="ariasessentials.png" #optional
 # A text field displayed in the mod UI
 credits="zontreck" #optional
 # A text field displayed in the mod UI
