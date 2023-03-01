@@ -31,7 +31,8 @@ public class RandomPositionLocator implements Runnable
     @Override
     public void run() {
         if(!AriasEssentials.ALIVE)return;
-        ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors(" !Dark_Purple!Searching... Attempt "+String.valueOf(contain.tries)+"/30")), contain.container.PlayerInst.server);
+        
+        ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.RTP_SEARCHING, String.valueOf(contain.tries), "30")), contain.container.PlayerInst.server);
 
         ServerLevel levl = contain.container.Dimension;
         ChunkAccess chunk  = levl.getChunk(contain.container.world_pos.Position.asBlockPos());
@@ -56,7 +57,7 @@ public class RandomPositionLocator implements Runnable
                 {
                     contain.complete=false;
                     contain.container.Position = contain.container.world_pos.Position.asMinecraftVector();
-                    ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors(" !Dark_Red!Last position checked was probably claimed. Another mod has asked us not to send you to that location, continuing the search")), contain.container.PlayerInst.server);
+                    ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.RTP_CANCELLED)), contain.container.PlayerInst.server);
 
                     break;
                 }else {
@@ -78,7 +79,7 @@ public class RandomPositionLocator implements Runnable
         if(contain.tries > 30)
         {
             // Abort
-            ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors(" !Dark_Red!Could not find a suitable location in 30 attempts")), contain.container.PlayerInst.server);
+            ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.RTP_ABORTED,"30")), contain.container.PlayerInst.server);
             contain.aborted=true;
             return;
         }else {
