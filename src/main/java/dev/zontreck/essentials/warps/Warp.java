@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.UUID;
 
 import dev.zontreck.essentials.commands.teleport.TeleportDestination;
+import dev.zontreck.essentials.events.WarpAccessControlListUpdatedEvent;
+import dev.zontreck.essentials.warps.AccessControlList.ACLEntry;
 import dev.zontreck.libzontreck.exceptions.InvalidDeserialization;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntArrayTag;
@@ -12,6 +14,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.MinecraftForge;
 
 public class Warp {
     public UUID owner;
@@ -97,7 +100,8 @@ public class Warp {
     {
         if(!isPublic)
         {
-            ACL.addEntry(name, ID);
+            ACLEntry entry = ACL.addEntry(name, ID);
+            MinecraftForge.EVENT_BUS.post(new WarpAccessControlListUpdatedEvent(this, entry, true));
         }else return;
     }
 
@@ -117,7 +121,8 @@ public class Warp {
     {
         if(ACL.getIDs().contains(id))
         {
-            ACL.removeByID(id);
+            ACLEntry entry = ACL.removeByID(id);
+            MinecraftForge.EVENT_BUS.post(new WarpAccessControlListUpdatedEvent(this, entry, false));
         }
     }
 

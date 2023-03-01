@@ -70,18 +70,29 @@ public class AccessControlList {
         return ids;
     }
 
-    public void add(ServerPlayer player)
+    /**
+     * Adds a ACL Entry for a name and ID
+     * @param name
+     * @param id
+     * @return null if the entry was already in the ACL
+     * @return Entry if the entry was successfully added to the ACL
+     */
+    public ACLEntry addEntry(String name, UUID id)
     {
-        ACLEntry entry = new ACLEntry(player.getName().getContents(), player.getUUID());
+        ACLEntry entry = new ACLEntry(name, id);
+        if(getIDs().contains(id)) return null;
         entries.add(entry);
+
+        return entry;
     }
 
-    public void addEntry(String name, UUID id)
-    {
-        entries.add(new ACLEntry(name, id));
-    }
-
-    public void removeByID(UUID ID)
+    /**
+     * Removes a ACLEntry by UUID
+     * @param ID
+     * @return null if no such entry
+     * @return Entry that was removed from the list
+     */
+    public ACLEntry removeByID(UUID ID)
     {
         Iterator<ACLEntry> entr = entries.iterator();
         while(entr.hasNext())
@@ -90,9 +101,11 @@ public class AccessControlList {
             if(entry.id==ID)
             {
                 entr.remove();
-                return;
+                return entry;
             }
         }
+
+        return null;
     }
 
     /**
