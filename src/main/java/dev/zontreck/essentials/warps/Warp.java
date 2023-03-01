@@ -19,7 +19,7 @@ public class Warp {
     public boolean RTP;
     public boolean isPublic;
     public TeleportDestination destination;
-    private List<UUID> ACL;
+    private AccessControlList ACL;
 
     public Warp(UUID owner, String name, boolean rtp, boolean publicWarp, TeleportDestination destination)
     {
@@ -28,26 +28,16 @@ public class Warp {
         RTP=rtp;
         isPublic=publicWarp;
         this.destination=destination;
-        this.ACL = new ArrayList<>();
+        this.ACL = new AccessControlList();
     }
 
     public static Warp deserialize(CompoundTag tag) throws InvalidDeserialization
     {
         Warp warp = new Warp(tag.getUUID("owner"), tag.getString("name"), tag.getBoolean("rtp"), tag.getBoolean("public"), new TeleportDestination(tag.getCompound("destination")));
-        List<UUID> acl = new ArrayList<>();
 
         if(!warp.isPublic)
         {
-
-            ListTag lst = tag.getList("acl", Tag.TAG_INT_ARRAY);
-            if(lst!=null){
-    
-                for (Tag tag2 : lst) {
-                    IntArrayTag tag3 = (IntArrayTag)tag2;
-                    acl.add(NbtUtils.loadUUID(tag3));
-                }
-                warp.ACL=acl;
-            }
+            warp.ACL = AccessControlList.deserialize(tag.getCompound("acl"));
         }
         
         return warp;
@@ -63,13 +53,7 @@ public class Warp {
         tag.put("destination", destination.serialize());
         if(!isPublic)
         {
-
-            ListTag lst = new ListTag();
-            for(UUID id : ACL)
-            {
-                lst.add(NbtUtils.createUUID(id));
-            }
-            tag.put("acl", lst);
+            tag.put("acl", ACL.serialize());
         }
 
         return tag;
@@ -93,7 +77,7 @@ public class Warp {
     public boolean hasAccess(UUID ID)
     {
         if(isPublic)return true;
-        return ACL.contains(ID);
+        return ACL.getIDs().contains(ID);
     }
 
     /**
@@ -102,18 +86,18 @@ public class Warp {
      */
     protected void giveAccess(ServerPlayer player)
     {
-        giveAccess(player.getUUID());
+        giveAccess(player.getName().getContents(), player.getUUID());
     }
 
     /**
      * If the warp is not public, it gives an ID access to the warp
      * @param ID
      */
-    protected void giveAccess(UUID ID)
+    protected void giveAccess(String name, UUID ID)
     {
         if(!isPublic)
         {
-            ACL.add(ID);
+            ACL.addEntry(name, ID);
         }else return;
     }
 
@@ -131,9 +115,9 @@ public class Warp {
      */
     protected void removeAccess(UUID id)
     {
-        if(ACL.contains(id))
+        if(ACL.getIDs().contains(id))
         {
-            ACL.remove(id);
+            ACL.removeByID(id);
         }
     }
 
@@ -143,6 +127,6 @@ public class Warp {
      */
     protected List<UUID> getWarpACL()
     {
-        return new ArrayList<UUID>(ACL);
+        return ACL.getIDs();
     }
 }
