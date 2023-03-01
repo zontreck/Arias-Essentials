@@ -9,6 +9,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.commands.teleport.TeleportDestination;
+import dev.zontreck.essentials.events.WarpCreatedEvent;
 import dev.zontreck.essentials.warps.Warp;
 import dev.zontreck.essentials.warps.WarpsProvider;
 import dev.zontreck.libzontreck.chat.ChatColor;
@@ -23,6 +24,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.MinecraftForge;
 
 public class SetWarpCommand {
     
@@ -46,9 +48,14 @@ public class SetWarpCommand {
 
         TeleportDestination dest = new TeleportDestination(new Vector3(position), new Vector2(rot), p.getLevel());
         Warp w = new Warp(p.getUUID(), string, false, true, dest);
+        WarpCreatedEvent event = new WarpCreatedEvent(w);
+        if(MinecraftForge.EVENT_BUS.post(event)){
+            ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.WARP_CREATE_ERROR, event.denyReason)), p.server);
+            return 0;
+        }
         WarpsProvider.WARPS_INSTANCE.add(w);
 
-        ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX+ChatColor.doColors(" !Dark_Green!Warp created successfully")), p.server);
+        ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.WARP_CREATED)), p.server);
 
         return 0;
     }

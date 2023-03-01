@@ -64,10 +64,10 @@ public class WarpCommand {
 
             if(type == 1)
             {
-                ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX+ ChatColor.doColors(" !Dark_Green!Attempting to locate a safe location. This may take a minute or two")), p.server);
+                ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.WARP_ATTEMPTING)), p.server);
             }else{
                 
-                ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX+ ChatColor.doColors(" !Dark_Purple!Warping!")), p.server);
+                ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.WARPING)), p.server);
             }
 
             Thread tx = new Thread(new Runnable(){
@@ -92,7 +92,7 @@ public class WarpCommand {
             tx.start();
         }catch(NoSuchWarpException e)
         {
-            ChatHelpers.broadcastTo(source.getEntity().getUUID(), new TextComponent(ChatColor.DARK_RED+"No such warp"), source.getServer());
+            ChatHelpers.broadcastTo(source.getEntity().getUUID(), new TextComponent(ChatHelpers.macroize(Messages.WARP_NOT_EXIST)), source.getServer());
         } catch (CommandSyntaxException e) {
             e.printStackTrace();
         }
@@ -101,7 +101,7 @@ public class WarpCommand {
 
     private static int nowarp(CommandSourceStack source) {
         ServerPlayer p = (ServerPlayer)source.getEntity();
-        ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatColor.DARK_RED + "You must supply the warp name. If you need to know what warps are available, please use the warps command, or click this message.").withStyle(Style.EMPTY.withFont(Style.DEFAULT_FONT).withClickEvent(Clickable.command("/warps"))), source.getServer());
+        ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.WARP_NAME_REQUIRED)).withStyle(Style.EMPTY.withFont(Style.DEFAULT_FONT).withClickEvent(Clickable.command("/warps"))), source.getServer());
         return 0;
     }
 

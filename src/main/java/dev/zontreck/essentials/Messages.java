@@ -19,9 +19,21 @@ public class Messages {
     public static final String WARP_ACCESS_FORMAT;
     public static final String PUBLIC;
     public static final String PRIVATE;
-    
+
+    public static final String WARP_NAME_REQUIRED;
+    public static final String WARP_NOT_EXIST;
+    public static final String WARP_ATTEMPTING;
+    public static final String WARPING;
+    public static final String WARP_CREATED;
+    public static final String WARP_CREATE_ERROR;
+    public static final String WARP_RTP_CREATED;
+
     static{
         ESSENTIALS_PREFIX = "!Gray![!Dark_Green!AE!Gray!] ";
+
+        WARP_ATTEMPTING = ESSENTIALS_PREFIX + "!Dark_Green!Attempting to find a safe landing location. This may take a minute";
+        WARPING = ESSENTIALS_PREFIX+"!Dark_green!Warping";
+
 
         RTP_SEARCHING = ESSENTIALS_PREFIX + "!Dark_Purple!Searching... Attempt !Gold![0]!White!/!Dark_Red![1]";
         RTP_CANCELLED = ESSENTIALS_PREFIX + "!Dark_Red!Last position was good, but another mod asked us not to send you there. This could happen with a claims mod.";
@@ -38,5 +50,13 @@ public class Messages {
         WARP_ACCESS_FORMAT = "!Dark_Purple!This warp is [0]";
         PUBLIC = "!Dark_Green!Public";
         PRIVATE = "!Dark_Red!Private";
+
+        WARP_NAME_REQUIRED = ESSENTIALS_PREFIX + "!Dark_Red!The warp name is required in order to warp. You can click this message to get a full list of the warps you have access to.";
+        WARP_NOT_EXIST = ESSENTIALS_PREFIX + "!Dark_Red!No Such Warp";
+
+        WARP_CREATED = ESSENTIALS_PREFIX + "!Dark_Green!Warp created successfully";
+        WARP_CREATE_ERROR = ESSENTIALS_PREFIX + "!Dark_Red!Warp could not be created due to [0]";
+
+        WARP_RTP_CREATED = WARP_CREATED+" with RTP properties";
     }
 }
