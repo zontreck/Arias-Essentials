@@ -79,7 +79,9 @@ public class WarpsCommand {
             HoverEvent h2 = HoverTip.get(
                 ChatHelpers.macroize(Messages.WARP_HOVER_FORMAT,  
                     ChatHelpers.macroize(Messages.WARP_OWNER, prof.name_color, prof.nickname),
-                    ChatHelpers.macroize(Messages.WARP_ACCESS_FORMAT, )
+                    ChatHelpers.macroize(Messages.WARP_ACCESS_FORMAT, 
+                        (warp.isPublic ? ChatHelpers.macroize(Messages.PUBLIC) : ChatHelpers.macroize(Messages.PRIVATE))
+                    )
                 ) 
                 
             );

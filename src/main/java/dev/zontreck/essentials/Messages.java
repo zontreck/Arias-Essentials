@@ -17,6 +17,8 @@ public class Messages {
     public static final String WARP_STANDARD;
 
     public static final String WARP_ACCESS_FORMAT;
+    public static final String PUBLIC;
+    public static final String PRIVATE;
     
     static{
         ESSENTIALS_PREFIX = "!Gray![!Dark_Green!AE!Gray!] ";
@@ -33,6 +35,8 @@ public class Messages {
         WARP_OWNER = "!Dark_Purple!The warp's owner is [0][1]";
         COUNT = ESSENTIALS_PREFIX + "!Dark_Purple!There are [0] [1](s) available";
 
-        WARP_ACCESS_FORMAT = "This warp is [0]";
+        WARP_ACCESS_FORMAT = "!Dark_Purple!This warp is [0]";
+        PUBLIC = "!Dark_Green!Public";
+        PRIVATE = "!Dark_Red!Private";
     }
 }
