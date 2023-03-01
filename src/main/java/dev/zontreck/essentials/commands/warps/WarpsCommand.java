@@ -47,12 +47,12 @@ public class WarpsCommand {
     
         Map<String, Warp> warps = WarpsProvider.WARPS_INSTANCE.get();
         
-        ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + " "+ChatColor.resetChat() + "There are "+warps.size()+" warps available"), source.getServer());
+        ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.COUNT, String.valueOf(warps.size()), "warp")), source.getServer());
 
         Iterator<Entry<String, Warp>> it = warps.entrySet().iterator();
         while(it.hasNext())
         {
-            // TODO: Implement public and private. Private requires an ACL be implemented. New GUI
+            // TODO: Implement public and private. Private requires an ACL be implemented. New GUI(?)
             Warp warp = it.next().getValue();
             // Pull the owner profile
             Profile prof=null;
@@ -66,18 +66,25 @@ public class WarpsCommand {
             int warpType = 0;
             if(warp.RTP) warpType=1;
             
-            String appendType = (warpType == 0) ? "standard warp." : "RTP Warp. This has a position randomizer.";
+            String appendType = (warpType == 0) ? Messages.WARP_STANDARD : Messages.WARP_RTP;
+            
 
-            HoverEvent hover = HoverTip.get(ChatColor.BOLD + ChatColor.DARK_PURPLE + "This warp is a "+appendType);
+            HoverEvent hover = HoverTip.get(ChatHelpers.macroize(appendType));
             ClickEvent click = Clickable.command("/warp "+warpName);
             Style S = Style.EMPTY.withFont(Style.DEFAULT_FONT).withHoverEvent(hover).withClickEvent(click);
 
             Component warpMsg = new TextComponent(ChatColor.GREEN + warpName + ChatColor.resetChat()).withStyle(S);
             
             // Now, display the warp name, along with the warp's owner information
-            HoverEvent h2 = HoverTip.get(prof.name_color+prof.nickname+ChatColor.resetChat()+ChatColor.AQUA+" is the owner of this warp");
+            HoverEvent h2 = HoverTip.get(
+                ChatHelpers.macroize(Messages.WARP_HOVER_FORMAT,  
+                    ChatHelpers.macroize(Messages.WARP_OWNER, prof.name_color, prof.nickname),
+                    ChatHelpers.macroize(Messages.WARP_ACCESS_FORMAT, )
+                ) 
+                
+            );
             S = Style.EMPTY.withFont(Style.DEFAULT_FONT).withHoverEvent(h2);
-            Component ownerInfo = new TextComponent(ChatColor.GOLD+ "  [Hover to see the warp's info]").withStyle(S);
+            Component ownerInfo = new TextComponent(ChatHelpers.macroize(Messages.HOVER_WARP_INFO)).withStyle(S);
 
             // Combine the two
             warpMsg = new TextComponent("").append(warpMsg).append(ownerInfo);
