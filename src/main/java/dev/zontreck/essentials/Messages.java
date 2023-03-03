@@ -47,7 +47,17 @@ public class Messages {
     public static final String NO_MORE_THAN_ONE_TPA;
     public static final String TPA;
 
+    public static final String HOME_FORMAT;
+    public static final String HOME_HOVER_TEXT;
+    public static final String HOME_COUNT;
+
     public static final String TELEPORT_REQUEST_ACCEPTED;
+
+    public static final String TELEPORTING_HOME;
+    public static final String TELEPORT_HOME_FAIL;
+
+    public static final String HOME_DELETE_SUCCESS;
+    public static final String HOME_DELETE_FAIL;
 
     static{
         ESSENTIALS_PREFIX = "!Gray![!Dark_Green!AE!Gray!] ";
@@ -101,5 +111,15 @@ public class Messages {
         NO_MORE_THAN_ONE_TPA = ESSENTIALS_PREFIX + "!Dark_Red!You already have a TPA Request active, wait for it to expire, or use the cancel button/command";
 
         TPA = "[0] !Bold!!Dark_Purple! is requesting to teleport to you!\n\n";
+
+        HOME_FORMAT = "!Dark_Gray![!Gold!Home!Dark_Gray!]!Bold!!Dark_Purple![0]";
+        HOME_HOVER_TEXT = "!Bold!!Dark_Green!Click here to go to this home";
+        HOME_COUNT = ESSENTIALS_PREFIX + "!Bold!!Dark_Purple!You have [0] total homes.";
+
+        TELEPORTING_HOME = ESSENTIALS_PREFIX + "!Dark_Green!Teleporting home now!";
+        TELEPORT_HOME_FAIL = ESSENTIALS_PREFIX + "!Dark_Red!Home not found";
+
+        HOME_DELETE_FAIL = ESSENTIALS_PREFIX + "!Dark_Red!Home could not be deleted due to an unknown error";
+        HOME_DELETE_SUCCESS = ESSENTIALS_PREFIX + "!Dark_Green!Home was successfully deleted";
     }
 }

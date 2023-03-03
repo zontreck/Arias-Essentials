@@ -11,13 +11,10 @@ import dev.zontreck.essentials.commands.teleport.TeleportContainer;
 import dev.zontreck.essentials.commands.teleport.TeleportDestination;
 import dev.zontreck.essentials.homes.Home;
 import dev.zontreck.essentials.homes.NoSuchHomeException;
-import dev.zontreck.libzontreck.chat.ChatColor;
-import dev.zontreck.libzontreck.profiles.UserProfileNotYetExistsException;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.chat.TextComponent;
 
 public class HomeCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher)
@@ -46,7 +43,7 @@ public class HomeCommand {
             TeleportContainer cont = new TeleportContainer(p, dest.Position.asMinecraftVector(), dest.Rotation.asMinecraftVector(), dest.getActualDimension());
             TeleportActioner.PerformTeleport(cont);
 
-            ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors("!dark_green!Home found! Wormhole opening now...")), ctx.getServer());
+            ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.TELEPORTING_HOME), ctx.getServer());
         }catch(CommandSyntaxException e)
         {
             e.printStackTrace();
@@ -54,7 +51,7 @@ public class HomeCommand {
         }catch(NoSuchHomeException e)
         {
             
-            ChatHelpers.broadcastTo(ctx.getEntity().getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors(" !dark_red!Home not found. Maybe it does not exist?")), ctx.getServer());
+            ChatHelpers.broadcastTo(ctx.getEntity().getUUID(), ChatHelpers.macro(Messages.TELEPORT_HOME_FAIL), ctx.getServer());
             return 0;
         }
         
