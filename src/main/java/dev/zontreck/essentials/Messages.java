@@ -1,6 +1,8 @@
 package dev.zontreck.essentials;
 
 import dev.zontreck.libzontreck.chat.ChatColor;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 
 public class Messages {
     public static final String ESSENTIALS_PREFIX;
@@ -34,6 +36,18 @@ public class Messages {
     public static final String TELEPORT_REQUEST_NOT_FOUND;
     public static final String TELEPORT_REQUEST_DENIED;
     public static final String TELEPORT_REQUEST_CANCELLED;
+
+    public static final String TELEPORT_ACCEPT;
+    public static final String TELEPORT_DENY;
+    public static final SoundEvent TPA_SOUND;
+    public static final String TPA_HERE;
+
+    public static final String PLAYER_NOT_FOUND;
+    public static final String NO_TP_TO_SELF;
+    public static final String NO_MORE_THAN_ONE_TPA;
+    public static final String TPA;
+
+    public static final String TELEPORT_REQUEST_ACCEPTED;
 
     static{
         ESSENTIALS_PREFIX = "!Gray![!Dark_Green!AE!Gray!] ";
@@ -74,5 +88,18 @@ public class Messages {
         TELEPORT_REQUEST_NOT_FOUND = ESSENTIALS_PREFIX + "!Dark_Red!The teleport request could not be found. Perhaps it already expired or was cancelled/denied already.";
         TELEPORT_REQUEST_DENIED = ESSENTIALS_PREFIX + "!Dark_Red!Teleport request was denied";
         TELEPORT_REQUEST_CANCELLED = ESSENTIALS_PREFIX + "!Dark_Red!Teleport request was cancelled";
+        TELEPORT_REQUEST_ACCEPTED = ESSENTIALS_PREFIX + "!Dark_Green!Teleport request was accepted";
+
+        TPA_SOUND = SoundEvents.ANVIL_FALL;
+        TELEPORT_ACCEPT = "!Dark_Gray![!Dark_Green!Accept!Dark_Gray!]";
+        TELEPORT_DENY = "!Dark_Gray![!Dark_Red!Deny!Dark_Gray!]";
+
+        TPA_HERE = "[0] !Bold!!Dark_Purple!is requesting you to teleport to them!\n\n";
+
+        PLAYER_NOT_FOUND = ESSENTIALS_PREFIX + "!Dark_Red!Error: Player not found";
+        NO_TP_TO_SELF = ESSENTIALS_PREFIX + "!Dark_Red!You cannot teleport to yourself!";
+        NO_MORE_THAN_ONE_TPA = ESSENTIALS_PREFIX + "!Dark_Red!You already have a TPA Request active, wait for it to expire, or use the cancel button/command";
+
+        TPA = "[0] !Bold!!Dark_Purple! is requesting to teleport to you!\n\n";
     }
 }

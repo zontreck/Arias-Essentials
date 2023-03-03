@@ -2,6 +2,7 @@ package dev.zontreck.essentials.commands.teleport;
 
 import com.mojang.brigadier.CommandDispatcher;
 
+import dev.zontreck.essentials.Messages;
 import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.chat.Clickable;
 import dev.zontreck.libzontreck.chat.HoverTip;
@@ -17,6 +18,7 @@ import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.network.NetworkHooks;
 
 public class TPACommand {
     
@@ -33,7 +35,7 @@ public class TPACommand {
     private static int tpa(CommandSourceStack source, ServerPlayer serverPlayer) {
         // Send the request to player
         if(serverPlayer == null){
-            source.sendFailure(new TextComponent(ChatColor.DARK_RED+"Error: Player not found"));
+            source.sendFailure(ChatHelpers.macro(Messages.PLAYER_NOT_FOUND));
             return 1;
         }
         
@@ -41,7 +43,7 @@ public class TPACommand {
 
         
         if(play.getUUID() == serverPlayer.getUUID()){
-            source.sendFailure(new TextComponent(ChatColor.DARK_RED+"You cannot teleport to yourself!"));
+            source.sendFailure(ChatHelpers.macro(Messages.NO_TP_TO_SELF));
             return 1;
         }
         
@@ -49,11 +51,11 @@ public class TPACommand {
 
         for(TeleportContainer cont2 : TeleportRegistry.get()){
             if(cont2.compareTo(cont)==0){
-                ChatHelpers.broadcastTo(cont.FromPlayer, new TextComponent(ChatColor.DARK_RED+ "You already have a TPA Request active, wait for it to expire, or use the cancel button/command"), source.getServer());
+                ChatHelpers.broadcastTo(cont.FromPlayer, ChatHelpers.macro(Messages.NO_MORE_THAN_ONE_TPA), source.getServer());
                 return 0;
             }else {
                 if(cont2.FromPlayer == cont.FromPlayer){
-                    ChatHelpers.broadcastTo(cont.FromPlayer, new TextComponent(ChatColor.DARK_RED+ "You already have a TPA Request active, wait for it to expire, or use the cancel button/command"), source.getServer());
+                    ChatHelpers.broadcastTo(cont.FromPlayer, ChatHelpers.macro(Messages.NO_MORE_THAN_ONE_TPA), source.getServer());
                     return 0;
                 }
             }
@@ -61,7 +63,7 @@ public class TPACommand {
 
 
         ClickEvent ce = Clickable.command("/tpcancel "+cont.TeleportID.toString());
-        HoverEvent he = HoverTip.get(ChatColor.DARK_GREEN+"Cancel this teleport request (Not yet implemented)");
+        HoverEvent he = HoverTip.get(ChatColor.DARK_GREEN+"Cancel this teleport request");
 
         Style s = Style.EMPTY.withFont(Style.DEFAULT_FONT).withHoverEvent(he).withClickEvent(ce);
 
@@ -77,15 +79,18 @@ public class TPACommand {
 
         Style s2 = Style.EMPTY.withFont(Style.DEFAULT_FONT).withClickEvent(ce2).withHoverEvent(he2);
 
+        
+
         Profile p;
         try {
             p = Profile.get_profile_of(cont.FromPlayer.toString());
         } catch (UserProfileNotYetExistsException e) {
             return 1;
         }
-        ChatHelpers.broadcastTo(cont.ToPlayer, new TextComponent(p.name_color+p.nickname + ChatColor.BOLD + ChatColor.DARK_PURPLE+" is requesting to teleport to you\n \n").
-            append(new TextComponent(ChatColor.DARK_GRAY+"["+ChatColor.DARK_GREEN+"ACCEPT" + ChatColor.DARK_GRAY+"] ").setStyle(s)).
-            append(new TextComponent(ChatColor.DARK_GRAY + "["+ChatColor.DARK_RED+"DENY"+ChatColor.DARK_GRAY+"]").setStyle(s2)), serverPlayer.server);
+        serverPlayer.playSound(Messages.TPA_SOUND, 1, serverPlayer.getRandom().nextFloat());
+        ChatHelpers.broadcastTo(cont.ToPlayer, ChatHelpers.macro(Messages.TPA, p.name_color+p.nickname).
+            append(ChatHelpers.macro(Messages.TELEPORT_ACCEPT+" ").setStyle(s)).
+            append(ChatHelpers.macro(Messages.TELEPORT_DENY).setStyle(s2)), serverPlayer.server);
         
         TeleportRegistry.get().add(cont);
         return 0;

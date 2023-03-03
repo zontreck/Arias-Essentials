@@ -1,5 +1,6 @@
 package dev.zontreck.essentials.commands.teleport;
 
+import java.util.Iterator;
 import java.util.UUID;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -32,19 +33,22 @@ public class TPAcceptCommand {
         UUID teleporter = UUID.fromString(TPID);
         
         ServerPlayer play = (ServerPlayer)source.getEntity();
-        for(TeleportContainer cont : TeleportRegistry.get()){
+        Iterator<TeleportContainer> it = TeleportRegistry.get().iterator();
+        while(it.hasNext())
+        {
+            TeleportContainer cont = it.next();
             if(cont.TeleportID.equals(teleporter)){
                 // Accepting!
 
                 ServerPlayer from = source.getServer().getPlayerList().getPlayer(cont.FromPlayer);
                 ServerPlayer to = source.getServer().getPlayerList().getPlayer(cont.ToPlayer);
 
-                Component comp = new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.DARK_PURPLE+"Teleport request was accepted. Opening wormhole!");
+                Component comp = ChatHelpers.macro(Messages.TELEPORT_REQUEST_ACCEPTED);
 
                 ChatHelpers.broadcastTo(cont.FromPlayer, comp, source.getServer());
                 ChatHelpers.broadcastTo(cont.ToPlayer, comp, source.getServer());
 
-                TeleportRegistry.get().remove(cont);
+                it.remove();
 
 
                 cont.PlayerInst = from;
@@ -58,7 +62,7 @@ public class TPAcceptCommand {
             }
         }
 
-        Component comp = new TextComponent(ChatColor.DARK_RED+"The teleport was not found, perhaps the request expired or was already cancelled/denied");
+        Component comp = ChatHelpers.macro(Messages.TELEPORT_REQUEST_NOT_FOUND);
 
         ChatHelpers.broadcastTo(play.getUUID(), comp, source.getServer());
 
