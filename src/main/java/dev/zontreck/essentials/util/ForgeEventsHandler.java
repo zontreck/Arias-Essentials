@@ -50,7 +50,7 @@ public class ForgeEventsHandler {
     {
         final TeleportContainer contain = ev.container.container;
         
-        ChatHelpers.broadcastTo(contain.PlayerInst.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.DARK_PURPLE+" A suitable location has been found. Wormhole opening now!"), contain.PlayerInst.server);
+        ChatHelpers.broadcastTo(contain.PlayerInst.getUUID(), ChatHelpers.macro(Messages.WARP_RTP_FOUND), contain.PlayerInst.server);
         TeleportActioner.ApplyTeleportEffect(contain.PlayerInst);
         TeleportActioner.PerformTeleport(contain);
     }

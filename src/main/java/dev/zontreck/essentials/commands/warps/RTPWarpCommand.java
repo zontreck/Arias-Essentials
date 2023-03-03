@@ -50,13 +50,13 @@ public class RTPWarpCommand {
         WarpCreatedEvent event = new WarpCreatedEvent(warp);
         if(MinecraftForge.EVENT_BUS.post(event))
         {
-            ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.WARP_CREATE_ERROR)), p.server);
+            ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARP_CREATE_ERROR), p.server);
             return 0;
         }
         WarpsProvider.WARPS_INSTANCE.add(warp);
 
 
-        ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.WARP_RTP_CREATED)), p.server);
+        ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARP_RTP_CREATED), p.server);
 
         return 0;
     }

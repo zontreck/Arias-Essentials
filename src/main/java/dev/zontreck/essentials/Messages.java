@@ -27,6 +27,13 @@ public class Messages {
     public static final String WARP_CREATED;
     public static final String WARP_CREATE_ERROR;
     public static final String WARP_RTP_CREATED;
+    public static final String WARP_RTP_FOUND;
+    public static final String WARP_DELETE_SUCCESS;
+    public static final String WARP_DELETE_FAIL;
+
+    public static final String TELEPORT_REQUEST_NOT_FOUND;
+    public static final String TELEPORT_REQUEST_DENIED;
+    public static final String TELEPORT_REQUEST_CANCELLED;
 
     static{
         ESSENTIALS_PREFIX = "!Gray![!Dark_Green!AE!Gray!] ";
@@ -34,7 +41,7 @@ public class Messages {
         WARP_ATTEMPTING = ESSENTIALS_PREFIX + "!Dark_Green!Attempting to find a safe landing location. This may take a minute";
         WARPING = ESSENTIALS_PREFIX+"!Dark_green!Warping";
 
-
+        WARP_RTP_FOUND = ESSENTIALS_PREFIX + "!Dark_Green!A suitable location has been found";
         RTP_SEARCHING = ESSENTIALS_PREFIX + "!Dark_Purple!Searching... Attempt !Gold![0]!White!/!Dark_Red![1]";
         RTP_CANCELLED = ESSENTIALS_PREFIX + "!Dark_Red!Last position was good, but another mod asked us not to send you there. This could happen with a claims mod.";
         RTP_ABORTED = ESSENTIALS_PREFIX + "!Dark_Red!Could not find a suitable location in [0] attempts. Giving up. [1]";
@@ -58,5 +65,14 @@ public class Messages {
         WARP_CREATE_ERROR = ESSENTIALS_PREFIX + "!Dark_Red!Warp could not be created due to [0]";
 
         WARP_RTP_CREATED = WARP_CREATED+" with RTP properties";
+
+
+        WARP_DELETE_SUCCESS = ESSENTIALS_PREFIX + "!Dark_Green!Warp successfully deleted";
+        WARP_DELETE_FAIL = ESSENTIALS_PREFIX + "!Dark_Red!Warp could not be deleted";
+
+
+        TELEPORT_REQUEST_NOT_FOUND = ESSENTIALS_PREFIX + "!Dark_Red!The teleport request could not be found. Perhaps it already expired or was cancelled/denied already.";
+        TELEPORT_REQUEST_DENIED = ESSENTIALS_PREFIX + "!Dark_Red!Teleport request was denied";
+        TELEPORT_REQUEST_CANCELLED = ESSENTIALS_PREFIX + "!Dark_Red!Teleport request was cancelled";
     }
 }

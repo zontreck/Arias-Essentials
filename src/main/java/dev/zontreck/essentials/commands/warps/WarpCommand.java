@@ -64,10 +64,10 @@ public class WarpCommand {
 
             if(type == 1)
             {
-                ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.WARP_ATTEMPTING)), p.server);
+                ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARP_ATTEMPTING), p.server);
             }else{
                 
-                ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.WARPING)), p.server);
+                ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARPING), p.server);
             }
 
             Thread tx = new Thread(new Runnable(){
@@ -92,7 +92,7 @@ public class WarpCommand {
             tx.start();
         }catch(NoSuchWarpException e)
         {
-            ChatHelpers.broadcastTo(source.getEntity().getUUID(), new TextComponent(ChatHelpers.macroize(Messages.WARP_NOT_EXIST)), source.getServer());
+            ChatHelpers.broadcastTo(source.getEntity().getUUID(), ChatHelpers.macro(Messages.WARP_NOT_EXIST), source.getServer());
         } catch (CommandSyntaxException e) {
             e.printStackTrace();
         }
@@ -101,7 +101,7 @@ public class WarpCommand {
 
     private static int nowarp(CommandSourceStack source) {
         ServerPlayer p = (ServerPlayer)source.getEntity();
-        ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.WARP_NAME_REQUIRED)).withStyle(Style.EMPTY.withFont(Style.DEFAULT_FONT).withClickEvent(Clickable.command("/warps"))), source.getServer());
+        ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARP_NAME_REQUIRED).withStyle(Style.EMPTY.withFont(Style.DEFAULT_FONT).withClickEvent(Clickable.command("/warps"))), source.getServer());
         return 0;
     }
 

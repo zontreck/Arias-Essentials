@@ -34,7 +34,7 @@ public class DelWarpCommand {
         try {
             warp = WarpsProvider.WARPS_INSTANCE.getNamedWarp(string);
         } catch (NoSuchWarpException e) {
-            ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX+ChatColor.doColors(" !Dark_Red!That warp does not exist")), p.server);
+            ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARP_NOT_EXIST), p.server);
             return 0;
         }
         if(p.getUUID().equals(warp.owner) || p.hasPermissions(5))
@@ -42,15 +42,15 @@ public class DelWarpCommand {
             try {
                 WarpsProvider.WARPS_INSTANCE.delete(WarpsProvider.WARPS_INSTANCE.getNamedWarp(string));
             } catch (NoSuchWarpException e) {
-                ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX+ChatColor.doColors(" !Dark_Red!That warp does not exist")), p.server);
+                ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARP_NOT_EXIST), p.server);
                 return 0;
             }
         
-            ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX+ChatColor.doColors(" !Dark_Green!Warp deleted successfully")), p.server);
+            ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARP_DELETE_SUCCESS), p.server);
     
         }else {
             
-            ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX+ChatColor.doColors(" !Dark_Red!Warp could not be deleted, because you do not own the warp.")), p.server);
+            ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARP_DELETE_FAIL), p.server);
         }
     
         return 0;

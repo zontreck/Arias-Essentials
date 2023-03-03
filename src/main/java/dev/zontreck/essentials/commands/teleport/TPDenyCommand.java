@@ -1,5 +1,6 @@
 package dev.zontreck.essentials.commands.teleport;
 
+import java.util.Iterator;
 import java.util.UUID;
 
 import com.mojang.brigadier.CommandDispatcher;
@@ -31,21 +32,23 @@ public class TPDenyCommand {
     private static int doCancel(CommandSourceStack source, String TPID) {
         UUID teleporter = UUID.fromString(TPID);
         ServerPlayer play = (ServerPlayer)source.getEntity();
-        
-        for(TeleportContainer cont : TeleportRegistry.get()){
+        Iterator<TeleportContainer> it = TeleportRegistry.get().iterator();
+        while(it.hasNext())
+        {
+            TeleportContainer cont = it.next();
             if(cont.TeleportID.equals(teleporter)){
                 // Canceling!
-                Component comp = new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.DARK_PURPLE+"Teleport request was denied");
+                Component comp = ChatHelpers.macro(Messages.TELEPORT_REQUEST_DENIED);
 
                 ChatHelpers.broadcastTo(cont.FromPlayer, comp, source.getServer());
                 ChatHelpers.broadcastTo(cont.ToPlayer, comp, source.getServer());
 
-                TeleportRegistry.get().remove(cont);
+                it.remove();
                 return 0;
             }
         }
 
-        Component comp = new TextComponent(ChatColor.DARK_RED+"The teleport was not found, perhaps the request expired or was already cancelled/denied");
+        Component comp = ChatHelpers.macro(Messages.TELEPORT_REQUEST_NOT_FOUND);
 
         ChatHelpers.broadcastTo(play.getUUID(), comp, source.getServer());
 

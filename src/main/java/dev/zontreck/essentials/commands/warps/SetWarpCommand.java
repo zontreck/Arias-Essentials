@@ -50,12 +50,12 @@ public class SetWarpCommand {
         Warp w = new Warp(p.getUUID(), string, false, true, dest);
         WarpCreatedEvent event = new WarpCreatedEvent(w);
         if(MinecraftForge.EVENT_BUS.post(event)){
-            ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.WARP_CREATE_ERROR, event.denyReason)), p.server);
+            ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARP_CREATE_ERROR, event.denyReason), p.server);
             return 0;
         }
         WarpsProvider.WARPS_INSTANCE.add(w);
 
-        ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.WARP_CREATED)), p.server);
+        ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARP_CREATED), p.server);
 
         return 0;
     }

@@ -47,7 +47,7 @@ public class WarpsCommand {
     
         Map<String, Warp> warps = WarpsProvider.WARPS_INSTANCE.get();
         
-        ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(ChatHelpers.macroize(Messages.COUNT, String.valueOf(warps.size()), "warp")), source.getServer());
+        ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.COUNT, String.valueOf(warps.size()), "warp"), source.getServer());
 
         Iterator<Entry<String, Warp>> it = warps.entrySet().iterator();
         while(it.hasNext())
