@@ -149,7 +149,7 @@ jar {
                 "Specification-Vendor"    : "Zontreck",
                 "Specification-Version"   : "${my_version}", // We are version 1 of ourselves
                 "Implementation-Title"    : project.name,
-                "Implementation-Version"  : version,
+                "Implementation-Version"  : "${my_version}",
                 "Implementation-Vendor"   : "Zontreck",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
@@ -170,9 +170,9 @@ task devJar(type: Jar) {
         attributes([
             "Specification-Title": project.name,
             "Specification-Vendor": "zontreck",
-            "Specification-Version": "1",
+            "Specification-Version": "${my_version}",
             "Implementation-Title": project.name,
-            "Implementation-Version": version,
+            "Implementation-Version": "${my_version}",
             "Implementation-Vendor": "zontreck",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
