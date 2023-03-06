@@ -9,6 +9,7 @@ import dev.zontreck.libzontreck.chat.HoverTip;
 import dev.zontreck.libzontreck.profiles.Profile;
 import dev.zontreck.libzontreck.profiles.UserProfileNotYetExistsException;
 import dev.zontreck.libzontreck.util.ChatHelpers;
+import dev.zontreck.libzontreck.util.DelayedExecutorService;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -47,7 +48,7 @@ public class TPACommand {
             return 1;
         }
         
-        TeleportContainer cont = new TeleportContainer(play.getUUID(), serverPlayer.getUUID());
+        final TeleportContainer cont = new TeleportContainer(play.getUUID(), serverPlayer.getUUID());
 
         for(TeleportContainer cont2 : TeleportRegistry.get()){
             if(cont2.compareTo(cont)==0){
@@ -93,6 +94,17 @@ public class TPACommand {
             append(ChatHelpers.macro(Messages.TELEPORT_DENY).setStyle(s2)), serverPlayer.server);
         
         TeleportRegistry.get().add(cont);
+        DelayedExecutorService.getInstance().schedule(new Runnable(){
+            @Override
+            public void run()
+            {
+                if(!(TeleportRegistry.get().contains(cont)))return;
+                TeleportRegistry.get().remove(cont);
+
+                ChatHelpers.broadcastTo(cont.ToPlayer, ChatHelpers.macro("!Dark_Red!Teleport request has expired"), cont.Dimension.getServer());
+                ChatHelpers.broadcastTo(cont.FromPlayer, ChatHelpers.macro("!Dark_Red!Teleport request has expired"), cont.Dimension.getServer());
+            }
+        }, 30);
         return 0;
     }
 
