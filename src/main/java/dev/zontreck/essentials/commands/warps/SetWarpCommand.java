@@ -19,8 +19,6 @@ import dev.zontreck.libzontreck.vectors.Vector3;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;

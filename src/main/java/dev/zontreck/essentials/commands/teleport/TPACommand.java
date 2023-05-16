@@ -2,6 +2,8 @@ package dev.zontreck.essentials.commands.teleport;
 
 import com.mojang.brigadier.CommandDispatcher;
 
+import dev.zontreck.ariaslib.terminal.Task;
+import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.chat.Clickable;
@@ -9,7 +11,6 @@ import dev.zontreck.libzontreck.chat.HoverTip;
 import dev.zontreck.libzontreck.profiles.Profile;
 import dev.zontreck.libzontreck.profiles.UserProfileNotYetExistsException;
 import dev.zontreck.libzontreck.util.ChatHelpers;
-import dev.zontreck.libzontreck.util.DelayedExecutorService;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -17,7 +18,6 @@ import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkHooks;
 
@@ -69,7 +69,7 @@ public class TPACommand {
         Style s = Style.EMPTY.withFont(Style.DEFAULT_FONT).withHoverEvent(he).withClickEvent(ce);
 
         // Send the alerts
-        ChatHelpers.broadcastTo(cont.FromPlayer, new TextComponent(ChatColor.BOLD + ChatColor.DARK_GREEN +"TPA Request Sent! ").append(new TextComponent(ChatColor.BOLD+ChatColor.DARK_GRAY+"["+ChatColor.DARK_RED+"X"+ChatColor.DARK_GRAY+"]").setStyle(s)), serverPlayer.server);
+        ChatHelpers.broadcastTo(cont.FromPlayer, ChatHelpers.macro(ChatColor.BOLD + ChatColor.DARK_GREEN +"TPA Request Sent! ").append(ChatHelpers.macro(ChatColor.BOLD+ChatColor.DARK_GRAY+"["+ChatColor.DARK_RED+"X"+ChatColor.DARK_GRAY+"]").setStyle(s)), serverPlayer.server);
 
 
         ce = Clickable.command("/tpaccept "+cont.TeleportID.toString());
@@ -94,7 +94,7 @@ public class TPACommand {
             append(ChatHelpers.macro(Messages.TELEPORT_DENY).setStyle(s2)), serverPlayer.server);
         
         TeleportRegistry.get().add(cont);
-        DelayedExecutorService.getInstance().schedule(new Runnable(){
+        DelayedExecutorService.getInstance().schedule(new Task("tpa_expire",true){
             @Override
             public void run()
             {
@@ -109,7 +109,7 @@ public class TPACommand {
     }
 
     private static int usage(CommandSourceStack source) {
-        source.sendSuccess(new TextComponent("/tpa USAGE\n\n      "+ChatColor.BOLD + ChatColor.DARK_GRAY+"/tpa "+ChatColor.DARK_RED+"target_player\n"), false);
+        source.sendSuccess(ChatHelpers.macro("/tpa USAGE\n\n      "+ChatColor.BOLD + ChatColor.DARK_GRAY+"/tpa "+ChatColor.DARK_RED+"target_player\n"), false);
         return 0;
     }
 }

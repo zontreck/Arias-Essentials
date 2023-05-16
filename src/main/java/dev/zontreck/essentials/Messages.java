@@ -59,6 +59,13 @@ public class Messages {
     public static final String HOME_DELETE_SUCCESS;
     public static final String HOME_DELETE_FAIL;
 
+    public static final String HOME_CREATE_SUCCESS;
+    public static final String HOME_CREATE_FAIL;
+
+    public static final String PAYMENT_ATTEMPTING;
+    public static final String PAYMENT_FAILED;
+    public static final String PAYMENT_SUCCESS;
+
     static{
         ESSENTIALS_PREFIX = "!Gray![!Dark_Green!AE!Gray!] ";
 
@@ -71,8 +78,8 @@ public class Messages {
         RTP_ABORTED = ESSENTIALS_PREFIX + "!Dark_Red!Could not find a suitable location in [0] attempts. Giving up. [1]";
         CONDITIONAL_RTP_ABORT = "!Dark_Red!You may try again in !Gold![0] !Dark_Red!minutes and !Gold![1] !Dark_Red!second(s)";
 
-        HOVER_WARP_INFO = "!Gold![Hover to see the Warp's info]";
-        WARP_HOVER_FORMAT = "[0]\n[1]"; // 0 = owner, 1 = public infos
+        HOVER_WARP_INFO = " !Gold![Hover to see the Warp's info]";
+        WARP_HOVER_FORMAT = "[0] \n[1]"; // 0 = owner, 1 = public infos
         WARP_RTP = "!Dark_Purple!This warp is a RTP. It will position you randomly in the dimension [0]";
         WARP_STANDARD = "!Green!This is a standard warp.";
         WARP_OWNER = "!Dark_Purple!The warp's owner is [0][1]";
@@ -112,7 +119,7 @@ public class Messages {
 
         TPA = "[0] !Bold!!Dark_Purple! is requesting to teleport to you!\n\n";
 
-        HOME_FORMAT = "!Dark_Gray![!Gold!Home!Dark_Gray!]!Bold!!Dark_Purple![0]";
+        HOME_FORMAT = "!Dark_Gray![!Gold!Home!Dark_Gray!] !Bold!!Dark_Purple![0]";
         HOME_HOVER_TEXT = "!Bold!!Dark_Green!Click here to go to this home";
         HOME_COUNT = ESSENTIALS_PREFIX + "!Bold!!Dark_Purple!You have [0] total homes.";
 
@@ -121,5 +128,12 @@ public class Messages {
 
         HOME_DELETE_FAIL = ESSENTIALS_PREFIX + "!Dark_Red!Home could not be deleted due to an unknown error";
         HOME_DELETE_SUCCESS = ESSENTIALS_PREFIX + "!Dark_Green!Home was successfully deleted";
+
+        HOME_CREATE_SUCCESS = ESSENTIALS_PREFIX + "!Dark_Green!Home was created or updated successfully";
+        HOME_CREATE_FAIL = ESSENTIALS_PREFIX + "!Dark_Red!Home could not be created or updated";
+
+        PAYMENT_ATTEMPTING = ESSENTIALS_PREFIX + "!Dark_Green!Please wait... Attempting to pay [0] to [1]";
+        PAYMENT_FAILED = ESSENTIALS_PREFIX + "!Dark_Red!Payment failed";
+        PAYMENT_SUCCESS = ESSENTIALS_PREFIX + "!Dark_Green!Payment successful";
     }
 }

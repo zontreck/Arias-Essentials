@@ -12,7 +12,6 @@ import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 
 public class TPDenyCommand {

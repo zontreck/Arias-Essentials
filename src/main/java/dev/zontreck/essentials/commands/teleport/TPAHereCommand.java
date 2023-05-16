@@ -2,6 +2,8 @@ package dev.zontreck.essentials.commands.teleport;
 
 import com.mojang.brigadier.CommandDispatcher;
 
+import dev.zontreck.ariaslib.terminal.Task;
+import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.chat.Clickable;
@@ -9,15 +11,10 @@ import dev.zontreck.libzontreck.chat.HoverTip;
 import dev.zontreck.libzontreck.profiles.Profile;
 import dev.zontreck.libzontreck.profiles.UserProfileNotYetExistsException;
 import dev.zontreck.libzontreck.util.ChatHelpers;
-import dev.zontreck.libzontreck.util.DelayedExecutorService;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.HoverEvent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.*;
 import net.minecraft.server.level.ServerPlayer;
 
 public class TPAHereCommand {
@@ -63,11 +60,15 @@ public class TPAHereCommand {
         ClickEvent ce = Clickable.command("/tpcancel "+cont.TeleportID.toString());
         HoverEvent he = HoverTip.get(ChatColor.DARK_GREEN+"Cancel this teleport request");
 
-        Style s = Style.EMPTY.withFont(Style.DEFAULT_FONT).withHoverEvent(he).withClickEvent(ce);
-
         // Send the alerts
-        ChatHelpers.broadcastTo(cont.ToPlayer, new TextComponent(ChatColor.BOLD + ChatColor.DARK_GREEN +"TPA Request Sent! ").append(new TextComponent(ChatColor.BOLD+ChatColor.DARK_GRAY+"["+ChatColor.DARK_RED+"X"+ChatColor.DARK_GRAY+"]").setStyle(s)), serverPlayer.server);
+        MutableComponent component = ChatHelpers.macro("!Bold!!Dark_Green!TPA Request Sent! ");
+        MutableComponent cancelation = ChatHelpers.macro("!Bold!!Dark_Gray![!Dark_Red!X!Dark_Gray!]");
+        cancelation.setStyle(cancelation.getStyle().withClickEvent(ce).withHoverEvent(he));
 
+        component.append(cancelation);
+        ChatHelpers.broadcastTo(cont.ToPlayer, component, serverPlayer.server);
+
+        Style s;
 
         ce = Clickable.command("/tpaccept "+cont.TeleportID.toString());
         he = HoverTip.get(ChatColor.DARK_GREEN + "Accept tp request");
@@ -90,7 +91,7 @@ public class TPAHereCommand {
         
         TeleportRegistry.get().add(cont);
         
-        DelayedExecutorService.getInstance().schedule(new Runnable(){
+        DelayedExecutorService.getInstance().schedule(new Task("tpahere_expire",true){
             @Override
             public void run()
             {
@@ -105,7 +106,7 @@ public class TPAHereCommand {
     }
 
     private static int usage(CommandSourceStack source) {
-        source.sendSuccess(new TextComponent("/tpahere USAGE\n\n      "+ChatColor.BOLD + ChatColor.DARK_GRAY+"/tpahere "+ChatColor.DARK_RED+"target_player\n"), false);
+        source.sendSuccess(ChatHelpers.macro("/tpahere USAGE\n\n      !Bold!!Dark_Gray!/tpahere !Dark_Red!target_player\n"), false);
         return 0;
     }
 }

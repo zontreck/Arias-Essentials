@@ -11,7 +11,6 @@ import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 
 public class DelWarpCommand {
@@ -37,7 +36,7 @@ public class DelWarpCommand {
             ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARP_NOT_EXIST), p.server);
             return 0;
         }
-        if(p.getUUID().equals(warp.owner) || p.hasPermissions(5))
+        if(p.getUUID().equals(warp.owner) || p.hasPermissions(4))
         {
             try {
                 WarpsProvider.WARPS_INSTANCE.delete(WarpsProvider.WARPS_INSTANCE.getNamedWarp(string));

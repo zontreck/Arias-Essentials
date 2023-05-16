@@ -21,12 +21,9 @@ import dev.zontreck.libzontreck.profiles.UserProfileNotYetExistsException;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.HoverEvent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.*;
 import net.minecraft.server.level.ServerPlayer;
+import org.spongepowered.asm.mixin.Mutable;
 
 public class WarpsCommand {
     
@@ -69,11 +66,12 @@ public class WarpsCommand {
             String appendType = (warpType == 0) ? Messages.WARP_STANDARD : Messages.WARP_RTP;
             
 
-            HoverEvent hover = HoverTip.get(ChatHelpers.macroize(appendType));
+            HoverEvent hover = HoverTip.get(ChatHelpers.macroize(appendType, warp.destination.Dimension));
             ClickEvent click = Clickable.command("/warp "+warpName);
-            Style S = Style.EMPTY.withFont(Style.DEFAULT_FONT).withHoverEvent(hover).withClickEvent(click);
 
-            Component warpMsg = new TextComponent(ChatColor.GREEN + warpName + ChatColor.resetChat()).withStyle(S);
+            MutableComponent warpMsg = ChatHelpers.macro(ChatColor.GREEN + warpName + ChatColor.resetChat());
+
+            warpMsg = ChatHelpers.applyHoverEvent(warpMsg, hover);
             
             // Now, display the warp name, along with the warp's owner information
             HoverEvent h2 = HoverTip.get(
@@ -85,11 +83,13 @@ public class WarpsCommand {
                 ) 
                 
             );
-            S = Style.EMPTY.withFont(Style.DEFAULT_FONT).withHoverEvent(h2);
-            Component ownerInfo = new TextComponent(ChatHelpers.macroize(Messages.HOVER_WARP_INFO)).withStyle(S);
+
+            Component ownerInfo = ChatHelpers.applyHoverEvent(ChatHelpers.macro(Messages.HOVER_WARP_INFO), h2);
+
 
             // Combine the two
-            warpMsg = new TextComponent("").append(warpMsg).append(ownerInfo);
+            warpMsg = warpMsg.copy().append(ownerInfo);
+            warpMsg = ChatHelpers.applyClickEvent(warpMsg, click);
             ChatHelpers.broadcastTo(p.getUUID(), warpMsg, source.getServer());
         }
         

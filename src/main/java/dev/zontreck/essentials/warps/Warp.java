@@ -89,7 +89,7 @@ public class Warp {
      */
     protected void giveAccess(ServerPlayer player)
     {
-        giveAccess(player.getName().getContents(), player.getUUID());
+        giveAccess(player.getName().getString(), player.getUUID());
     }
 
     /**

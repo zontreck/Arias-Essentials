@@ -1,6 +1,6 @@
 package dev.zontreck.essentials.util;
 
-import dev.zontreck.libzontreck.util.DelayedExecutorService;
+import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec2;

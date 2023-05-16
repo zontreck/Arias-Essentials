@@ -1,12 +1,15 @@
 package dev.zontreck.essentials.commands.teleport;
 
-import dev.zontreck.libzontreck.util.DelayedExecutorService;
 
-public class TeleportRunnable implements Runnable
+import dev.zontreck.ariaslib.terminal.Task;
+import dev.zontreck.ariaslib.util.DelayedExecutorService;
+
+public class TeleportRunnable extends Task
 {
     
     public final TeleportContainer Action;
     public TeleportRunnable(TeleportContainer cont){
+        super("TP",true);
         Action = cont;
     }
 
@@ -14,7 +17,7 @@ public class TeleportRunnable implements Runnable
     public void run() {
         Action.PlayerInst.teleportTo(Action.Dimension, Action.Position.x, Action.Position.y, Action.Position.z, Action.Rotation.y, Action.Rotation.x);
 
-        DelayedExecutorService.getInstance().schedule(new Runnable(){
+        DelayedExecutorService.getInstance().schedule(new Task("tp_action",true){
             public TeleportContainer container=Action;
             @Override
             public void run()

@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import dev.zontreck.ariaslib.util.DelayedExecutorService;
+import dev.zontreck.essentials.configs.AEServerConfig;
+import net.minecraftforge.fml.config.ModConfig;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -24,6 +27,7 @@ import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -39,6 +43,11 @@ public class AriasEssentials {
     {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::setup);
+        DelayedExecutorService.setup();
+
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, AEServerConfig.SPEC, "arias-essentials-server.toml");
+        
 
         EssentialsDatastore.initialize();
         MinecraftForge.EVENT_BUS.register(this);

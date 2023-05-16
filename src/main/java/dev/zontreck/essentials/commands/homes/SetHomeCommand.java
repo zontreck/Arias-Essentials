@@ -22,7 +22,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.network.chat.TextComponent;
 
 public class SetHomeCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher)
@@ -55,10 +54,10 @@ public class SetHomeCommand {
             AriasEssentials.player_homes.get(p.getUUID()).add(newhome);
             
                 
-            ChatHelpers.broadcastTo(p.getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors(" !dark_green!Home was created or updated successfully!")), ctx.getServer());
+            ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.HOME_CREATE_SUCCESS), ctx.getServer());
         } catch (CommandSyntaxException e) {
             
-            ChatHelpers.broadcastTo(ctx.getEntity().getUUID(), new TextComponent(Messages.ESSENTIALS_PREFIX + ChatColor.doColors(" !dark_red!Home could not be created or updated!")), ctx.getServer());
+            ChatHelpers.broadcastTo(ctx.getEntity().getUUID(), ChatHelpers.macro(Messages.HOME_CREATE_FAIL), ctx.getServer());
             e.printStackTrace();
         }
         

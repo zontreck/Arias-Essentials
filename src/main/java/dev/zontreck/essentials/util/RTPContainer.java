@@ -15,6 +15,7 @@ import dev.zontreck.libzontreck.vectors.Vector3;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.BlockGetter;
@@ -114,7 +115,8 @@ public class RTPContainer {
 
     private void spiralPositions(Vector3 position)
     {
-        for(BlockPos pos : BlockPos.spiralAround(new BlockPos(position.x, container.Dimension.getSeaLevel(), position.z), 16, Direction.WEST, Direction.NORTH)){
+        Vec3i posi = position.asMinecraftVec3i();
+        for(BlockPos pos : BlockPos.spiralAround(new BlockPos(posi.getX(), container.Dimension.getSeaLevel(), posi.getZ()), 16, Direction.WEST, Direction.NORTH)){
             if(isSafe(pos)){
                 // Set the new position
                 container.world_pos.Position = new Vector3(pos);

@@ -18,7 +18,6 @@ import dev.zontreck.libzontreck.events.ProfileLoadedEvent;
 import dev.zontreck.libzontreck.events.ProfileUnloadedEvent;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import dev.zontreck.libzontreck.vectors.WorldPosition;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 

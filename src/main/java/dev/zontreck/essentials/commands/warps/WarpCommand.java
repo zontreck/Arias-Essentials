@@ -28,8 +28,10 @@ import dev.zontreck.libzontreck.vectors.Vector3;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec2;
@@ -101,7 +103,9 @@ public class WarpCommand {
 
     private static int nowarp(CommandSourceStack source) {
         ServerPlayer p = (ServerPlayer)source.getEntity();
-        ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARP_NAME_REQUIRED).withStyle(Style.EMPTY.withFont(Style.DEFAULT_FONT).withClickEvent(Clickable.command("/warps"))), source.getServer());
+
+        ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.applyClickEvent(ChatHelpers.macro(Messages.WARP_NAME_REQUIRED), Clickable.command("/warps")), p.server);
+
         return 0;
     }
 

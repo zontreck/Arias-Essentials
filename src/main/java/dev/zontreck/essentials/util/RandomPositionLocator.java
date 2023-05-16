@@ -1,13 +1,13 @@
 package dev.zontreck.essentials.util;
 
+import dev.zontreck.ariaslib.terminal.Task;
+import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.AriasEssentials;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.events.RTPEvent;
 import dev.zontreck.essentials.events.RTPNotCancelledEvent;
 import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.util.ChatHelpers;
-import dev.zontreck.libzontreck.util.DelayedExecutorService;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -19,12 +19,13 @@ import net.minecraftforge.common.MinecraftForge;
  * 
  * To utilize, initialize a RTPContainer from the RandomPositionFactory and execute from there.
  */
-public class RandomPositionLocator implements Runnable
+public class RandomPositionLocator extends Task
 {
     private final RTPContainer contain;
 
     public RandomPositionLocator(RTPContainer rtp)
     {
+        super("RPL",true);
         contain=rtp;
     }
 
