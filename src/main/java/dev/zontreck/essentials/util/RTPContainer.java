@@ -86,13 +86,13 @@ public class RTPContainer {
         Random rng = new Random(Instant.now().getEpochSecond());
         Vector3 pos = new Vector3(rng.nextDouble(0xFFFF), 0, rng.nextDouble(0xFFFF));
         BlockPos bpos = pos.asBlockPos();
-        container.Dimension.getChunk(bpos.getX() >> 4, bpos.getZ() >> 4, ChunkStatus.SURFACE);
+        container.Dimension.getChunk(bpos.getX() >> 4, bpos.getZ() >> 4, ChunkStatus.SPAWN);
         pos = new Vector3(
                 container.Dimension.getHeightmapPos(heightMapType, pos.asBlockPos()));
         while (!container.Dimension.getWorldBorder().isWithinBounds(pos.asBlockPos())) {
             pos = new Vector3(rng.nextDouble(0xffff), 0, rng.nextDouble(0xffff));
             bpos = pos.asBlockPos();
-            container.Dimension.getChunk(bpos.getX() >> 4, bpos.getZ() >> 4, ChunkStatus.SURFACE);
+            container.Dimension.getChunk(bpos.getX() >> 4, bpos.getZ() >> 4, ChunkStatus.SPAWN);
             pos = new Vector3(
                     container.Dimension.getHeightmapPos(heightMapType, pos.asBlockPos()));
         }
