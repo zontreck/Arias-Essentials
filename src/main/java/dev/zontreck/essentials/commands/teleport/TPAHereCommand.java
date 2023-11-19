@@ -106,7 +106,7 @@ public class TPAHereCommand {
     }
 
     private static int usage(CommandSourceStack source) {
-        source.sendSuccess(ChatHelpers.macro("/tpahere USAGE\n\n      !Bold!!Dark_Gray!/tpahere !Dark_Red!target_player\n"), false);
+        source.sendSystemMessage(ChatHelpers.macro("/tpahere USAGE\n\n      !Bold!!Dark_Gray!/tpahere !Dark_Red!target_player\n"));
         return 0;
     }
 }

@@ -10,7 +10,6 @@ import net.minecraft.nbt.NbtIo;
 public class HomesProvider {
     /**
      * DO NOT USE. Internal use only.
-     * @see Profile#player_homes
      * @param player
      * @return
      */

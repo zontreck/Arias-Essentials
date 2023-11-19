@@ -44,7 +44,7 @@ public class SetWarpCommand {
         Vec3 position = p.position();
         Vec2 rot = p.getRotationVector();
 
-        TeleportDestination dest = new TeleportDestination(new Vector3(position), new Vector2(rot), p.getLevel());
+        TeleportDestination dest = new TeleportDestination(new Vector3(position), new Vector2(rot), p.serverLevel());
         Warp w = new Warp(p.getUUID(), string, false, true, dest);
         WarpCreatedEvent event = new WarpCreatedEvent(w);
         if(MinecraftForge.EVENT_BUS.post(event)){

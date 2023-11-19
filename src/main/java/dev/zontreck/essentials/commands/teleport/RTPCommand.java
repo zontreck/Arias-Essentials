@@ -51,7 +51,7 @@ public class RTPCommand {
                 Vec3 pos = pla.position();
                 
                 //boolean found_place= false;
-                RandomPositionFactory.beginRTPSearch(pla, pos, pla.getRotationVector(), pla.getLevel());
+                RandomPositionFactory.beginRTPSearch(pla, pos, pla.getRotationVector(), pla.serverLevel());
                 return;
                 
         

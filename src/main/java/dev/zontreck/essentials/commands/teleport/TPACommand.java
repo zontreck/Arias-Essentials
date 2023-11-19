@@ -109,7 +109,8 @@ public class TPACommand {
     }
 
     private static int usage(CommandSourceStack source) {
-        source.sendSuccess(ChatHelpers.macro("/tpa USAGE\n\n      "+ChatColor.BOLD + ChatColor.DARK_GRAY+"/tpa "+ChatColor.DARK_RED+"target_player\n"), false);
+
+        source.sendSystemMessage(ChatHelpers.macro("/tpa USAGE\n\n      "+ChatColor.BOLD + ChatColor.DARK_GRAY+"/tpa "+ChatColor.DARK_RED+"target_player\n"));
         return 0;
     }
 }

@@ -48,7 +48,7 @@ public class SetHomeCommand {
             Vec3 position = p.position();
             Vec2 rot = p.getRotationVector();
     
-            TeleportDestination dest = new TeleportDestination(new Vector3(position), new Vector2(rot), p.getLevel());
+            TeleportDestination dest = new TeleportDestination(new Vector3(position), new Vector2(rot), p.serverLevel());
     
             Home newhome = new Home(p, homeName, dest);
             AriasEssentials.player_homes.get(p.getUUID()).add(newhome);

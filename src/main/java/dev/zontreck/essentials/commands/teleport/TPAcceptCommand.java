@@ -53,7 +53,7 @@ public class TPAcceptCommand {
                 cont.PlayerInst = from;
                 cont.Position = to.position();
                 cont.Rotation = to.getRotationVector();
-                cont.Dimension = to.getLevel();
+                cont.Dimension = to.serverLevel();
 
                 TeleportActioner.ApplyTeleportEffect(from);
                 TeleportActioner.PerformTeleport(cont);
