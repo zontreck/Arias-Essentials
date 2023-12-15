@@ -27,7 +27,8 @@ public class TeleportActioner
                 // 10-05-2022   - Adjusted to 100 on duration due to a small issue where it would sometimes stop levitation prior to the teleport taking effect.
                 // 02/26/2023   - Adjusted to 200 on duration due to 1.18.2 causing levitation to run out too quickly before teleport
                 // Small tradeoff is the player now levitates slightly longer at the destination. This is acceptable. Compensated by increasing regen strength by 1
-                MobEffectInstance levitate = new MobEffectInstance(MobEffects.LEVITATION, 200, 1, true, true);
+                // 12/15/2023  - Adjusted to 150 on duration to attempt to fix the levitate effect being too long
+                MobEffectInstance levitate = new MobEffectInstance(MobEffects.LEVITATION, 150, 1, true, true);
 
                 // 05/15/2023 - Add feather falling as a effect that lasts longer than levitate to avoid damaging the player.
                 MobEffectInstance feathers = new MobEffectInstance(MobEffects.SLOW_FALLING, 400, 2, true, true);
