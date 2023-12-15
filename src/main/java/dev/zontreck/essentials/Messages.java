@@ -70,7 +70,7 @@ public class Messages {
         ESSENTIALS_PREFIX = "!Gray![!Dark_Green!AE!Gray!] ";
 
         WARP_ATTEMPTING = ESSENTIALS_PREFIX + "!Dark_Green!Attempting to find a safe landing location. This may take a minute";
-        WARPING = ESSENTIALS_PREFIX+"!Dark_green!Warping";
+        WARPING = ESSENTIALS_PREFIX+"!Dark_Green!Warping";
 
         WARP_RTP_FOUND = ESSENTIALS_PREFIX + "!Dark_Green!A suitable location has been found";
         RTP_SEARCHING = ESSENTIALS_PREFIX + "!Dark_Purple!Searching... Attempt !Gold![0]!White!/!Dark_Red![1]";
