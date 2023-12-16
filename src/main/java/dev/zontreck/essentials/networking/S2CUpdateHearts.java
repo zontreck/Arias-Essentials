@@ -11,7 +11,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 import java.util.function.Supplier;
 
-public class S2CUpdateHearts implements IPacket
+public class S2CUpdateHearts
 {
     public boolean current;
 
@@ -27,22 +27,10 @@ public class S2CUpdateHearts implements IPacket
 
     public S2CUpdateHearts(){}
 
-    @Override
-    public void deserialize(CompoundTag compoundTag) {
-
-    }
-
-    @Override
-    public void serialize(CompoundTag compoundTag) {
-
-    }
-
-    @Override
     public void toBytes(FriendlyByteBuf friendlyByteBuf) {
         friendlyByteBuf.writeBoolean(current);
     }
 
-    @Override
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context ctx=supplier.get();
 
@@ -51,16 +39,5 @@ public class S2CUpdateHearts implements IPacket
         });
 
         return true;
-    }
-
-    @Override
-    public NetworkDirection getDirection() {
-        return NetworkDirection.PLAY_TO_CLIENT;
-    }
-
-    @Override
-    public void register(SimpleChannel simpleChannel) {
-        ServerUtilities.registerPacket(simpleChannel, S2CUpdateHearts.class, this, S2CUpdateHearts::new);
-
     }
 }
