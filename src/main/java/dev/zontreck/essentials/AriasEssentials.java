@@ -55,7 +55,6 @@ public class AriasEssentials {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, AEServerConfig.SPEC, "arias-essentials-server.toml");
 
 
-        ModMessages.register();
 
 
         
@@ -68,6 +67,7 @@ public class AriasEssentials {
 
     public void setup(FMLCommonSetupEvent ev)
     {
+        ModMessages.register();
     }
 
 
