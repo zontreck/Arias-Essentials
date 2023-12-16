@@ -14,6 +14,7 @@ import dev.zontreck.essentials.gui.HeartsRenderer;
 import dev.zontreck.essentials.networking.S2CUpdateHearts;
 import dev.zontreck.libzontreck.events.RegisterPacketsEvent;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -51,19 +52,20 @@ public class AriasEssentials {
 
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, AEServerConfig.SPEC, "arias-essentials-server.toml");
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AEClientConfig.SPEC, "arias-essentials-client.toml");
+
+
+
+
         
 
         EssentialsDatastore.initialize();
         MinecraftForge.EVENT_BUS.register(this);
-        MinecraftForge.EVENT_BUS.register(new HeartsRenderer());
         MinecraftForge.EVENT_BUS.register(new CommandRegister());
         MinecraftForge.EVENT_BUS.register(new ForgeEventsHandler());
     }
 
     public void setup(FMLCommonSetupEvent ev)
     {
-
     }
 
     @SubscribeEvent
@@ -85,5 +87,18 @@ public class AriasEssentials {
         ALIVE=false;
     }
 
+
+    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
+    @Mod.EventBusSubscriber(modid = AriasEssentials.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    public static class ClientModEvents {
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event) {
+
+            ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AEClientConfig.SPEC, "arias-essentials-client.toml");
+
+
+            MinecraftForge.EVENT_BUS.register(new HeartsRenderer());
+        }
+    }
 
 }
