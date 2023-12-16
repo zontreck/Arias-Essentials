@@ -55,6 +55,7 @@ public class AriasEssentials {
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, AEServerConfig.SPEC, "arias-essentials-server.toml");
 
 
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AEClientConfig.SPEC, "arias-essentials-client.toml");
 
 
         
@@ -91,7 +92,6 @@ public class AriasEssentials {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
 
-            ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AEClientConfig.SPEC, "arias-essentials-client.toml");
 
 
             MinecraftForge.EVENT_BUS.register(new HeartsRenderer());
