@@ -92,7 +92,7 @@ public class AriasEssentials {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
 
-
+            LOGGER.info("Client setup");
 
             MinecraftForge.EVENT_BUS.register(new HeartsRenderer());
         }
