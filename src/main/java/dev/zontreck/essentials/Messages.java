@@ -66,6 +66,10 @@ public class Messages {
     public static final String PAYMENT_FAILED;
     public static final String PAYMENT_SUCCESS;
 
+    public static final String HEARTS_USAGE;
+    public static final String HEARTS_UPDATED;
+
+
     static{
         ESSENTIALS_PREFIX = "!Gray![!Dark_Green!AE!Gray!] ";
 
@@ -135,5 +139,9 @@ public class Messages {
         PAYMENT_ATTEMPTING = ESSENTIALS_PREFIX + "!Dark_Green!Please wait... Attempting to pay [0] to [1]";
         PAYMENT_FAILED = ESSENTIALS_PREFIX + "!Dark_Red!Payment failed";
         PAYMENT_SUCCESS = ESSENTIALS_PREFIX + "!Dark_Green!Payment successful";
+
+        HEARTS_USAGE = ESSENTIALS_PREFIX + "!Dark_Green!This command allows you to toggle on and off the compressed hearts feature without editing the config file.\n\n!Gold!/hearts [true/false]";
+
+        HEARTS_UPDATED = ESSENTIALS_PREFIX + "!Dark_Red!Your hearts preferences have been updated";
     }
 }

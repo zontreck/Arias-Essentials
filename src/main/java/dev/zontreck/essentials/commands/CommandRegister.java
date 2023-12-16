@@ -1,5 +1,6 @@
 package dev.zontreck.essentials.commands;
 
+import dev.zontreck.essentials.commands.gui.HeartsCommand;
 import dev.zontreck.essentials.commands.homes.DelHomeCommand;
 import dev.zontreck.essentials.commands.homes.HomeCommand;
 import dev.zontreck.essentials.commands.homes.HomesCommand;
@@ -40,5 +41,7 @@ public class CommandRegister {
         SetWarpCommand.register(ev.getDispatcher());
         WarpCommand.register(ev.getDispatcher());
         WarpsCommand.register(ev.getDispatcher());
+
+        HeartsCommand.register(ev.getDispatcher());
     }
 }

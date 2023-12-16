@@ -8,7 +8,11 @@ import java.util.Map;
 import java.util.UUID;
 
 import dev.zontreck.ariaslib.util.DelayedExecutorService;
+import dev.zontreck.essentials.configs.AEClientConfig;
 import dev.zontreck.essentials.configs.AEServerConfig;
+import dev.zontreck.essentials.gui.HeartsRenderer;
+import dev.zontreck.essentials.networking.S2CUpdateHearts;
+import dev.zontreck.libzontreck.events.RegisterPacketsEvent;
 import net.minecraftforge.fml.config.ModConfig;
 import org.slf4j.Logger;
 
@@ -47,10 +51,12 @@ public class AriasEssentials {
 
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, AEServerConfig.SPEC, "arias-essentials-server.toml");
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AEClientConfig.SPEC, "arias-essentials-client.toml");
         
 
         EssentialsDatastore.initialize();
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new HeartsRenderer());
         MinecraftForge.EVENT_BUS.register(new CommandRegister());
         MinecraftForge.EVENT_BUS.register(new ForgeEventsHandler());
     }
@@ -58,6 +64,11 @@ public class AriasEssentials {
     public void setup(FMLCommonSetupEvent ev)
     {
 
+    }
+
+    @SubscribeEvent
+    public void onRegisterPackets(RegisterPacketsEvent ev){
+        ev.packets.add(new S2CUpdateHearts());
     }
 
 
