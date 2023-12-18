@@ -3,13 +3,17 @@ package dev.zontreck.essentials;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import dev.zontreck.ariaslib.util.DelayedExecutorService;
+import dev.zontreck.essentials.commands.teleport.TeleportActioner;
 import dev.zontreck.essentials.configs.AEClientConfig;
 import dev.zontreck.essentials.configs.AEServerConfig;
+import dev.zontreck.essentials.events.TeleportEvent;
 import dev.zontreck.essentials.gui.HeartsRenderer;
 import dev.zontreck.essentials.networking.ModMessages;
 import dev.zontreck.essentials.networking.S2CUpdateHearts;
@@ -41,6 +45,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod(AriasEssentials.MODID)
 public class AriasEssentials {
     public static final String MODID = "ariasessentials";
+    public static final Random random = new Random(Instant.now().getEpochSecond());
     public static final Logger LOGGER = LogUtils.getLogger();
     public static boolean ALIVE;
     public static Map<UUID, Homes> player_homes = new HashMap<>();
@@ -64,6 +69,15 @@ public class AriasEssentials {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new CommandRegister());
         MinecraftForge.EVENT_BUS.register(new ForgeEventsHandler());
+    }
+
+    @SubscribeEvent
+    public void onTeleport(TeleportEvent event)
+    {
+        if(TeleportActioner.isBlacklistedDimension(event.getContainer().Dimension))
+        {
+            event.setCanceled(true);
+        }
     }
 
     public void setup(FMLCommonSetupEvent ev)

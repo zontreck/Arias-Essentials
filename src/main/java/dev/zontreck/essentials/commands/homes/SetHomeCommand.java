@@ -10,7 +10,9 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import dev.zontreck.essentials.AriasEssentials;
 import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.commands.teleport.TeleportActioner;
 import dev.zontreck.essentials.commands.teleport.TeleportDestination;
+import dev.zontreck.essentials.configs.AEServerConfig;
 import dev.zontreck.essentials.homes.Home;
 import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.util.ChatHelpers;
@@ -45,6 +47,15 @@ public class SetHomeCommand {
         ServerPlayer p;
         try {
             p = ctx.getPlayerOrException();
+
+
+            if(TeleportActioner.isBlacklistedDimension(p.serverLevel()))
+            {
+                ChatHelpers.broadcastTo(p, ChatHelpers.macro(Messages.ESSENTIALS_PREFIX + AEServerConfig.BLACKLISTED_DIMENSION_ERROR.get()), p.server);
+
+                return 0;
+            }
+
             Vec3 position = p.position();
             Vec2 rot = p.getRotationVector();
     

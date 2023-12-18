@@ -13,7 +13,7 @@ public class AEClientConfig
 
     static {
         BUILDER.push("overlay");
-        ENABLE_HEARTS_RENDER = BUILDER.comment("Enable compressed hearts? This puts all the hearts in a single row").define("enable_hearts", false);
+        ENABLE_HEARTS_RENDER = BUILDER.comment("Enable compressed hearts? This puts all the hearts in a single row").define("enable_hearts", true);
 
         BUILDER.pop();
         SPEC = BUILDER.build();

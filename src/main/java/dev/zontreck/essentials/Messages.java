@@ -68,6 +68,7 @@ public class Messages {
 
     public static final String HEARTS_USAGE;
     public static final String HEARTS_UPDATED;
+    public static final String RESPAWNING;
 
 
     static{
@@ -143,5 +144,7 @@ public class Messages {
         HEARTS_USAGE = ESSENTIALS_PREFIX + "!Dark_Green!This command allows you to toggle on and off the compressed hearts feature without editing the config file.\n\n!Gold!/hearts [true/false]";
 
         HEARTS_UPDATED = ESSENTIALS_PREFIX + "!Dark_Red!Your hearts preferences have been updated";
+
+        RESPAWNING = ESSENTIALS_PREFIX + "!Dark_Green!Respawning at World Spawn";
     }
 }

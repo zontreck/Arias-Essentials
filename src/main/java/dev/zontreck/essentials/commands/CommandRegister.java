@@ -5,12 +5,7 @@ import dev.zontreck.essentials.commands.homes.DelHomeCommand;
 import dev.zontreck.essentials.commands.homes.HomeCommand;
 import dev.zontreck.essentials.commands.homes.HomesCommand;
 import dev.zontreck.essentials.commands.homes.SetHomeCommand;
-import dev.zontreck.essentials.commands.teleport.RTPCommand;
-import dev.zontreck.essentials.commands.teleport.TPACommand;
-import dev.zontreck.essentials.commands.teleport.TPAHereCommand;
-import dev.zontreck.essentials.commands.teleport.TPAcceptCommand;
-import dev.zontreck.essentials.commands.teleport.TPCancelCommand;
-import dev.zontreck.essentials.commands.teleport.TPDenyCommand;
+import dev.zontreck.essentials.commands.teleport.*;
 import dev.zontreck.essentials.commands.warps.DelWarpCommand;
 import dev.zontreck.essentials.commands.warps.RTPWarpCommand;
 import dev.zontreck.essentials.commands.warps.SetWarpCommand;
@@ -43,5 +38,6 @@ public class CommandRegister {
         WarpsCommand.register(ev.getDispatcher());
 
         HeartsCommand.register(ev.getDispatcher());
+        SpawnCommand.register(ev.getDispatcher());
     }
 }
