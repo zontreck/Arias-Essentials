@@ -1,12 +1,12 @@
-package dev.zontreck.essentials.util;
+package dev.zontreck.essentials.rtp;
 
 import dev.zontreck.ariaslib.terminal.Task;
 import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.AriasEssentials;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.events.RTPEvent;
+import dev.zontreck.essentials.events.RTPFoundEvent;
 import dev.zontreck.essentials.events.RTPNotCancelledEvent;
-import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
@@ -21,9 +21,9 @@ import net.minecraftforge.common.MinecraftForge;
  */
 public class RandomPositionLocator extends Task
 {
-    private final RTPContainer contain;
+    private final RTP contain;
 
-    public RandomPositionLocator(RTPContainer rtp)
+    public RandomPositionLocator(RTP rtp)
     {
         super("RPL",true);
         contain=rtp;
@@ -33,10 +33,10 @@ public class RandomPositionLocator extends Task
     public void run() {
         if(!AriasEssentials.ALIVE)return;
         
-        ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), ChatHelpers.macro(Messages.RTP_SEARCHING, String.valueOf(contain.tries), "30"), contain.container.PlayerInst.server);
+        //ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), ChatHelpers.macro(Messages.RTP_SEARCHING, String.valueOf(contain.tries), "30"), contain.container.PlayerInst.server);
 
-        ServerLevel levl = contain.container.Dimension;
-        ChunkAccess chunk  = levl.getChunk(contain.container.world_pos.Position.asBlockPos());
+        ServerLevel levl = contain.position.getActualDimension();
+        ChunkAccess chunk  = levl.getChunk(contain.position.Position.asBlockPos());
         ChunkPos cpos = chunk.getPos();
         boolean needsLoading = false;
         needsLoading = !(levl.getForcedChunks().contains(cpos.toLong()));
@@ -48,25 +48,16 @@ public class RandomPositionLocator extends Task
         int curChecks=0;
         while(curChecks<10)
         {
-            if(contain.isSafe(contain.container.world_pos.Position.asBlockPos()))
+            if(contain.isSafe(contain.position.Position.asBlockPos()))
             {
-                contain.complete=true;
+                contain.putAge();
                 if(needsLoading)    
                     levl.setChunkForced(cpos.x, cpos.z, false);
-                
-                if(MinecraftForge.EVENT_BUS.post(new RTPEvent(contain.container.PlayerInst, contain.container.world_pos)))
-                {
-                    contain.complete=false;
-                    contain.container.Position = contain.container.world_pos.Position.asMinecraftVector();
-                    ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), ChatHelpers.macro(Messages.RTP_CANCELLED), contain.container.PlayerInst.server);
 
-                    break;
-                }else {
-                    AriasEssentials.LOGGER.info("RTP Not cancelled. Actioning");
-                    new RTPNotCancelledEvent(contain).send();
-                }
+                MinecraftForge.EVENT_BUS.post(new RTPFoundEvent(contain));
+
                 return;
-            }else {
+            } else {
                 curChecks++;
                 contain.move();
                 //AriasEssentials.LOGGER.info("[DEBUG] "+ChatColor.doColors("!Dark_Red!Checking position: "+contain.container.world_pos.Position.toString()+"; "+contain.container.Dimension.getBlockState(contain.container.world_pos.Position.asBlockPos()).getBlock().toString()+"; "+contain.container.Dimension.getBlockState(contain.container.world_pos.Position.asBlockPos().below()).getBlock().toString()));
@@ -80,8 +71,6 @@ public class RandomPositionLocator extends Task
         if(contain.tries > 30)
         {
             // Abort
-            ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), ChatHelpers.macro(Messages.RTP_ABORTED,"30"), contain.container.PlayerInst.server);
-            contain.aborted=true;
             return;
         }else {
             // Schedule the task to execute

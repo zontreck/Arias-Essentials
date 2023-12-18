@@ -2,7 +2,7 @@ package dev.zontreck.essentials.commands.teleport;
 
 import com.mojang.brigadier.CommandDispatcher;
 
-import dev.zontreck.essentials.util.RandomPositionFactory;
+import dev.zontreck.essentials.rtp.RandomPositionFactory;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
@@ -51,7 +51,7 @@ public class RTPCommand {
                 Vec3 pos = pla.position();
                 
                 //boolean found_place= false;
-                RandomPositionFactory.beginRTPSearch(pla, pos, pla.getRotationVector(), pla.serverLevel());
+                RandomPositionFactory.beginRTP(pla, pla.serverLevel());
                 return;
                 
         

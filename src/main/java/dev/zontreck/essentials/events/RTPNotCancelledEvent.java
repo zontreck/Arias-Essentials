@@ -1,6 +1,6 @@
 package dev.zontreck.essentials.events;
 
-import dev.zontreck.essentials.util.RTPContainer;
+import dev.zontreck.essentials.rtp.RTPContainer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;
 
