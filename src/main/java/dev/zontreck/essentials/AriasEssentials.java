@@ -17,6 +17,7 @@ import dev.zontreck.essentials.events.TeleportEvent;
 import dev.zontreck.essentials.gui.HeartsRenderer;
 import dev.zontreck.essentials.networking.ModMessages;
 import dev.zontreck.essentials.networking.S2CUpdateHearts;
+import dev.zontreck.essentials.rtp.RTPCachesEventHandlers;
 import dev.zontreck.libzontreck.events.RegisterPacketsEvent;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -69,6 +70,7 @@ public class AriasEssentials {
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(new CommandRegister());
         MinecraftForge.EVENT_BUS.register(new ForgeEventsHandler());
+        MinecraftForge.EVENT_BUS.register(new RTPCachesEventHandlers());
     }
 
     @SubscribeEvent
