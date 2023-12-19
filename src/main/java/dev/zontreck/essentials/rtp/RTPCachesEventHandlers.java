@@ -6,10 +6,16 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class RTPCachesEventHandlers
 {
+    public int lastTick;
     @SubscribeEvent
     public void onTick(TickEvent.ServerTickEvent event)
     {
-        RTP.checkStale();
+        lastTick++;
+        if(lastTick>=40)
+        {
+            lastTick=0;
+            RTP.checkStale();
+        }
     }
 
     @SubscribeEvent
