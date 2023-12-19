@@ -70,6 +70,8 @@ public class Messages {
     public static final String HEARTS_UPDATED;
     public static final String RESPAWNING;
     public static final String RTP_CACHED;
+    public static final String NO_BACK;
+    public static final String TELEPORT_BACK;
 
 
     static{
@@ -149,5 +151,9 @@ public class Messages {
         RESPAWNING = ESSENTIALS_PREFIX + "!Dark_Green!Respawning at World Spawn";
 
         RTP_CACHED = ESSENTIALS_PREFIX + "!Dark_Green!A new RTP location has been cached for [0]";
+
+        NO_BACK = ESSENTIALS_PREFIX + "!Dark_Green!Good news! You have not died recently, there is no saved back position";
+        TELEPORT_BACK = ESSENTIALS_PREFIX + "!Dark_Purple!You are being taken back to your last death location now.";
+
     }
 }

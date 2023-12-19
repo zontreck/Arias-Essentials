@@ -13,6 +13,7 @@ import dev.zontreck.essentials.commands.warps.WarpCommand;
 import dev.zontreck.essentials.commands.warps.WarpsCommand;
 import dev.zontreck.essentials.warps.Warps;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class CommandRegister {
@@ -39,5 +40,6 @@ public class CommandRegister {
 
         HeartsCommand.register(ev.getDispatcher());
         SpawnCommand.register(ev.getDispatcher());
+        BackCommand.register(ev.getDispatcher());
     }
 }

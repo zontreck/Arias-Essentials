@@ -46,8 +46,13 @@ public class TeleportActioner
                 for(int i = 0; i < effects.size(); i++) {
                     RegistryObject<MobEffect> effect = RegistryObject.create(new ResourceLocation(effects.get(i)), ForgeRegistries.MOB_EFFECTS);
 
-                    int duration = AriasEssentials.random.nextInt(5, 15) * 20;
-                    int amplifier = AriasEssentials.random.nextInt(1, 4);
+                    int duration = AriasEssentials.random.nextInt(5, 10) * 20;
+                    int amplifier = AriasEssentials.random.nextInt(1, 3);
+
+                    if (effects.get(i).equals("minecraft:slow_falling"))
+                    {
+                        duration = duration*2;
+                    }
 
                     MobEffectInstance inst = new MobEffectInstance(effect.get(), duration, amplifier, true, true);
 

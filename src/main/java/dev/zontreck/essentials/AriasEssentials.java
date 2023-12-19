@@ -19,8 +19,14 @@ import dev.zontreck.essentials.networking.ModMessages;
 import dev.zontreck.essentials.networking.S2CUpdateHearts;
 import dev.zontreck.essentials.rtp.RTPCachesEventHandlers;
 import dev.zontreck.essentials.rtp.RandomPositionFactory;
+import dev.zontreck.essentials.util.BackPositionCaches;
 import dev.zontreck.libzontreck.events.RegisterPacketsEvent;
+import dev.zontreck.libzontreck.vectors.WorldPosition;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.slf4j.Logger;
@@ -103,6 +109,17 @@ public class AriasEssentials {
     public void onServerStop(final ServerStoppingEvent ev)
     {
         ALIVE=false;
+    }
+
+    @SubscribeEvent (priority = EventPriority.HIGHEST)
+    public void onPlayerDied(final LivingDeathEvent ev)
+    {
+        if(ev.getEntity() instanceof ServerPlayer sp)
+        {
+            // Update player back position!
+            WorldPosition wp = new WorldPosition(sp);
+            BackPositionCaches.Update(sp.getUUID(), wp);
+        }
     }
 
 
