@@ -57,6 +57,7 @@ public class RTP
     protected RTP withThreadDelay(int delay)
     {
         lastThreadDelay=delay;
+        if(lastThreadDelay >= 60) lastThreadDelay = 60;
         return this;
     }
 
