@@ -69,6 +69,7 @@ public class Messages {
     public static final String HEARTS_USAGE;
     public static final String HEARTS_UPDATED;
     public static final String RESPAWNING;
+    public static final String RTP_CACHED;
 
 
     static{
@@ -146,5 +147,7 @@ public class Messages {
         HEARTS_UPDATED = ESSENTIALS_PREFIX + "!Dark_Red!Your hearts preferences have been updated";
 
         RESPAWNING = ESSENTIALS_PREFIX + "!Dark_Green!Respawning at World Spawn";
+
+        RTP_CACHED = ESSENTIALS_PREFIX + "!Dark_Green!A new RTP location has been cached for [0]";
     }
 }

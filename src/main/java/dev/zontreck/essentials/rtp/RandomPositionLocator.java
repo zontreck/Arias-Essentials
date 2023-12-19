@@ -42,11 +42,10 @@ public class RandomPositionLocator extends Task
             levl.setChunkForced(cpos.x, cpos.z, true);
 
         int curChecks=0;
-        while(curChecks<10)
+        while(curChecks<3)
         {
             if(contain.isSafe(contain.position.Position.asBlockPos()))
             {
-                contain.putAge();
                 if(needsLoading)    
                     levl.setChunkForced(cpos.x, cpos.z, false);
 

@@ -35,7 +35,6 @@ public class RTP
 {
     public RTP(ServerLevel level)
     {
-        Age = Instant.now().getEpochSecond();
         position = new WorldPosition(new Vector3(0,500,0), WorldPosition.getDim(level));
 
         if(position.getActualDimension().dimensionType().hasCeiling())
@@ -53,10 +52,6 @@ public class RTP
     public WorldPosition position;
     private List<Block> BLACKLIST = Lists.of(Blocks.LAVA, Blocks.WATER);
     protected int tries;
-    /**
-     * This is a unix timestamp, that is checked for being Stale
-     */
-    public long Age;
 
     public boolean isDimension(ServerLevel level)
     {
@@ -65,23 +60,6 @@ public class RTP
         {
             return true;
         }else return false;
-    }
-
-    /**
-     * Checks if the RTP Cached position is stale. This means over 2 hours old
-     * @return True if stale
-     */
-    public boolean isStale()
-    {
-        if((Age+(2*60*60)) < Instant.now().getEpochSecond())
-        {
-            return true;
-        } else return false;
-    }
-
-    public boolean readyForNewer()
-    {
-        return ((Age + (10*60)) < Instant.now().getEpochSecond());
     }
 
     /**
@@ -116,7 +94,10 @@ public class RTP
         List<RTP> slice = slicedByDimension(level);
         if(slice.size()>0)
         {
-            return slice.get(AriasEssentials.random.nextInt(0, slice.size()));
+            RTP ret = slice.get(AriasEssentials.random.nextInt(0, slice.size()));
+            RTPCaches.Locations.remove(ret);
+            RandomPositionFactory.beginRTPSearch(ret.position.getActualDimension());
+            return ret;
         } else return null;
     }
 
@@ -221,50 +202,5 @@ public class RTP
         }else AriasEssentials.LOGGER.info("/!\\ NOT SAFE /!\\");
 
         return s;
-    }
-
-    public void putAge()
-    {
-        Age = Instant.now().getEpochSecond();
-    }
-
-    public static void checkStale()
-    {
-        Iterator<RTP> it = RTPCaches.Locations.iterator();
-        List<ServerLevel> uniqueDims = new ArrayList<>();
-        while(it.hasNext())
-        {
-            RTP loc = it.next();
-            if(loc.isStale()){
-                it.remove();
-            }
-
-            if(!uniqueDims.contains(loc.position.getActualDimension()))
-            {
-                uniqueDims.add(loc.position.getActualDimension());
-            }
-        }
-
-        checkNeedsNewer(uniqueDims);
-    }
-
-    public static void checkNeedsNewer(List<ServerLevel> dims)
-    {
-        Iterator<ServerLevel> it = dims.iterator();
-        while(it.hasNext())
-        {
-            ServerLevel lvl = it.next();
-            List<RTP> slice = slicedByDimension(lvl);
-            boolean needsNewer = true;
-            for(var X : slice)
-            {
-                if(!X.readyForNewer()) needsNewer=false;
-            }
-
-            if(needsNewer)
-            {
-                RandomPositionFactory.beginRTPSearch(lvl);
-            }
-        }
     }
 }

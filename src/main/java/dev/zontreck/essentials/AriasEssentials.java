@@ -18,7 +18,9 @@ import dev.zontreck.essentials.gui.HeartsRenderer;
 import dev.zontreck.essentials.networking.ModMessages;
 import dev.zontreck.essentials.networking.S2CUpdateHearts;
 import dev.zontreck.essentials.rtp.RTPCachesEventHandlers;
+import dev.zontreck.essentials.rtp.RandomPositionFactory;
 import dev.zontreck.libzontreck.events.RegisterPacketsEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.slf4j.Logger;
@@ -92,6 +94,8 @@ public class AriasEssentials {
     public void onServerStart(final ServerStartedEvent ev)
     {
         ALIVE=true;
+
+
     }
 
 
