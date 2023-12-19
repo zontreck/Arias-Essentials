@@ -133,7 +133,7 @@ public class RTP
         if(!AriasEssentials.ALIVE)return;
         containingThread=Thread.currentThread();
         if(tries>=30)return;
-        AriasEssentials.LOGGER.info("RTPContainer starts looking for new position");
+        AriasEssentials.LOGGER.info("RTP starts looking for new position");
         Random rng = new Random(Instant.now().getEpochSecond());
         Vector3 pos = new Vector3(rng.nextDouble(0xFFFF), 0, rng.nextDouble(0xFFFF));
         BlockPos bpos = pos.asBlockPos();
@@ -160,7 +160,7 @@ public class RTP
         }
 
         tries++;
-        AriasEssentials.LOGGER.info("RTPContainer returns new position");
+        AriasEssentials.LOGGER.info("RTP returns new position");
     }
 
     private void spiralPositions(Vector3 position)
@@ -195,12 +195,14 @@ public class RTP
 
     }
     public boolean isSafe(BlockPos blockPos) {
+        return safe(blockPos);
+        /*
         boolean s = safe(blockPos);
         if(s)
         {
             AriasEssentials.LOGGER.info("/!\\ SAFE /!\\");
         }else AriasEssentials.LOGGER.info("/!\\ NOT SAFE /!\\");
 
-        return s;
+        return s;*/
     }
 }
