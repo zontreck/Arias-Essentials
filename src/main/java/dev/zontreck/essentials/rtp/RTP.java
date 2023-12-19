@@ -52,6 +52,13 @@ public class RTP
     public WorldPosition position;
     private List<Block> BLACKLIST = Lists.of(Blocks.LAVA, Blocks.WATER);
     protected int tries;
+    protected int lastThreadDelay = 1;
+
+    protected RTP withThreadDelay(int delay)
+    {
+        lastThreadDelay=delay;
+        return this;
+    }
 
     public boolean isDimension(ServerLevel level)
     {

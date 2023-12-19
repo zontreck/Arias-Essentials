@@ -70,8 +70,9 @@ public class RandomPositionLocator extends Task
         }else {
             // Schedule the task to execute
             //run();
-            RandomPositionLocator next = new RandomPositionLocator(contain);
-            DelayedExecutorService.getInstance().schedule(next, 1);
+
+            RandomPositionLocator next = new RandomPositionLocator(contain.withThreadDelay(contain.lastThreadDelay+1));
+            DelayedExecutorService.getInstance().schedule(next, contain.lastThreadDelay+1);
             AriasEssentials.LOGGER.info("Giving up current RTP search. Scheduling another search in 1 second");
         }
     }
