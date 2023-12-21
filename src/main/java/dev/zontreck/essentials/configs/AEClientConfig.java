@@ -11,6 +11,7 @@ public class AEClientConfig
 
     public static final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_HEARTS_RENDER;
 
+
     static {
         BUILDER.push("overlay");
         ENABLE_HEARTS_RENDER = BUILDER.comment("Enable compressed hearts? This puts all the hearts in a single row").define("enable_hearts", true);

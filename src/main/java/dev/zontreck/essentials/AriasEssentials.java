@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import dev.zontreck.ariaslib.util.DelayedExecutorService;
+import dev.zontreck.essentials.client.Keybindings;
 import dev.zontreck.essentials.commands.teleport.TeleportActioner;
 import dev.zontreck.essentials.configs.AEClientConfig;
 import dev.zontreck.essentials.configs.AEServerConfig;
@@ -22,9 +23,12 @@ import dev.zontreck.essentials.rtp.RandomPositionFactory;
 import dev.zontreck.essentials.util.BackPositionCaches;
 import dev.zontreck.libzontreck.events.RegisterPacketsEvent;
 import dev.zontreck.libzontreck.vectors.WorldPosition;
+import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.config.ModConfig;
@@ -133,6 +137,13 @@ public class AriasEssentials {
 
             MinecraftForge.EVENT_BUS.register(new HeartsRenderer());
         }
+
+        @SubscribeEvent
+        public static void onRegisterKeyBinds(RegisterKeyMappingsEvent ev)
+        {
+            ev.register(Keybindings.AUTOWALK);
+        }
+
     }
 
 }
