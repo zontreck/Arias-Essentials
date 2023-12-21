@@ -1,8 +1,5 @@
 package dev.zontreck.essentials;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,17 +14,12 @@ import dev.zontreck.essentials.configs.AEServerConfig;
 import dev.zontreck.essentials.events.TeleportEvent;
 import dev.zontreck.essentials.gui.HeartsRenderer;
 import dev.zontreck.essentials.networking.ModMessages;
-import dev.zontreck.essentials.networking.S2CUpdateHearts;
 import dev.zontreck.essentials.rtp.RTPCachesEventHandlers;
-import dev.zontreck.essentials.rtp.RandomPositionFactory;
 import dev.zontreck.essentials.util.BackPositionCaches;
-import dev.zontreck.libzontreck.events.RegisterPacketsEvent;
 import dev.zontreck.libzontreck.vectors.WorldPosition;
-import net.minecraft.client.Minecraft;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -39,12 +31,8 @@ import com.mojang.logging.LogUtils;
 
 import dev.zontreck.essentials.commands.CommandRegister;
 import dev.zontreck.essentials.homes.Homes;
-import dev.zontreck.essentials.homes.HomesProvider;
 import dev.zontreck.essentials.util.EssentialsDatastore;
 import dev.zontreck.essentials.util.ForgeEventsHandler;
-import dev.zontreck.libzontreck.events.ProfileLoadedEvent;
-import dev.zontreck.libzontreck.events.ProfileUnloadedEvent;
-import dev.zontreck.libzontreck.profiles.Profile;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
@@ -138,6 +126,7 @@ public class AriasEssentials {
             MinecraftForge.EVENT_BUS.register(new HeartsRenderer());
         }
 
+        @OnlyIn(Dist.CLIENT)
         @SubscribeEvent
         public static void onRegisterKeyBinds(RegisterKeyMappingsEvent ev)
         {

@@ -4,16 +4,15 @@ import dev.zontreck.essentials.AriasEssentials;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.time.Instant;
 
+@OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = AriasEssentials.MODID, value = Dist.CLIENT)
 public class AutoWalk {
     private static boolean isWalking = false;
