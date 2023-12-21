@@ -50,7 +50,7 @@ public class RTP
     private Thread containingThread;
     private Heightmap.Types heightMapType;
     public WorldPosition position;
-    private List<Block> BLACKLIST = Lists.of(Blocks.LAVA, Blocks.WATER);
+    private List<Block> BLACKLIST = Lists.of(Blocks.LAVA, Blocks.WATER, Blocks.BEDROCK);
     protected int tries;
     protected int lastThreadDelay = 1;
 
