@@ -22,7 +22,7 @@ public class AutoWalk {
 
     @SubscribeEvent
     public static void onKeyPress(InputEvent.Key event) {
-        if(Keybindings.AUTOWALK.matches(event.getKey(), event.getScanCode()) && Minecraft.getInstance().screen == null && lastPress+5 < Instant.now().getEpochSecond() && Keybindings.AUTOWALK.isDown())
+        if(Keybindings.AUTOWALK.matches(event.getKey(), event.getScanCode()) && Minecraft.getInstance().screen == null && Keybindings.AUTOWALK.isDown())
         {
             lastPress = Instant.now().getEpochSecond();
             if(isWalking)
