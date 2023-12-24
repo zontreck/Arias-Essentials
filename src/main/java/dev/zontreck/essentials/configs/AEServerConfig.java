@@ -28,6 +28,9 @@ public class AEServerConfig {
     public static final ForgeConfigSpec.ConfigValue<List<String>> DIMENSION_BLACKLIST;
     public static final ForgeConfigSpec.ConfigValue<String> BLACKLISTED_DIMENSION_ERROR;
 
+    public static final ForgeConfigSpec.ConfigValue<Boolean> BACK_ALLOWS_LAST_TP;
+    public static final ForgeConfigSpec.ConfigValue<Boolean> ENABLE_BACK;
+
     public static final ForgeConfigSpec.ConfigValue<List<String>> TELEPORT_EFFECTS;
 
 
@@ -60,6 +63,13 @@ public class AEServerConfig {
                 "minecraft:hunger"
 
         ));
+
+        BUILDER.push("back");
+        BACK_ALLOWS_LAST_TP = BUILDER.comment("Whether to allow going back to the last teleport location in addition to the last death (If back is enabled for non-op). The history for the back command goes back only to the very last teleport or death").define("allow_last_tp", true);
+
+        ENABLE_BACK = BUILDER.comment("Enable the use of the back command for non-op?").define("enabled", true);
+
+        BUILDER.pop();
 
 
 

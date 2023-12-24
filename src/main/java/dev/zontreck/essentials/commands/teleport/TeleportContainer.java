@@ -24,6 +24,7 @@ public class TeleportContainer implements Comparable{
     public Vec3 Position;
     public Vec2 Rotation;
     public ServerLevel Dimension;
+    public WorldPosition OldPosition; // Populated in a teleport event
     
     
     public boolean has_expired(){

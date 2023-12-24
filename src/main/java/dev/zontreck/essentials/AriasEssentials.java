@@ -79,6 +79,9 @@ public class AriasEssentials {
         if(TeleportActioner.isBlacklistedDimension(event.getContainer().Dimension))
         {
             event.setCanceled(true);
+        } else {
+            if(AEServerConfig.BACK_ALLOWS_LAST_TP.get())
+                BackPositionCaches.Update(event.getContainer().PlayerInst.getUUID(), event.getContainer().world_pos);
         }
     }
 

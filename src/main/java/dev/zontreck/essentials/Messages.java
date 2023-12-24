@@ -72,6 +72,9 @@ public class Messages {
     public static final String RTP_CACHED;
     public static final String NO_BACK;
     public static final String TELEPORT_BACK;
+    public static final String TELEPORT_BACK_DISABLED;
+    public static final String TELEPORT_BACK_LAST;
+    public static final String TELEPORT_BACK_NO_LAST;
 
 
     static{
@@ -154,6 +157,12 @@ public class Messages {
 
         NO_BACK = ESSENTIALS_PREFIX + "!Dark_Green!Good news! You have not died recently, there is no saved back position";
         TELEPORT_BACK = ESSENTIALS_PREFIX + "!Dark_Purple!You are being taken back to your last death location now.";
+
+        TELEPORT_BACK_DISABLED = ESSENTIALS_PREFIX + "!Dark_Red!You are not an op, and the back command is disabled on this server.";
+
+        TELEPORT_BACK_NO_LAST = ESSENTIALS_PREFIX + "!Dark_Red!You have not teleported recently, nor died. There is nothing to go back to.";
+
+        TELEPORT_BACK_LAST = ESSENTIALS_PREFIX + "!Dark_Purple!You are being taken back to your last death or teleport location.";
 
     }
 }

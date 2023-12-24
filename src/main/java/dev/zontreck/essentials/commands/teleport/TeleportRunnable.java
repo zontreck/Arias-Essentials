@@ -4,6 +4,7 @@ package dev.zontreck.essentials.commands.teleport;
 import dev.zontreck.ariaslib.terminal.Task;
 import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.events.TeleportEvent;
+import dev.zontreck.libzontreck.vectors.WorldPosition;
 import net.minecraftforge.common.MinecraftForge;
 
 public class TeleportRunnable extends Task
@@ -17,6 +18,7 @@ public class TeleportRunnable extends Task
 
     @Override
     public void run() {
+        Action.OldPosition = new WorldPosition(Action.PlayerInst);
 
         if(MinecraftForge.EVENT_BUS.post(new TeleportEvent(Action)))
         {

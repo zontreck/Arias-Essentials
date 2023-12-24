@@ -2,6 +2,7 @@ package dev.zontreck.essentials.commands.teleport;
 
 import com.mojang.brigadier.CommandDispatcher;
 import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.configs.AEServerConfig;
 import dev.zontreck.essentials.util.BackPositionCaches;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import dev.zontreck.libzontreck.vectors.WorldPosition;
@@ -18,6 +19,13 @@ public class BackCommand
     public static int back(CommandSourceStack ctx)
     {
         try {
+
+            if(!AEServerConfig.ENABLE_BACK.get() && !ctx.hasPermission(ctx.getServer().getOperatorUserPermissionLevel()))
+            {
+                ChatHelpers.broadcastTo(ctx.getPlayer(), ChatHelpers.macro(Messages.TELEPORT_BACK_DISABLED), ctx.getServer());
+                return 0;
+            }
+
             WorldPosition wp = BackPositionCaches.Pop(ctx.getPlayer().getUUID());
 
             ChatHelpers.broadcastTo(ctx.getPlayer(), ChatHelpers.macro(Messages.TELEPORT_BACK), ctx.getServer());
