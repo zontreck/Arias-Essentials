@@ -50,7 +50,7 @@ public class AEServerConfig {
         BUILDER.push("teleport");
         BUILDER.push("blacklist");
 
-        DIMENSION_BLACKLIST = BUILDER.comment("Blacklist the use of teleportation commands from any of the listed dimensions.").define("blacklist", Lists.of("dimdoors:dungeon_pockets", "dimdoors:limbo", "dimdoors:personal_pockets", "dimdoors:public_pockets"));
+        DIMENSION_BLACKLIST = BUILDER.comment("Blacklist the use of teleportation commands from any of the listed dimensions.").define("blacklist", Lists.of("dimdoors:dungeon_pockets", "dimdoors:limbo", "dimdoors:personal_pockets", "dimdoors:public_pockets", "witherstormmod:bowels"));
 
         BLACKLISTED_DIMENSION_ERROR = BUILDER.comment("The error to say if the user tries to teleport out of a blacklisted dimension").define("error", "!Dark_Red!You appear to be in a place where we cannot find you.");
 
