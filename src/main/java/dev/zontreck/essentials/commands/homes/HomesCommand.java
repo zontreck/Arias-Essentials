@@ -6,17 +6,31 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import dev.zontreck.essentials.AriasEssentials;
 import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.commands.teleport.TeleportActioner;
+import dev.zontreck.essentials.commands.teleport.TeleportContainer;
+import dev.zontreck.essentials.commands.teleport.TeleportDestination;
 import dev.zontreck.essentials.homes.Home;
 import dev.zontreck.essentials.homes.Homes;
+import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.chat.Clickable;
 import dev.zontreck.libzontreck.chat.HoverTip;
+import dev.zontreck.libzontreck.chestgui.ChestGUI;
+import dev.zontreck.libzontreck.chestgui.ChestGUIButton;
+import dev.zontreck.libzontreck.lore.LoreEntry;
 import dev.zontreck.libzontreck.util.ChatHelpers;
+import dev.zontreck.libzontreck.vectors.Vector2i;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class HomesCommand {
+    private static final ResourceLocation HOMES_GUI_ID = new ResourceLocation("ariasmods", "homes-gui");
+
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher)
     {
         dispatcher.register(Commands.literal("homes").executes(HomesCommand::getHomes));
@@ -32,18 +46,46 @@ public class HomesCommand {
 
             ChatHelpers.broadcastTo(player.getUUID(), ChatHelpers.macro(Messages.HOME_COUNT, String.valueOf(homes.count())), player.server);
 
+            ChestGUI gui = ChestGUI.builder().withGUIId(HOMES_GUI_ID).withTitle("Homes").withPlayer(player.getUUID());
+
+            int iconX = 0;
+            int iconY = 0;
             
             for (Home string : homes.getList()) {
                 Style st = Style.EMPTY.withFont(Style.DEFAULT_FONT).withHoverEvent(HoverTip.get(ChatHelpers.macroize(Messages.HOME_HOVER_TEXT))).withClickEvent(Clickable.command("/home "+string.homeName));
 
-                ChatHelpers.broadcastTo(player.getUUID(), ChatHelpers.macro(Messages.HOME_FORMAT, string.homeName).setStyle(st), ctx.getSource().getServer());
+                ItemStack stack = new ItemStack(Items.BLUE_BED);
+                stack.setHoverName(Component.literal(string.homeName));
+
+                ChestGUIButton button = new ChestGUIButton(stack, ()-> {
+
+                    TeleportDestination dest = string.destination;
+                    TeleportActioner.ApplyTeleportEffect(player);
+                    TeleportContainer cont = new TeleportContainer(player, dest.Position.asMinecraftVector(), dest.Rotation.asMinecraftVector(), dest.getActualDimension());
+                    TeleportActioner.PerformTeleport(cont);
+                    gui.close();
+                }, new Vector2i(iconX, iconY))
+                        .withInfo(new LoreEntry.Builder().text(ChatColor.doColors("!Dark_Green!Click here to go to this home")).build())
+                        .withInfo(new LoreEntry.Builder().text(ChatHelpers.macro("!Dark_Purple!This home is in the dimension [0]", string.destination.Dimension).getString()).bold(true).build());
+
+                iconY++;
+                gui.withButton(button);
+                if(iconY>=9)
+                {
+                    iconY=0;
+                    iconX++;
+                }
+                //ChatHelpers.broadcastTo(player.getUUID(), ChatHelpers.macro(Messages.HOME_FORMAT, string.homeName).setStyle(st), ctx.getSource().getServer());
                 
             }
+            gui.open();
         }catch(CommandSyntaxException ex)
         {
             ex.printStackTrace();
 
         }
+
+
 
         return 0;
     }
