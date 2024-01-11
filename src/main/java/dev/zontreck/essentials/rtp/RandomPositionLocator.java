@@ -8,73 +8,44 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraftforge.common.MinecraftForge;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
- * This class aims to serve as the Random Position Locate system
- * It aims to be as non-thread blocking as possible to avoid server lag
- * 
- * To utilize, initialize a RTPContainer from the RandomPositionFactory and execute from there.
+ * This class serves as the Random Position Locate system, aiming to be non-thread blocking for improved server performance.
+ * To utilize, initialize an RTP from the RandomPositionFactory and execute from there.
  */
-public class RandomPositionLocator extends Task
-{
+public class RandomPositionLocator extends Task {
+    private static final Logger log = LogManager.getLogger("RPL-"+Thread.currentThread().getName());
     private final RTP contain;
 
-    public RandomPositionLocator(RTP rtp)
-    {
-        super("RPL",true);
-        contain=rtp;
+    /**
+     * Constructs a RandomPositionLocator with the specified RTP instance.
+     *
+     * @param rtp The RTP instance to use.
+     */
+    public RandomPositionLocator(RTP rtp) {
+        super("RPL", true);
+        contain = rtp;
     }
 
     @Override
     public void run() {
-        if(!AriasEssentials.ALIVE)return;
-        
-        //ChatHelpers.broadcastTo(contain.container.PlayerInst.getUUID(), ChatHelpers.macro(Messages.RTP_SEARCHING, String.valueOf(contain.tries), "30"), contain.container.PlayerInst.server);
+        if (!AriasEssentials.ALIVE) return;
 
-        ServerLevel levl = contain.position.getActualDimension();
-        ChunkAccess chunk  = levl.getChunk(contain.position.Position.asBlockPos());
-        ChunkPos cpos = chunk.getPos();
-        boolean needsLoading = false;
-        needsLoading = !(levl.getForcedChunks().contains(cpos.toLong()));
-
-
-        if(needsLoading)
-            levl.setChunkForced(cpos.x, cpos.z, true);
-
-        int curChecks=0;
-        while(curChecks<3)
-        {
-            if(contain.isSafe(contain.position.Position.asBlockPos()))
-            {
-                if(needsLoading)    
-                    levl.setChunkForced(cpos.x, cpos.z, false);
-
-                MinecraftForge.EVENT_BUS.post(new RTPFoundEvent(contain));
-
-                return;
-            } else {
-                curChecks++;
-                contain.move();
-                //AriasEssentials.LOGGER.info("[DEBUG] "+ChatColor.doColors("!Dark_Red!Checking position: "+contain.container.world_pos.Position.toString()+"; "+contain.container.Dimension.getBlockState(contain.container.world_pos.Position.asBlockPos()).getBlock().toString()+"; "+contain.container.Dimension.getBlockState(contain.container.world_pos.Position.asBlockPos().below()).getBlock().toString()));
-            }
+        if (AriasEssentials.DEBUG) {
+            log.debug("RTP Search thread");
         }
-        if(needsLoading)
-            levl.setChunkForced(cpos.x, cpos.z, false);
-            
+
         contain.newPosition();
 
-        if(contain.tries > 30)
+        if(AriasEssentials.DEBUG)
         {
-            // Abort
-            return;
-        }else {
-            // Schedule the task to execute
-            //run();
-
-            RandomPositionLocator next = new RandomPositionLocator(contain.withThreadDelay(contain.lastThreadDelay+1));
-            DelayedExecutorService.getInstance().schedule(next, contain.lastThreadDelay+1);
-            AriasEssentials.LOGGER.info("Giving up current RTP search. Scheduling another search in 1 second");
+            log.debug("Dispatching RTPFoundEvent - " + contain.position.Dimension);
         }
+
+        contain.position.getActualDimension().getServer().execute(()->{
+            MinecraftForge.EVENT_BUS.post(new RTPFoundEvent(contain));
+        });
     }
-    
 }

@@ -8,12 +8,18 @@ import dev.zontreck.essentials.commands.teleport.TeleportDestination;
 import dev.zontreck.essentials.events.WarpAccessControlListUpdatedEvent;
 import dev.zontreck.essentials.warps.AccessControlList.ACLEntry;
 import dev.zontreck.libzontreck.exceptions.InvalidDeserialization;
+import dev.zontreck.libzontreck.profiles.Profile;
+import dev.zontreck.libzontreck.profiles.UserProfileNotYetExistsException;
+import dev.zontreck.libzontreck.util.ServerUtilities;
+import dev.zontreck.libzontreck.util.heads.HeadUtilities;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntArrayTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
 public class Warp {
@@ -24,7 +30,9 @@ public class Warp {
     public TeleportDestination destination;
     private AccessControlList ACL;
 
-    public Warp(UUID owner, String name, boolean rtp, boolean publicWarp, TeleportDestination destination)
+    public ItemStack warpIcon;
+
+    public Warp(UUID owner, String name, boolean rtp, boolean publicWarp, TeleportDestination destination, ItemStack warpIcon)
     {
         this.owner=owner;
         WarpName=name;
@@ -32,11 +40,23 @@ public class Warp {
         isPublic=publicWarp;
         this.destination=destination;
         this.ACL = new AccessControlList();
+
+        if(warpIcon==null)
+        {
+            try {
+                Profile prof = Profile.get_profile_of(owner.toString());
+                this.warpIcon = HeadUtilities.get(prof.username, name);
+
+            } catch (UserProfileNotYetExistsException e) {
+                throw new RuntimeException(e);
+            }
+
+        }else this.warpIcon=warpIcon;
     }
 
     public static Warp deserialize(CompoundTag tag) throws InvalidDeserialization
     {
-        Warp warp = new Warp(tag.getUUID("owner"), tag.getString("name"), tag.getBoolean("rtp"), tag.getBoolean("public"), new TeleportDestination(tag.getCompound("destination")));
+        Warp warp = new Warp(tag.getUUID("owner"), tag.getString("name"), tag.getBoolean("rtp"), tag.getBoolean("public"), new TeleportDestination(tag.getCompound("destination")), ItemStack.of(tag.getCompound("icon")));
 
         if(!warp.isPublic)
         {
@@ -54,6 +74,7 @@ public class Warp {
         tag.putBoolean("rtp", RTP);
         tag.putBoolean("public", isPublic);
         tag.put("destination", destination.serialize());
+        tag.put("icon", warpIcon.serializeNBT());
         if(!isPublic)
         {
             tag.put("acl", ACL.serialize());

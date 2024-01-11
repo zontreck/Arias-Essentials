@@ -7,6 +7,7 @@ import java.util.Map;
 
 import dev.zontreck.essentials.events.HomeCreatedEvent;
 import dev.zontreck.essentials.events.HomeDeletedEvent;
+import dev.zontreck.essentials.exceptions.NoSuchHomeException;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;

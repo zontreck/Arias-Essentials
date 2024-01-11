@@ -16,6 +16,7 @@ import dev.zontreck.libzontreck.chat.Clickable;
 import dev.zontreck.libzontreck.chat.HoverTip;
 import dev.zontreck.libzontreck.chestgui.ChestGUI;
 import dev.zontreck.libzontreck.chestgui.ChestGUIButton;
+import dev.zontreck.libzontreck.chestgui.ChestGUIIdentifier;
 import dev.zontreck.libzontreck.lore.LoreEntry;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import dev.zontreck.libzontreck.vectors.Vector2i;
@@ -29,7 +30,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public class HomesCommand {
-    private static final ResourceLocation HOMES_GUI_ID = new ResourceLocation("ariasmods", "homes-gui");
+    private static final ChestGUIIdentifier HOMES_GUI_ID = new ChestGUIIdentifier("homes-gui");
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher)
     {
@@ -54,7 +55,11 @@ public class HomesCommand {
             for (Home string : homes.getList()) {
                 Style st = Style.EMPTY.withFont(Style.DEFAULT_FONT).withHoverEvent(HoverTip.get(ChatHelpers.macroize(Messages.HOME_HOVER_TEXT))).withClickEvent(Clickable.command("/home "+string.homeName));
 
-                ItemStack stack = new ItemStack(Items.BLUE_BED);
+                ItemStack stack = string.homeIcon.copy();
+                if(stack.is(Items.AIR))
+                {
+                    stack = new ItemStack(Items.GRASS_BLOCK, 1);
+                }
                 stack.setHoverName(Component.literal(string.homeName));
 
                 ChestGUIButton button = new ChestGUIButton(stack, ()-> {
@@ -69,16 +74,20 @@ public class HomesCommand {
                         .withInfo(new LoreEntry.Builder().text(ChatHelpers.macro("!Dark_Purple!This home is in the dimension [0]", string.destination.Dimension).getString()).bold(true).build());
 
                 iconY++;
-                gui.withButton(button);
                 if(iconY>=9)
                 {
                     iconY=0;
                     iconX++;
                 }
-                //ChatHelpers.broadcastTo(player.getUUID(), ChatHelpers.macro(Messages.HOME_FORMAT, string.homeName).setStyle(st), ctx.getSource().getServer());
+                if(homes.count() > 27)
+                    ChatHelpers.broadcastTo(player.getUUID(), ChatHelpers.macro(Messages.HOME_FORMAT, string.homeName).setStyle(st), ctx.getSource().getServer());
+                else
+                    gui.withButton(button); // Put this in the else case, to prevent a error when exceeding inventory slots
                 
             }
-            gui.open();
+
+            if(homes.count()<=27)
+                gui.open();
         }catch(CommandSyntaxException ex)
         {
             ex.printStackTrace();

@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.networking.ModMessages;
-import dev.zontreck.essentials.networking.S2CUpdateHearts;
+import dev.zontreck.essentials.networking.packets.s2c.S2CUpdateHearts;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;

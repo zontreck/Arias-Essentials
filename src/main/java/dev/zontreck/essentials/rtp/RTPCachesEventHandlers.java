@@ -1,10 +1,12 @@
 package dev.zontreck.essentials.rtp;
 
+import dev.zontreck.essentials.AriasEssentials;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.commands.teleport.TeleportActioner;
 import dev.zontreck.essentials.events.RTPFoundEvent;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -15,8 +17,9 @@ public class RTPCachesEventHandlers
     @SubscribeEvent
     public void onTick(TickEvent.ServerTickEvent event)
     {
+        if(!AriasEssentials.ALIVE) return;
         lastTick++;
-        if(lastTick>=40)
+        if(lastTick>=400)
         {
             lastTick=0;
 
@@ -24,16 +27,25 @@ public class RTPCachesEventHandlers
             {
                 try {
 
+                    MinecraftForge.EVENT_BUS.unregister(this);
+
                     firstRun=false;
+                    AriasEssentials.LOGGER.info("Aria's Essentials startup is running. Scanning for initial RTP locations");
                     for(ServerLevel level : event.getServer().getAllLevels())
                     {
+                        if(AriasEssentials.DEBUG)
+                        {
+                            AriasEssentials.LOGGER.info("Scanning a level");
+                        }
                         if(TeleportActioner.isBlacklistedDimension(level))
                         {
                             continue;
                         }
 
-                        RandomPositionFactory.beginRTPSearch(level); // Populate 10 RTP points
+                        RandomPositionFactory.beginRTPSearch(level);
                     }
+
+                    AriasEssentials.LOGGER.info("Startup done. RTP searching will continue in a separate thread");
                 }catch (Exception e)
                 {
                     e.printStackTrace();
@@ -43,7 +55,7 @@ public class RTPCachesEventHandlers
     }
 
     @SubscribeEvent
-    public void onRTPFound(RTPFoundEvent event)
+    public static void onRTPFound(final RTPFoundEvent event)
     {
         RTPCaches.Locations.add(event.rtp);
         ChatHelpers.broadcast(ChatHelpers.macro(Messages.RTP_CACHED, event.rtp.position.Dimension), event.rtp.position.getActualDimension().getServer());

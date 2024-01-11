@@ -27,6 +27,8 @@ public class TeleportRunnable extends Task
 
         Action.PlayerInst.teleportTo(Action.Dimension, Action.Position.x, Action.Position.y, Action.Position.z, Action.Rotation.y, Action.Rotation.x);
 
+        Action.PlayerInst.onUpdateAbilities();
+
         DelayedExecutorService.getInstance().schedule(new Task("tp_action",true){
             public TeleportContainer container=Action;
             @Override

@@ -1,6 +1,7 @@
 package dev.zontreck.essentials.networking;
 
 import dev.zontreck.essentials.AriasEssentials;
+import dev.zontreck.essentials.networking.packets.s2c.S2CUpdateHearts;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;

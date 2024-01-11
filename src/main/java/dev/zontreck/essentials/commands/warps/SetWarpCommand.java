@@ -20,6 +20,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
@@ -45,7 +46,7 @@ public class SetWarpCommand {
         Vec2 rot = p.getRotationVector();
 
         TeleportDestination dest = new TeleportDestination(new Vector3(position), new Vector2(rot), p.serverLevel());
-        Warp w = new Warp(p.getUUID(), string, false, true, dest);
+        Warp w = new Warp(p.getUUID(), string, false, true, dest, new ItemStack(p.getBlockStateOn().getBlock().asItem()));
         WarpCreatedEvent event = new WarpCreatedEvent(w);
         if(MinecraftForge.EVENT_BUS.post(event)){
             ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARP_CREATE_ERROR, event.denyReason), p.server);

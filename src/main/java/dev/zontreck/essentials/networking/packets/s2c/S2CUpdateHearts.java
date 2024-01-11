@@ -1,4 +1,4 @@
-package dev.zontreck.essentials.networking;
+package dev.zontreck.essentials.networking.packets.s2c;
 
 import dev.zontreck.essentials.configs.AEClientConfig;
 import dev.zontreck.libzontreck.networking.packets.IPacket;
@@ -36,6 +36,7 @@ public class S2CUpdateHearts
 
         ctx.enqueueWork(()->{
             AEClientConfig.ENABLE_HEARTS_RENDER.set(current);
+            AEClientConfig.ENABLE_HEARTS_RENDER.save();
         });
 
         return true;

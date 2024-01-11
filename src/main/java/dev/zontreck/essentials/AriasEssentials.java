@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.Executor;
 
 import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.client.Keybindings;
@@ -14,6 +15,7 @@ import dev.zontreck.essentials.configs.AEServerConfig;
 import dev.zontreck.essentials.events.TeleportEvent;
 import dev.zontreck.essentials.gui.HeartsRenderer;
 import dev.zontreck.essentials.networking.ModMessages;
+import dev.zontreck.essentials.rtp.RTPCaches;
 import dev.zontreck.essentials.rtp.RTPCachesEventHandlers;
 import dev.zontreck.essentials.util.BackPositionCaches;
 import dev.zontreck.libzontreck.vectors.WorldPosition;
@@ -50,6 +52,9 @@ public class AriasEssentials {
     public static final Logger LOGGER = LogUtils.getLogger();
     public static boolean ALIVE;
     public static Map<UUID, Homes> player_homes = new HashMap<>();
+    public static boolean DEBUG = true;
+
+
 
     public AriasEssentials()
     {
@@ -71,6 +76,7 @@ public class AriasEssentials {
         MinecraftForge.EVENT_BUS.register(new CommandRegister());
         MinecraftForge.EVENT_BUS.register(new ForgeEventsHandler());
         MinecraftForge.EVENT_BUS.register(new RTPCachesEventHandlers());
+        MinecraftForge.EVENT_BUS.register(RTPCachesEventHandlers.class);
     }
 
     @SubscribeEvent
@@ -104,6 +110,11 @@ public class AriasEssentials {
     public void onServerStop(final ServerStoppingEvent ev)
     {
         ALIVE=false;
+        LOGGER.info("Tearing down Aria's Essentials functions and tasks");
+        DelayedExecutorService.stop();
+
+        DelayedExecutorService.getInstance().EXECUTORS.clear();
+        RTPCaches.Locations.clear();
     }
 
     @SubscribeEvent (priority = EventPriority.HIGHEST)

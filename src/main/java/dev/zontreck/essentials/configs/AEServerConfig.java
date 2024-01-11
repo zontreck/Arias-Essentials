@@ -25,6 +25,8 @@ public class AEServerConfig {
     public static final ForgeConfigSpec.ConfigValue<Integer> COST_TO_MAKE_WARP;
 
     public static final ForgeConfigSpec.ConfigValue<Integer> MAX_HOMES;
+    public static final ForgeConfigSpec.ConfigValue<Integer> MAX_WARPS;
+
     public static final ForgeConfigSpec.ConfigValue<List<String>> DIMENSION_BLACKLIST;
     public static final ForgeConfigSpec.ConfigValue<String> BLACKLISTED_DIMENSION_ERROR;
 
@@ -44,7 +46,8 @@ public class AEServerConfig {
         BUILDER.pop();
         BUILDER.push("permissions").comment("This section defines permissions, such as total number of homes, and who can make warps");
 
-        MAX_HOMES = BUILDER.comment("Maximum number of homes that are allowed per player (-1 disables the limit entirely)").define("max_homes", -1);
+        MAX_HOMES = BUILDER.comment("Maximum number of homes that are allowed per player (-1 disables the limit entirely). 27 is the current default as that is the max that can fit in the current /homes gui").define("max_homes", 27);
+        MAX_WARPS = BUILDER.comment("Maximum number of warps that are allowed to exist. Default is 27, the max number that can fit in the /warps gui").define("max_warps", 27);
 
         BUILDER.pop();
         BUILDER.push("teleport");

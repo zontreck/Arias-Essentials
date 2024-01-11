@@ -20,6 +20,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
@@ -44,7 +45,7 @@ public class RTPWarpCommand {
         Vec2 rot = p.getRotationVector();
 
         TeleportDestination dest = new TeleportDestination(new Vector3(position), new Vector2(rot), p.serverLevel());
-        Warp warp = new Warp(p.getUUID(), string, true, true, dest);
+        Warp warp = new Warp(p.getUUID(), string, true, true, dest, new ItemStack(p.getBlockStateOn().getBlock().asItem()));
         WarpCreatedEvent event = new WarpCreatedEvent(warp);
         if(MinecraftForge.EVENT_BUS.post(event))
         {

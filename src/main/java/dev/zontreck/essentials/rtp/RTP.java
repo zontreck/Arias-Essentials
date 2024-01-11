@@ -52,7 +52,7 @@ public class RTP
     public WorldPosition position;
     private List<Block> BLACKLIST = Lists.of(Blocks.LAVA, Blocks.WATER, Blocks.BEDROCK);
     protected int tries;
-    protected int lastThreadDelay = 1;
+    protected int lastThreadDelay = 15;
 
     protected RTP withThreadDelay(int delay)
     {
@@ -136,52 +136,61 @@ public class RTP
             moveUp();
         }
     }
-
     public void newPosition() {
-        if(!AriasEssentials.ALIVE)return;
-        containingThread=Thread.currentThread();
-        if(tries>=30)return;
+        if (!AriasEssentials.ALIVE || tries >= 25) return;
+
+        containingThread = Thread.currentThread();
         AriasEssentials.LOGGER.info("RTP starts looking for new position");
+
         Random rng = new Random(Instant.now().getEpochSecond());
-        Vector3 pos = new Vector3(rng.nextDouble(0xFFFF), 0, rng.nextDouble(0xFFFF));
-        BlockPos bpos = pos.asBlockPos();
-        position.getActualDimension().getChunk(bpos.getX() >> 4, bpos.getZ() >> 4, ChunkStatus.SPAWN);
-        pos = new Vector3(
-                position.getActualDimension().getHeightmapPos(heightMapType, pos.asBlockPos()));
-        while (!position.getActualDimension().getWorldBorder().isWithinBounds(pos.asBlockPos())) {
-            pos = new Vector3(rng.nextDouble(0xffff), 0, rng.nextDouble(0xffff));
+
+        Vector3 pos;
+        BlockPos bpos;
+
+        do {
+            pos = new Vector3(rng.nextDouble(0xFFFF), 150, rng.nextDouble(0xFFFF));
+
+            pos = spiralPositions(pos);
+            position.Position = pos;
             bpos = pos.asBlockPos();
-            position.getActualDimension().getChunk(bpos.getX() >> 4, bpos.getZ() >> 4, ChunkStatus.SPAWN);
-            pos = new Vector3(
-                    position.getActualDimension().getHeightmapPos(heightMapType, pos.asBlockPos()));
-        }
+        } while (!isValidPosition(bpos));
 
-        position.Position = pos;
 
-        if (pos.y < -60) {
+        if (pos.y < -30 || pos.y >= position.getActualDimension().getLogicalHeight()) {
             newPosition();
             return;
-        }
-
-        if (pos.y >= position.getActualDimension().getLogicalHeight()) {
-            spiralPositions(pos);
         }
 
         tries++;
         AriasEssentials.LOGGER.info("RTP returns new position");
     }
 
-    private void spiralPositions(Vector3 position)
-    {
+    private boolean isValidPosition(BlockPos bpos) {
+        ServerLevel dimension = position.getActualDimension();
+        ChunkStatus status = ChunkStatus.SPAWN;
+
+        dimension.getChunk(bpos.getX() >> 4, bpos.getZ() >> 4, status);
+
+        Vector3 pos = new Vector3(dimension.getHeightmapPos(heightMapType, bpos));
+        return dimension.getWorldBorder().isWithinBounds(pos.asBlockPos());
+    }
+
+
+    private Vector3 spiralPositions(Vector3 position) {
         Vec3i posi = position.asMinecraftVec3i();
-        for(BlockPos pos : BlockPos.spiralAround(new BlockPos(posi.getX(), this.position.getActualDimension().getSeaLevel(), posi.getZ()), 16, Direction.WEST, Direction.NORTH)){
-            if(isSafe(pos)){
+        ServerLevel dimension = this.position.getActualDimension();
+        BlockPos startBlockPos = new BlockPos(posi.getX(), dimension.getSeaLevel(), posi.getZ());
+
+        for (BlockPos pos : BlockPos.spiralAround(startBlockPos, 16, Direction.WEST, Direction.NORTH)) {
+            if (isSafe(pos)) {
                 // Set the new position
-                this.position.Position = new Vector3(pos);
-                return;
+                return new Vector3(pos);
             }
         }
+
+        return position;
     }
+
 
     private boolean safe(BlockPos blockPos)
     {

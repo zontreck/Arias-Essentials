@@ -22,6 +22,7 @@ import dev.zontreck.libzontreck.chat.Clickable;
 import dev.zontreck.libzontreck.chat.HoverTip;
 import dev.zontreck.libzontreck.chestgui.ChestGUI;
 import dev.zontreck.libzontreck.chestgui.ChestGUIButton;
+import dev.zontreck.libzontreck.chestgui.ChestGUIIdentifier;
 import dev.zontreck.libzontreck.lore.LoreEntry;
 import dev.zontreck.libzontreck.profiles.Profile;
 import dev.zontreck.libzontreck.profiles.UserProfileNotYetExistsException;
@@ -39,7 +40,7 @@ import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.Mutable;
 
 public class WarpsCommand {
-    private static final ResourceLocation WARPS_GUI_ID = new ResourceLocation("ariasmods", "ess_warps");
+    private static final ChestGUIIdentifier WARPS_GUI_ID = new ChestGUIIdentifier("ess_warps");
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher)
     {
         dispatcher.register(Commands.literal("warps").executes(c-> warps(c.getSource())));
@@ -89,6 +90,30 @@ public class WarpsCommand {
             String appendType = (warpType == 0) ? Messages.WARP_STANDARD : Messages.WARP_RTP;
 
 
+            HoverEvent hover = HoverTip.get(ChatHelpers.macroize(appendType, warp.destination.Dimension));
+            ClickEvent click = Clickable.command("/warp "+warpName);
+
+            MutableComponent warpMsg = ChatHelpers.macro(ChatColor.GREEN + warpName + ChatColor.resetChat());
+
+            warpMsg = ChatHelpers.applyHoverEvent(warpMsg, hover);
+            // Now, display the warp name, along with the warp's owner information
+            HoverEvent h2 = HoverTip.get(
+                    ChatHelpers.macroize(Messages.WARP_HOVER_FORMAT,
+                            ChatHelpers.macroize(Messages.WARP_OWNER, prof.name_color, prof.nickname),
+                            ChatHelpers.macroize(Messages.WARP_ACCESS_FORMAT,
+                                    (warp.isPublic ? ChatHelpers.macroize(Messages.PUBLIC) : ChatHelpers.macroize(Messages.PRIVATE))
+                            )
+                    )
+
+            );
+            Component ownerInfo = ChatHelpers.applyHoverEvent(ChatHelpers.macro(Messages.HOVER_WARP_INFO), h2);
+
+
+            // Combine the two
+            warpMsg = warpMsg.copy().append(ownerInfo);
+            warpMsg = ChatHelpers.applyClickEvent(warpMsg, click);
+
+
             ChestGUIButton button = new ChestGUIButton(HeadUtilities.get(prof.username, warpName), ()->{
                 TeleportDestination dest = warp.destination;
                 if(warpType == 1)
@@ -114,7 +139,13 @@ public class WarpsCommand {
                             .build()
                     )
                     .withInfo(new LoreEntry.Builder().text(ChatHelpers.macro(appendType, warp.destination.Dimension).getString()).build());
-            chestGui.withButton(button);
+
+            if(warps.size() > 27)
+            {
+                // Say to person
+                ChatHelpers.broadcastTo(p, warpMsg, p.server);
+            }else
+                chestGui.withButton(button);
 
             iconY++;
             if(iconY>=9){
@@ -124,7 +155,8 @@ public class WarpsCommand {
 
         }
 
-        chestGui.open();
+        if(warps.size() < 27)
+            chestGui.open();
         
         return 0;
     }
