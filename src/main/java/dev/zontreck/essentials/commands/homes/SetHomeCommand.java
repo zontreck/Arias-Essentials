@@ -12,9 +12,10 @@ import dev.zontreck.essentials.AriasEssentials;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.commands.teleport.TeleportActioner;
 import dev.zontreck.essentials.commands.teleport.TeleportDestination;
-import dev.zontreck.essentials.configs.AEServerConfig;
+import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.essentials.homes.Home;
 import dev.zontreck.libzontreck.chat.ChatColor;
+import dev.zontreck.essentials.configs.server.AEServerConfig;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import dev.zontreck.libzontreck.vectors.Vector2;
 import dev.zontreck.libzontreck.vectors.Vector3;
@@ -25,6 +26,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.MinecraftForge;
 
 public class SetHomeCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher)
@@ -39,6 +41,12 @@ public class SetHomeCommand {
 
     private static int setHome(CommandSourceStack ctx, String homeName)
     {
+
+        var exec = new CommandExecutionEvent(ctx.getPlayer(), "sethome");
+        if(MinecraftForge.EVENT_BUS.post(exec))
+        {
+            return 0;
+        }
         // Request homes
 //        String homeName = "";
 //        CommandSourceStack ctx = ctx2.getSource();
@@ -52,7 +60,7 @@ public class SetHomeCommand {
 
             if(TeleportActioner.isBlacklistedDimension(p.serverLevel()))
             {
-                ChatHelpers.broadcastTo(p, ChatHelpers.macro(Messages.ESSENTIALS_PREFIX + AEServerConfig.BLACKLISTED_DIMENSION_ERROR.get()), p.server);
+                ChatHelpers.broadcastTo(p, ChatHelpers.macro(Messages.ESSENTIALS_PREFIX + AEServerConfig.getInstance().messages.BlacklistedDimensionError), p.server);
 
                 return 0;
             }

@@ -2,12 +2,14 @@ package dev.zontreck.essentials.commands.teleport;
 
 import com.mojang.brigadier.CommandDispatcher;
 
+import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.essentials.rtp.RandomPositionFactory;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.MinecraftForge;
 
 public class RTPCommand {
     
@@ -25,6 +27,11 @@ public class RTPCommand {
 
     private static int rtp(CommandSourceStack source) {
 
+        var exec = new CommandExecutionEvent(source.getPlayer(), "rtp");
+        if(MinecraftForge.EVENT_BUS.post(exec))
+        {
+            return 0;
+        }
         /*if(!CommandRegistry.canUse("rtp")) {
             ChatServerOverride.broadcastTo(source.getPlayer().getUUID(), Component.translatable("dev.zontreck.otemod.msgs.command_cooling_down").append(Component.literal(""+CommandRegistry.getRemaining("rtp"))).append(Component.translatable("dev.zontreck.otemod.msgs.command_cooling_down_seconds")), source.getServer());
 

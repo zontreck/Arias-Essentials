@@ -114,7 +114,7 @@ public class WarpsCommand {
             warpMsg = ChatHelpers.applyClickEvent(warpMsg, click);
 
 
-            ChestGUIButton button = new ChestGUIButton(HeadUtilities.get(prof.username, warpName), ()->{
+            ChestGUIButton button = new ChestGUIButton(HeadUtilities.get(prof.username, warpName), (stack, container, lore)->{
                 TeleportDestination dest = warp.destination;
                 if(warpType == 1)
                 {
@@ -126,7 +126,7 @@ public class WarpsCommand {
                 try {
                     TeleportActioner.ApplyTeleportEffect(p);
                     TeleportContainer tc = new TeleportContainer(p, dest.Position.asMinecraftVector(), dest.Rotation.asMinecraftVector(), dest.getActualDimension());
-                    TeleportActioner.PerformTeleport(tc);
+                    TeleportActioner.PerformTeleport(tc, false);
 
                 }catch(Exception e){
 
@@ -140,7 +140,7 @@ public class WarpsCommand {
                     )
                     .withInfo(new LoreEntry.Builder().text(ChatHelpers.macro(appendType, warp.destination.Dimension).getString()).build());
 
-            if(warps.size() > 27)
+            if(warps.size() > (2*9))
             {
                 // Say to person
                 ChatHelpers.broadcastTo(p, warpMsg, p.server);

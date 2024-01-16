@@ -5,6 +5,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import dev.zontreck.ariaslib.terminal.Task;
 import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.chat.Clickable;
 import dev.zontreck.libzontreck.chat.HoverTip;
@@ -19,6 +20,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.network.NetworkHooks;
 
 public class TPACommand {
@@ -34,6 +36,12 @@ public class TPACommand {
     }
 
     private static int tpa(CommandSourceStack source, ServerPlayer serverPlayer) {
+
+        var exec = new CommandExecutionEvent(source.getPlayer(), "tpa");
+        if(MinecraftForge.EVENT_BUS.post(exec))
+        {
+            return 0;
+        }
         // Send the request to player
         if(serverPlayer == null){
             source.sendFailure(ChatHelpers.macro(Messages.PLAYER_NOT_FOUND));

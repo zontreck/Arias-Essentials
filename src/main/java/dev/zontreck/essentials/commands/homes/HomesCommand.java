@@ -62,12 +62,12 @@ public class HomesCommand {
                 }
                 stack.setHoverName(Component.literal(string.homeName));
 
-                ChestGUIButton button = new ChestGUIButton(stack, ()-> {
+                ChestGUIButton button = new ChestGUIButton(stack, (stackx, container, lore)-> {
 
                     TeleportDestination dest = string.destination;
                     TeleportActioner.ApplyTeleportEffect(player);
                     TeleportContainer cont = new TeleportContainer(player, dest.Position.asMinecraftVector(), dest.Rotation.asMinecraftVector(), dest.getActualDimension());
-                    TeleportActioner.PerformTeleport(cont);
+                    TeleportActioner.PerformTeleport(cont, false);
                     gui.close();
                 }, new Vector2i(iconX, iconY))
                         .withInfo(new LoreEntry.Builder().text(ChatColor.doColors("!Dark_Green!Click here to go to this home")).build())
@@ -79,7 +79,7 @@ public class HomesCommand {
                     iconY=0;
                     iconX++;
                 }
-                if(homes.count() > 27)
+                if(homes.count() > (2*9))
                     ChatHelpers.broadcastTo(player.getUUID(), ChatHelpers.macro(Messages.HOME_FORMAT, string.homeName).setStyle(st), ctx.getSource().getServer());
                 else
                     gui.withButton(button); // Put this in the else case, to prevent a error when exceeding inventory slots

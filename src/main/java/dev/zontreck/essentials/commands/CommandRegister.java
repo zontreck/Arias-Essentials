@@ -41,5 +41,7 @@ public class CommandRegister {
         HeartsCommand.register(ev.getDispatcher());
         SpawnCommand.register(ev.getDispatcher());
         BackCommand.register(ev.getDispatcher());
+
+        TPEffectsCommand.register(ev.getDispatcher());
     }
 }

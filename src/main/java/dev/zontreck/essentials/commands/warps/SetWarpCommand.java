@@ -9,6 +9,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.commands.teleport.TeleportDestination;
+import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.essentials.events.WarpCreatedEvent;
 import dev.zontreck.essentials.warps.Warp;
 import dev.zontreck.essentials.warps.WarpsProvider;
@@ -38,7 +39,12 @@ public class SetWarpCommand {
     }
 
     private static int setWarp(CommandSourceStack source, String string) {
-        
+
+        var exec = new CommandExecutionEvent(source.getPlayer(), "setwarp");
+        if(MinecraftForge.EVENT_BUS.post(exec))
+        {
+            return 0;
+        }
         ServerPlayer p = (ServerPlayer)source.getEntity();
         
 

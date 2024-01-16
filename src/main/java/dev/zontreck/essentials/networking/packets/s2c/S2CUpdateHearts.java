@@ -1,6 +1,6 @@
 package dev.zontreck.essentials.networking.packets.s2c;
 
-import dev.zontreck.essentials.configs.AEClientConfig;
+import dev.zontreck.essentials.configs.client.AEClientConfig;
 import dev.zontreck.libzontreck.networking.packets.IPacket;
 import dev.zontreck.libzontreck.util.ServerUtilities;
 import net.minecraft.nbt.CompoundTag;
@@ -35,8 +35,8 @@ public class S2CUpdateHearts
         NetworkEvent.Context ctx=supplier.get();
 
         ctx.enqueueWork(()->{
-            AEClientConfig.ENABLE_HEARTS_RENDER.set(current);
-            AEClientConfig.ENABLE_HEARTS_RENDER.save();
+            AEClientConfig.getInstance().EnableHearts = current;
+            AEClientConfig.save();
         });
 
         return true;

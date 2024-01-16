@@ -7,28 +7,29 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
 import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.MinecraftForge;
 
 public class TPAcceptCommand {
     
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher)
     {
-        dispatcher.register(Commands.literal("tpaccept").then(Commands.argument("TeleportUUID", StringArgumentType.string()).executes(c->doCancel(c.getSource(), StringArgumentType.getString(c, "TeleportUUID")))));
-        
-        //executes(c -> doCancel(c.getSource())));
-        
-        //dispatcher.register(Commands.literal("sethome").then(Commands.argument("nickname", StringArgumentType.string())).executes(command -> {
-            //String arg = StringArgumentType.getString(command, "nickname");
-            //return setHome(command.getSource(), arg);
-        //}));
+        dispatcher.register(Commands.literal("tpaccept").then(Commands.argument("TeleportUUID", StringArgumentType.string()).executes(c->doAccept(c.getSource(), StringArgumentType.getString(c, "TeleportUUID")))));
     }
 
-    private static int doCancel(CommandSourceStack source, String TPID) {
+    private static int doAccept(CommandSourceStack source, String TPID) {
+
+        var exec = new CommandExecutionEvent(source.getPlayer(), "tpaccept");
+        if(MinecraftForge.EVENT_BUS.post(exec))
+        {
+            return 0;
+        }
         UUID teleporter = UUID.fromString(TPID);
         
         ServerPlayer play = (ServerPlayer)source.getEntity();
@@ -56,7 +57,7 @@ public class TPAcceptCommand {
                 cont.Dimension = to.serverLevel();
 
                 TeleportActioner.ApplyTeleportEffect(from);
-                TeleportActioner.PerformTeleport(cont);
+                TeleportActioner.PerformTeleport(cont, false);
                 return 0;
             }
         }

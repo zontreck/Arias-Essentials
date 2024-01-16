@@ -8,6 +8,7 @@ import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.commands.teleport.TeleportActioner;
 import dev.zontreck.essentials.commands.teleport.TeleportContainer;
 import dev.zontreck.essentials.commands.teleport.TeleportDestination;
+import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.essentials.rtp.RandomPositionFactory;
 import dev.zontreck.essentials.warps.NoSuchWarpException;
 import dev.zontreck.essentials.warps.Warp;
@@ -21,6 +22,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.MinecraftForge;
 
 public class WarpCommand {
     
@@ -62,6 +64,11 @@ public class WarpCommand {
 
                     if(type==1){
                         try {
+                            var exec = new CommandExecutionEvent(source.getPlayer(), "rtp");
+                            if(MinecraftForge.EVENT_BUS.post(exec))
+                            {
+                                return;
+                            }
                             dest.Position =  Vector3.ZERO;
                             RandomPositionFactory.beginRTP(p, f_dim);
                             return;
@@ -70,10 +77,16 @@ public class WarpCommand {
                             return;
                         }
                     }
+
+                    var exec = new CommandExecutionEvent(source.getPlayer(), "warp");
+                    if(MinecraftForge.EVENT_BUS.post(exec))
+                    {
+                        return;
+                    }
     
                     TeleportActioner.ApplyTeleportEffect(p);
                     TeleportContainer tc = new TeleportContainer(p, dest.Position.asMinecraftVector(), dest.Rotation.asMinecraftVector(), f_dim);
-                    TeleportActioner.PerformTeleport(tc);
+                    TeleportActioner.PerformTeleport(tc, false);
                 }
             });
             tx.start();

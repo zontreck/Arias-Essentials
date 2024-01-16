@@ -13,7 +13,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import dev.zontreck.essentials.AriasEssentials;
-import dev.zontreck.essentials.configs.AEClientConfig;
+import dev.zontreck.essentials.configs.client.AEClientConfig;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -96,7 +96,7 @@ public class HeartsRenderer {
                 }
             }
         }
-        if (event.isCanceled() || !AEClientConfig.ENABLE_HEARTS_RENDER.get() || event.getOverlay() != ActualOverlay) {
+        if (event.isCanceled() || !AEClientConfig.getInstance().EnableHearts || event.getOverlay() != ActualOverlay) {
             return;
         }
         // ensure its visible

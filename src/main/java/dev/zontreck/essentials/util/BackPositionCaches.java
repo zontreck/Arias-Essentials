@@ -1,7 +1,12 @@
 package dev.zontreck.essentials.util;
 
 
+import dev.zontreck.libzontreck.profiles.Profile;
+import dev.zontreck.libzontreck.profiles.UserProfileNotYetExistsException;
 import dev.zontreck.libzontreck.vectors.WorldPosition;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,18 +15,46 @@ import java.util.UUID;
 
 public class BackPositionCaches
 {
-    private static final Map<UUID, WorldPosition> backCaches = new HashMap<>();
     public static void Update(UUID ID, WorldPosition pos)
     {
-        backCaches.put(ID, pos);
+        try {
+            Profile prof = Profile.get_profile_of(ID.toString());
+            if(prof.NBT.contains("back_positions"))
+            {
+
+                ListTag backCaches = prof.NBT.getList("back_positions", CompoundTag.TAG_COMPOUND);
+                backCaches.add(pos.serialize());
+
+                prof.commit();
+            } else {
+                ListTag backCaches = new ListTag();
+                backCaches.add(pos.serialize());
+
+                prof.NBT.put("back_positions", backCaches);
+
+                prof.commit();
+            }
+        } catch (UserProfileNotYetExistsException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static WorldPosition Pop(UUID ID) throws Exception {
-        if(backCaches.containsKey(ID)) {
-            WorldPosition pos = backCaches.get(ID);
-            backCaches.remove(ID);
-            return pos;
-        }else throw new Exception("No such back cache");
+        Profile prof = Profile.get_profile_of(ID.toString());
+        if(prof.NBT.contains("back_positions"))
+        {
+            ListTag lst = prof.NBT.getList("back_positions", Tag.TAG_COMPOUND);
+            if(lst.size()>0)
+            {
+                WorldPosition pos = new WorldPosition(lst.getCompound(0), false);
+                lst.remove(0);
+
+                prof.commit();
+                return pos;
+            }else {
+                throw new Exception("No back cache");
+            }
+        } else throw new Exception("No back cache");
     }
 
 }

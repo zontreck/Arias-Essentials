@@ -4,6 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
 import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.essentials.warps.NoSuchWarpException;
 import dev.zontreck.essentials.warps.Warp;
 import dev.zontreck.essentials.warps.WarpsProvider;
@@ -12,6 +13,7 @@ import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.MinecraftForge;
 
 public class DelWarpCommand {
     
@@ -26,7 +28,14 @@ public class DelWarpCommand {
     }
 
     private static int setWarp(CommandSourceStack source, String string) {
-        
+
+        var exec = new CommandExecutionEvent(source.getPlayer(), "delwarp");
+        if(MinecraftForge.EVENT_BUS.post(exec))
+        {
+            return 0;
+        }
+
+
         ServerPlayer p = (ServerPlayer)source.getEntity();
 
         Warp warp;

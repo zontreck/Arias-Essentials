@@ -3,6 +3,7 @@ package dev.zontreck.essentials.commands.teleport;
 import com.mojang.brigadier.CommandDispatcher;
 
 import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -10,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.MinecraftForge;
 
 public class SpawnCommand {
 
@@ -24,6 +26,12 @@ public class SpawnCommand {
     }
 
     private static int respawn(CommandSourceStack source) {
+
+        var exec = new CommandExecutionEvent(source.getPlayer(), "spawn");
+        if(MinecraftForge.EVENT_BUS.post(exec))
+        {
+            return 0;
+        }
         ServerPlayer p = (ServerPlayer)source.getEntity();
 
         ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.RESPAWNING), p.server);
@@ -32,7 +40,7 @@ public class SpawnCommand {
 
         TeleportActioner.ApplyTeleportEffect(p);
         TeleportContainer cont = new TeleportContainer(p, new Vec3(spawn.getX(), spawn.getY(), spawn.getZ()), Vec2.ZERO, p.serverLevel());
-        TeleportActioner.PerformTeleport(cont);
+        TeleportActioner.PerformTeleport(cont, false);
 
 
         return 0;

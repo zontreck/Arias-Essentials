@@ -9,17 +9,21 @@ import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.commands.teleport.TeleportActioner;
 import dev.zontreck.essentials.commands.teleport.TeleportContainer;
 import dev.zontreck.essentials.commands.teleport.TeleportDestination;
+import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.essentials.homes.Home;
 import dev.zontreck.essentials.exceptions.NoSuchHomeException;
+import dev.zontreck.essentials.homes.HomesSuggestionProvider;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.MinecraftForge;
 
 public class HomeCommand {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher)
     {
-        dispatcher.register(Commands.literal("home").executes(c-> home(c.getSource(), "default")).then(Commands.argument("nickname", StringArgumentType.string()).executes(c -> home(c.getSource(), StringArgumentType.getString(c, "nickname")))));
+        dispatcher.register(Commands.literal("home").executes(c-> home(c.getSource(), "default"))
+                .then(Commands.argument("nickname", StringArgumentType.string()).suggests(HomesSuggestionProvider.PROVIDER).executes(c -> home(c.getSource(), StringArgumentType.getString(c, "nickname")))));
         
         //dispatcher.register(Commands.literal("sethome").then(Commands.argument("nickname", StringArgumentType.string())).executes(command -> {
             //String arg = StringArgumentType.getString(command, "nickname");
@@ -29,6 +33,11 @@ public class HomeCommand {
 
     private static int home(CommandSourceStack ctx, String homeName)
     {
+        var exec = new CommandExecutionEvent(ctx.getPlayer(), "home");
+        if(MinecraftForge.EVENT_BUS.post(exec))
+        {
+            return 0;
+        }
         // Request homes
 //        String homeName = "";
 //        CommandSourceStack ctx = ctx2.getSource();
@@ -53,7 +62,7 @@ public class HomeCommand {
             TeleportDestination dest = home.destination;
             TeleportActioner.ApplyTeleportEffect(p);
             TeleportContainer cont = new TeleportContainer(p, dest.Position.asMinecraftVector(), dest.Rotation.asMinecraftVector(), dest.getActualDimension());
-            TeleportActioner.PerformTeleport(cont);
+            TeleportActioner.PerformTeleport(cont,false);
 
             ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.TELEPORTING_HOME), ctx.getServer());
         }catch(CommandSyntaxException e)

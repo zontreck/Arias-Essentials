@@ -5,6 +5,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import dev.zontreck.ariaslib.terminal.Task;
 import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.Messages;
+import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.chat.Clickable;
 import dev.zontreck.libzontreck.chat.HoverTip;
@@ -16,6 +17,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.*;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.MinecraftForge;
 
 public class TPAHereCommand {
     
@@ -30,6 +32,12 @@ public class TPAHereCommand {
     }
 
     private static int tpa(CommandSourceStack source, ServerPlayer serverPlayer) {
+
+        var exec = new CommandExecutionEvent(source.getPlayer(), "tpahere");
+        if(MinecraftForge.EVENT_BUS.post(exec))
+        {
+            return 0;
+        }
         // Send the request to player
 
         ServerPlayer play = (ServerPlayer)source.getEntity();

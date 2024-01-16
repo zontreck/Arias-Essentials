@@ -9,20 +9,26 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class TeleportRunnable extends Task
 {
-    
+
+    public final boolean IgnoreEvent;
     public final TeleportContainer Action;
-    public TeleportRunnable(TeleportContainer cont){
+    public TeleportRunnable(TeleportContainer cont, boolean eventless){
         super("TP",true);
         Action = cont;
+        IgnoreEvent=eventless;
     }
 
     @Override
     public void run() {
         Action.OldPosition = new WorldPosition(Action.PlayerInst);
 
-        if(MinecraftForge.EVENT_BUS.post(new TeleportEvent(Action)))
+        if(!IgnoreEvent)
         {
-            return;
+
+            if(MinecraftForge.EVENT_BUS.post(new TeleportEvent(Action)))
+            {
+                return;
+            }
         }
 
         Action.PlayerInst.teleportTo(Action.Dimension, Action.Position.x, Action.Position.y, Action.Position.z, Action.Rotation.y, Action.Rotation.x);

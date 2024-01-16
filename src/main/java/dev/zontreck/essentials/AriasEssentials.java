@@ -5,27 +5,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.Executor;
 
 import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.client.Keybindings;
 import dev.zontreck.essentials.commands.teleport.TeleportActioner;
-import dev.zontreck.essentials.configs.AEClientConfig;
-import dev.zontreck.essentials.configs.AEServerConfig;
+import dev.zontreck.essentials.configs.client.AEClientConfig;
+import dev.zontreck.essentials.configs.server.AEServerConfig;
 import dev.zontreck.essentials.events.TeleportEvent;
 import dev.zontreck.essentials.gui.HeartsRenderer;
 import dev.zontreck.essentials.networking.ModMessages;
 import dev.zontreck.essentials.rtp.RTPCaches;
 import dev.zontreck.essentials.rtp.RTPCachesEventHandlers;
 import dev.zontreck.essentials.util.BackPositionCaches;
+import dev.zontreck.essentials.util.CommandCooldowns;
+import dev.zontreck.libzontreck.util.ChatHelpers;
+import dev.zontreck.libzontreck.util.ServerUtilities;
 import dev.zontreck.libzontreck.vectors.WorldPosition;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.slf4j.Logger;
 
@@ -40,7 +42,6 @@ import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -62,11 +63,8 @@ public class AriasEssentials {
         bus.addListener(this::setup);
         DelayedExecutorService.setup();
 
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, AEServerConfig.SPEC, "arias-essentials-server.toml");
-
-
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AEClientConfig.SPEC, "arias-essentials-client.toml");
+        AEServerConfig.loadFromFile();
+        AEClientConfig.loadFromFile();
 
 
         
@@ -76,6 +74,7 @@ public class AriasEssentials {
         MinecraftForge.EVENT_BUS.register(new CommandRegister());
         MinecraftForge.EVENT_BUS.register(new ForgeEventsHandler());
         MinecraftForge.EVENT_BUS.register(new RTPCachesEventHandlers());
+        MinecraftForge.EVENT_BUS.register(new CommandCooldowns());
         MinecraftForge.EVENT_BUS.register(RTPCachesEventHandlers.class);
     }
 
@@ -86,8 +85,8 @@ public class AriasEssentials {
         {
             event.setCanceled(true);
         } else {
-            if(AEServerConfig.BACK_ALLOWS_LAST_TP.get())
-                BackPositionCaches.Update(event.getContainer().PlayerInst.getUUID(), event.getContainer().world_pos);
+            if(AEServerConfig.getInstance().back.Enabled && AEServerConfig.getInstance().back.EnabledForTp)
+                BackPositionCaches.Update(event.getContainer().PlayerInst.getUUID(), event.getContainer().OldPosition);
         }
     }
 
@@ -120,11 +119,17 @@ public class AriasEssentials {
     @SubscribeEvent (priority = EventPriority.HIGHEST)
     public void onPlayerDied(final LivingDeathEvent ev)
     {
-        if(ev.getEntity() instanceof ServerPlayer sp)
+        if(ev.getEntity() instanceof Player p)
         {
-            // Update player back position!
-            WorldPosition wp = new WorldPosition(sp);
-            BackPositionCaches.Update(sp.getUUID(), wp);
+            if(ServerUtilities.isServer())
+            {
+                ServerPlayer sp = ServerUtilities.getPlayerByID(p.getUUID().toString());
+                // Update player back position!
+                WorldPosition wp = new WorldPosition(sp);
+                BackPositionCaches.Update(sp.getUUID(), wp);
+
+                ChatHelpers.broadcastTo(p, ChatHelpers.macro(Messages.USE_BACK_INTRO), sp.server);
+            }
         }
     }
 

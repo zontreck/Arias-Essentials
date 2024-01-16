@@ -39,6 +39,6 @@ public class RandomPositionFactory {
         TeleportActioner.ApplyTeleportEffect(player);
         TeleportContainer cont = new TeleportContainer(player, tmp.position.Position.asMinecraftVector(), player.getRotationVector(), level);
 
-        TeleportActioner.PerformTeleport(cont);
+        TeleportActioner.PerformTeleport(cont, false);
     }
 }

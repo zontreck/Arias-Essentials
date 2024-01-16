@@ -75,6 +75,9 @@ public class Messages {
     public static final String TELEPORT_BACK_DISABLED;
     public static final String TELEPORT_BACK_LAST;
     public static final String TELEPORT_BACK_NO_LAST;
+    public static final String USE_BACK_INTRO;
+    public static final String COOLDOWN_IN_PROGRESS;
+    public static final String TP_EFFECTS_TOGGLED;
 
 
     static{
@@ -164,5 +167,10 @@ public class Messages {
 
         TELEPORT_BACK_LAST = ESSENTIALS_PREFIX + "!Dark_Purple!You are being taken back to your last death or teleport location.";
 
+        USE_BACK_INTRO = ESSENTIALS_PREFIX + "!Dark_Purple!You died! Use the !Dark_Red!/back!Dark_Purple! command to go back to your last death location";
+
+        COOLDOWN_IN_PROGRESS = ESSENTIALS_PREFIX + "!Dark_Red!The command [0] is still on cooldown for another [1]";
+
+        TP_EFFECTS_TOGGLED = ESSENTIALS_PREFIX + "!Dark_Purple!The teleport effects preferences have been toggled to: [0]";
     }
 }
