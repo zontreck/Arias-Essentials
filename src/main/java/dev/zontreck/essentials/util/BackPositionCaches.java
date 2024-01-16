@@ -25,6 +25,11 @@ public class BackPositionCaches
                 ListTag backCaches = prof.NBT.getList("back_positions", CompoundTag.TAG_COMPOUND);
                 backCaches.add(pos.serialize());
 
+                while(backCaches.size()>10)
+                {
+                    backCaches.remove(backCaches.size()-1);
+                }
+
                 prof.commit();
             } else {
                 ListTag backCaches = new ListTag();
