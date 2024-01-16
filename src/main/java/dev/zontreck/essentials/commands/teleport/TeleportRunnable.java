@@ -36,7 +36,7 @@ public class TeleportRunnable extends Task
         Action.PlayerInst.onUpdateAbilities();
 
         DelayedExecutorService.getInstance().schedule(new Task("tp_action",true){
-            public TeleportContainer container=Action;
+            public final TeleportContainer container=Action;
             @Override
             public void run()
             {

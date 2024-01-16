@@ -80,7 +80,7 @@ public class TPAHereCommand {
 
         ce = Clickable.command("/tpaccept "+cont.TeleportID.toString());
         he = HoverTip.get(ChatColor.DARK_GREEN + "Accept tp request");
-        ClickEvent ce2 = Clickable.command("/tpdeny "+cont.TeleportID.toString());
+        ClickEvent ce2 = Clickable.command("/tpdeny "+ cont.TeleportID);
         HoverEvent he2 = HoverTip.get(ChatColor.DARK_RED+"Deny this request");
         s = Style.EMPTY.withFont(Style.DEFAULT_FONT).withClickEvent(ce).withHoverEvent(he);
 

@@ -22,7 +22,7 @@ public class RandomPositionFactory {
         RTP tmp = new RTP(level);
         tmp.position = new WorldPosition(new Vector3(0,0,0), WorldPosition.getDim(level));
         Thread tx = new Thread(new RandomPositionLocator(tmp));
-        tx.setName("RTPTask-"+String.valueOf(DelayedExecutorService.getNext()));
+        tx.setName("RTPTask-"+ DelayedExecutorService.getNext());
         tx.start();
 
         return tmp;

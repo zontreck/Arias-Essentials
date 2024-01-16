@@ -14,7 +14,7 @@ import net.minecraft.nbt.Tag;
 import net.minecraftforge.common.MinecraftForge;
 
 public class Homes {
-    private Map<String, Home> homes = new HashMap<>();
+    private final Map<String, Home> homes = new HashMap<>();
 
     public String playerID;
     public Homes(String playerID)

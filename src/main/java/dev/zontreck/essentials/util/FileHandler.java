@@ -19,7 +19,6 @@ public class FileHandler
         try {
             Files.write(Paths.get(filePath), newContent.getBytes());
         } catch (IOException e) {
-            return;
         }
     }
 }

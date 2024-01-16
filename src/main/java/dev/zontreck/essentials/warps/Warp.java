@@ -123,7 +123,8 @@ public class Warp {
         {
             ACLEntry entry = ACL.addEntry(name, ID);
             MinecraftForge.EVENT_BUS.post(new WarpAccessControlListUpdatedEvent(this, entry, true));
-        }else return;
+        }else {
+        }
     }
 
     /**

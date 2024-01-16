@@ -46,11 +46,11 @@ public class RTP
             SearchDirection=1;
         }
     }
-    private int SearchDirection;
+    private final int SearchDirection;
     private Thread containingThread;
-    private Heightmap.Types heightMapType;
+    private final Heightmap.Types heightMapType;
     public WorldPosition position;
-    private List<Block> BLACKLIST = Lists.of(Blocks.LAVA, Blocks.WATER, Blocks.BEDROCK);
+    private final List<Block> BLACKLIST = Lists.of(Blocks.LAVA, Blocks.WATER, Blocks.BEDROCK);
     protected int tries;
     protected int lastThreadDelay = 15;
 
@@ -64,10 +64,7 @@ public class RTP
     public boolean isDimension(ServerLevel level)
     {
         String dim = WorldPosition.getDim(level);
-        if(dim.equals(position.Dimension))
-        {
-            return true;
-        }else return false;
+        return dim.equals(position.Dimension);
     }
 
     /**
@@ -201,10 +198,7 @@ public class RTP
 
         if (b.isAir() && b2.isAir()) {
             if (!b3.isAir()) {
-                if (BLACKLIST.contains(b3.getBlock())) {
-                    return false;
-                } else
-                    return true;
+                return !BLACKLIST.contains(b3.getBlock());
             } else
                 return false;
         } else

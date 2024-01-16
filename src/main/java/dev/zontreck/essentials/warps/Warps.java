@@ -17,7 +17,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class Warps 
 {
-    private Map<String,Warp> warps = new HashMap<>();
+    private final Map<String,Warp> warps = new HashMap<>();
     
     private Warps(){
 

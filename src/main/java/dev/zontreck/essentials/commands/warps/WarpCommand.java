@@ -45,7 +45,7 @@ public class WarpCommand {
 
             TeleportDestination dest = warp.destination;
 
-            ServerLevel dimL=(ServerLevel) dest.getActualDimension();
+            ServerLevel dimL= dest.getActualDimension();
             
 
             final int type = warp.RTP ? 1 : 0;

@@ -26,10 +26,7 @@ public class TeleportActioner
     public static boolean isBlacklistedDimension(ServerLevel level)
     {
         WorldPosition pos = new WorldPosition(Vector3.ZERO, level);
-        if(AEServerConfig.getInstance().teleport.Blacklist.contains(pos.Dimension))
-        {
-            return true;
-        } else return false;
+        return AEServerConfig.getInstance().teleport.Blacklist.contains(pos.Dimension);
     }
 
     public static void ApplyTeleportEffect(ServerPlayer player){

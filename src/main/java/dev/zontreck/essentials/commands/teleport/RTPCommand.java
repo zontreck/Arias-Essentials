@@ -59,9 +59,8 @@ public class RTPCommand {
                 
                 //boolean found_place= false;
                 RandomPositionFactory.beginRTP(pla, pla.serverLevel());
-                return;
-                
-        
+
+
             }
         });
 

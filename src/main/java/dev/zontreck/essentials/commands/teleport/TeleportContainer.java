@@ -28,10 +28,7 @@ public class TeleportContainer implements Comparable{
     
     
     public boolean has_expired(){
-        if(Instant.now().getEpochSecond() > (StartedAt + (60)))
-        {
-            return true;
-        }else return false;
+        return Instant.now().getEpochSecond() > (StartedAt + (60));
     }
 
     public TeleportContainer (UUID From, UUID To)
@@ -58,8 +55,7 @@ public class TeleportContainer implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        if(o instanceof TeleportContainer){
-            TeleportContainer cont = (TeleportContainer)o;
+        if(o instanceof TeleportContainer cont){
             if(cont.FromPlayer != FromPlayer){
                 return -1;
             }else {

@@ -7,7 +7,7 @@ import net.minecraftforge.eventbus.api.Event;
 @Cancelable
 public class TeleportEvent extends Event
 {
-    private TeleportContainer container;
+    private final TeleportContainer container;
     public TeleportEvent(TeleportContainer container)
     {
         this.container=container;
