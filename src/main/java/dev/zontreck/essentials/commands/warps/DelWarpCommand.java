@@ -3,6 +3,7 @@ package dev.zontreck.essentials.commands.warps;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.essentials.warps.NoSuchWarpException;
@@ -29,7 +30,12 @@ public class DelWarpCommand {
 
     private static int setWarp(CommandSourceStack source, String string) {
 
-        var exec = new CommandExecutionEvent(source.getPlayer(), "delwarp");
+        CommandExecutionEvent exec = null;
+        try {
+            exec = new CommandExecutionEvent(source.getPlayerOrException(), "delwarp");
+        } catch (CommandSyntaxException e) {
+            throw new RuntimeException(e);
+        }
         if(MinecraftForge.EVENT_BUS.post(exec))
         {
             return 0;

@@ -11,6 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = AriasEssentials.MODID, value = Dist.CLIENT)
@@ -21,7 +22,7 @@ public class AutoWalk {
     static long lastPress;
 
     @SubscribeEvent
-    public static void onKeyPress(InputEvent.Key event) {
+    public static void onKeyPress(InputEvent.KeyInputEvent event) {
         if(Keybindings.AUTOWALK.matches(event.getKey(), event.getScanCode()) && Minecraft.getInstance().screen == null && Keybindings.AUTOWALK.isDown())
         {
             lastPress = Instant.now().getEpochSecond();
@@ -35,10 +36,10 @@ public class AutoWalk {
 
     private static void startWalking() {
         isWalking=true;
-        autoJump = Minecraft.getInstance().options.autoJump().get();
-        Minecraft.getInstance().options.autoJump().set(true);
+        autoJump = Minecraft.getInstance().options.autoJump;
+        Minecraft.getInstance().options.autoJump = true;
 
-        Minecraft.getInstance().player.sendSystemMessage(ChatHelpers.macro(Messages.ESSENTIALS_PREFIX + "!Dark_Green!AutoWalking started"));
+        Minecraft.getInstance().player.sendMessage(ChatHelpers.macro(Messages.ESSENTIALS_PREFIX + "!Dark_Green!AutoWalking started"), new UUID(0,0));
 
         runner = new Thread(()->{
             while(AutoWalk.isWalking)
@@ -54,10 +55,10 @@ public class AutoWalk {
         isWalking=false;
         runner.interrupt();
         runner=null;
-        Minecraft.getInstance().options.autoJump().set(autoJump);
+        Minecraft.getInstance().options.autoJump = autoJump;
         Minecraft.getInstance().options.keyUp.setDown(false);
 
-        Minecraft.getInstance().player.sendSystemMessage(ChatHelpers.macro(Messages.ESSENTIALS_PREFIX + "!Dark_Green!AutoWalking stopped"));
+        Minecraft.getInstance().player.sendMessage(ChatHelpers.macro(Messages.ESSENTIALS_PREFIX + "!Dark_Green!AutoWalking stopped"), new UUID(0,0));
 
     }
 }

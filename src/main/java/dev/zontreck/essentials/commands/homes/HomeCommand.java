@@ -33,7 +33,12 @@ public class HomeCommand {
 
     private static int home(CommandSourceStack ctx, String homeName)
     {
-        var exec = new CommandExecutionEvent(ctx.getPlayer(), "home");
+        CommandExecutionEvent exec = null;
+        try {
+            exec = new CommandExecutionEvent(ctx.getPlayerOrException(), "home");
+        } catch (CommandSyntaxException e) {
+            throw new RuntimeException(e);
+        }
         if(MinecraftForge.EVENT_BUS.post(exec))
         {
             return 0;

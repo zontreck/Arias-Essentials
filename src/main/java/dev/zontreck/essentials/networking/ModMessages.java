@@ -30,10 +30,10 @@ public class ModMessages {
 
 
         net.messageBuilder(S2CUpdateHearts.class, id(), NetworkDirection.PLAY_TO_CLIENT)
-                        .decoder(S2CUpdateHearts::new)
-                                .encoder(S2CUpdateHearts::toBytes)
-                                        .consumerMainThread(S2CUpdateHearts::handle)
-                                                .add();
+                    .decoder(S2CUpdateHearts::new)
+                    .encoder(S2CUpdateHearts::toBytes)
+                    .consumer(S2CUpdateHearts::handle)
+                    .add();
 
     }
 

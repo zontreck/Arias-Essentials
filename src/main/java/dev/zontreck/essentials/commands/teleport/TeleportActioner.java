@@ -3,9 +3,10 @@ package dev.zontreck.essentials.commands.teleport;
 import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.AriasEssentials;
 import dev.zontreck.essentials.configs.server.AEServerConfig;
+import dev.zontreck.libzontreck.profiles.Profile;
+import dev.zontreck.libzontreck.profiles.UserProfileNotYetExistsException;
 import dev.zontreck.libzontreck.vectors.Vector3;
 import dev.zontreck.libzontreck.vectors.WorldPosition;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.commands.EffectCommands;
 import net.minecraft.server.level.ServerLevel;
@@ -30,7 +31,16 @@ public class TeleportActioner
     }
 
     public static void ApplyTeleportEffect(ServerPlayer player){
-        if(isBlacklistedDimension(player.serverLevel())){
+        try {
+            Profile prof = Profile.get_profile_of(player.getStringUUID());
+            if(!prof.NBT.getBoolean("tpeffects"))
+            {
+                return;
+            }
+        } catch (UserProfileNotYetExistsException e) {
+            throw new RuntimeException(e);
+        }
+        if(isBlacklistedDimension(player.getLevel())){
             return;
         }
         // 10/05/2022 - Thinking ahead here to future proof it so i can do things in threads safely
@@ -43,7 +53,7 @@ public class TeleportActioner
                 for(int i = 0; i < effects.size(); i++) {
                     RegistryObject<MobEffect> effect = RegistryObject.create(new ResourceLocation(effects.get(i)), ForgeRegistries.MOB_EFFECTS);
 
-                    int duration = AriasEssentials.random.nextInt(5, 10) * 20;
+                    int duration = AriasEssentials.random.nextInt(2, 5) * 20;
                     int amplifier = AriasEssentials.random.nextInt(1, 3);
 
                     if (effects.get(i).equals("minecraft:slow_falling"))

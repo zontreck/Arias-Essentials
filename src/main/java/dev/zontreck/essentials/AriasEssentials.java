@@ -25,7 +25,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -143,13 +142,6 @@ public class AriasEssentials {
             LOGGER.info("Client setup");
 
             MinecraftForge.EVENT_BUS.register(new HeartsRenderer());
-        }
-
-        @OnlyIn(Dist.CLIENT)
-        @SubscribeEvent
-        public static void onRegisterKeyBinds(RegisterKeyMappingsEvent ev)
-        {
-            ev.register(Keybindings.AUTOWALK);
         }
 
     }

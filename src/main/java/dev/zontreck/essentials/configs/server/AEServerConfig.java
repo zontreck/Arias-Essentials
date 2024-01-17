@@ -87,7 +87,7 @@ public class AEServerConfig
         back = new Back();
         teleport = new Teleportation();
         teleport.Effects = Lists.of(
-                "minecraft:darkness",
+                "minecraft:blindness",
                 "minecraft:levitation",
                 "minecraft:slow_falling",
                 "minecraft:hunger"

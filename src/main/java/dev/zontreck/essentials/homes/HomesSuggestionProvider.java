@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class HomesSuggestionProvider {
     public static SuggestionProvider<CommandSourceStack> PROVIDER = (ctx,suggestionsBuilder)->{
-        Homes homes = HomesProvider.getHomesForPlayer(ctx.getSource().getPlayer().getUUID().toString());
+        Homes homes = HomesProvider.getHomesForPlayer(ctx.getSource().getPlayerOrException().getUUID().toString());
 
         List<String> homesList = new ArrayList<>();
 

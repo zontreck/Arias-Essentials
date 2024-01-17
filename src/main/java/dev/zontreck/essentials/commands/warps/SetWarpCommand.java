@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.commands.teleport.TeleportDestination;
 import dev.zontreck.essentials.events.CommandExecutionEvent;
@@ -40,7 +41,12 @@ public class SetWarpCommand {
 
     private static int setWarp(CommandSourceStack source, String string) {
 
-        var exec = new CommandExecutionEvent(source.getPlayer(), "setwarp");
+        CommandExecutionEvent exec = null;
+        try {
+            exec = new CommandExecutionEvent(source.getPlayerOrException(), "setwarp");
+        } catch (CommandSyntaxException e) {
+            throw new RuntimeException(e);
+        }
         if(MinecraftForge.EVENT_BUS.post(exec))
         {
             return 0;
@@ -51,8 +57,8 @@ public class SetWarpCommand {
         Vec3 position = p.position();
         Vec2 rot = p.getRotationVector();
 
-        TeleportDestination dest = new TeleportDestination(new Vector3(position), new Vector2(rot), p.serverLevel());
-        Warp w = new Warp(p.getUUID(), string, false, true, dest, new ItemStack(p.getBlockStateOn().getBlock().asItem()));
+        TeleportDestination dest = new TeleportDestination(new Vector3(position), new Vector2(rot), p.getLevel());
+        Warp w = new Warp(p.getUUID(), string, false, true, dest, new ItemStack(p.getFeetBlockState().getBlock().asItem()));
         WarpCreatedEvent event = new WarpCreatedEvent(w);
         if(MinecraftForge.EVENT_BUS.post(event)){
             ChatHelpers.broadcastTo(p.getUUID(), ChatHelpers.macro(Messages.WARP_CREATE_ERROR, event.denyReason), p.server);

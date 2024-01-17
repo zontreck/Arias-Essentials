@@ -2,6 +2,7 @@ package dev.zontreck.essentials.commands.teleport;
 
 import com.mojang.brigadier.CommandDispatcher;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.essentials.rtp.RandomPositionFactory;
 import net.minecraft.commands.CommandSourceStack;
@@ -27,7 +28,12 @@ public class RTPCommand {
 
     private static int rtp(CommandSourceStack source) {
 
-        var exec = new CommandExecutionEvent(source.getPlayer(), "rtp");
+        CommandExecutionEvent exec = null;
+        try {
+            exec = new CommandExecutionEvent(source.getPlayerOrException(), "rtp");
+        } catch (CommandSyntaxException e) {
+            throw new RuntimeException(e);
+        }
         if(MinecraftForge.EVENT_BUS.post(exec))
         {
             return 0;
@@ -58,7 +64,7 @@ public class RTPCommand {
                 Vec3 pos = pla.position();
                 
                 //boolean found_place= false;
-                RandomPositionFactory.beginRTP(pla, pla.serverLevel());
+                RandomPositionFactory.beginRTP(pla, pla.getLevel());
 
 
             }

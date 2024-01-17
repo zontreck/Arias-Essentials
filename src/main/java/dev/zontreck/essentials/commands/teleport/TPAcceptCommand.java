@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.libzontreck.chat.ChatColor;
@@ -25,7 +26,12 @@ public class TPAcceptCommand {
 
     private static int doAccept(CommandSourceStack source, String TPID) {
 
-        var exec = new CommandExecutionEvent(source.getPlayer(), "tpaccept");
+        CommandExecutionEvent exec = null;
+        try {
+            exec = new CommandExecutionEvent(source.getPlayerOrException(), "tpaccept");
+        } catch (CommandSyntaxException e) {
+            throw new RuntimeException(e);
+        }
         if(MinecraftForge.EVENT_BUS.post(exec))
         {
             return 0;
@@ -54,7 +60,7 @@ public class TPAcceptCommand {
                 cont.PlayerInst = from;
                 cont.Position = to.position();
                 cont.Rotation = to.getRotationVector();
-                cont.Dimension = to.serverLevel();
+                cont.Dimension = to.getLevel();
 
                 TeleportActioner.ApplyTeleportEffect(from);
                 TeleportActioner.PerformTeleport(cont, false);

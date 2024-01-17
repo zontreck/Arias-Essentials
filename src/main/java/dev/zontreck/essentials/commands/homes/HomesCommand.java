@@ -60,7 +60,7 @@ public class HomesCommand {
                 {
                     stack = new ItemStack(Items.GRASS_BLOCK, 1);
                 }
-                stack.setHoverName(Component.literal(string.homeName));
+                stack.setHoverName(ChatHelpers.macro(string.homeName));
 
                 ChestGUIButton button = new ChestGUIButton(stack, (stackx, container, lore)-> {
 

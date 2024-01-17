@@ -42,7 +42,12 @@ public class SetHomeCommand {
     private static int setHome(CommandSourceStack ctx, String homeName)
     {
 
-        var exec = new CommandExecutionEvent(ctx.getPlayer(), "sethome");
+        CommandExecutionEvent exec = null;
+        try {
+            exec = new CommandExecutionEvent(ctx.getPlayerOrException(), "sethome");
+        } catch (CommandSyntaxException e) {
+            throw new RuntimeException(e);
+        }
         if(MinecraftForge.EVENT_BUS.post(exec))
         {
             return 0;
@@ -58,7 +63,7 @@ public class SetHomeCommand {
             p = ctx.getPlayerOrException();
 
 
-            if(TeleportActioner.isBlacklistedDimension(p.serverLevel()))
+            if(TeleportActioner.isBlacklistedDimension(p.getLevel()))
             {
                 ChatHelpers.broadcastTo(p, ChatHelpers.macro(Messages.ESSENTIALS_PREFIX + AEServerConfig.getInstance().messages.BlacklistedDimensionError), p.server);
 
@@ -68,9 +73,9 @@ public class SetHomeCommand {
             Vec3 position = p.position();
             Vec2 rot = p.getRotationVector();
     
-            TeleportDestination dest = new TeleportDestination(new Vector3(position), new Vector2(rot), p.serverLevel());
+            TeleportDestination dest = new TeleportDestination(new Vector3(position), new Vector2(rot), p.getLevel());
     
-            Home newhome = new Home(p, homeName, dest, new ItemStack(p.getBlockStateOn().getBlock().asItem()));
+            Home newhome = new Home(p, homeName, dest, new ItemStack(p.getFeetBlockState().getBlock().asItem()));
             AriasEssentials.player_homes.get(p.getUUID()).add(newhome);
             
                 

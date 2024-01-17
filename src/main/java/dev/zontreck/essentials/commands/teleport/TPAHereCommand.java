@@ -2,6 +2,7 @@ package dev.zontreck.essentials.commands.teleport;
 
 import com.mojang.brigadier.CommandDispatcher;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.zontreck.ariaslib.terminal.Task;
 import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.Messages;
@@ -33,7 +34,12 @@ public class TPAHereCommand {
 
     private static int tpa(CommandSourceStack source, ServerPlayer serverPlayer) {
 
-        var exec = new CommandExecutionEvent(source.getPlayer(), "tpahere");
+        CommandExecutionEvent exec = null;
+        try {
+            exec = new CommandExecutionEvent(source.getPlayerOrException(), "tpahere");
+        } catch (CommandSyntaxException e) {
+            throw new RuntimeException(e);
+        }
         if(MinecraftForge.EVENT_BUS.post(exec))
         {
             return 0;
@@ -114,7 +120,7 @@ public class TPAHereCommand {
     }
 
     private static int usage(CommandSourceStack source) {
-        source.sendSystemMessage(ChatHelpers.macro("/tpahere USAGE\n\n      !Bold!!Dark_Gray!/tpahere !Dark_Red!target_player\n"));
+        ChatHelpers.broadcastTo(source.getEntity().getUUID(), ChatHelpers.macro("/tpahere USAGE\n\n      !Bold!!Dark_Gray!/tpahere !Dark_Red!target_player\n"), source.getServer());
         return 0;
     }
 }

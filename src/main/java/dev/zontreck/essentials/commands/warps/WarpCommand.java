@@ -64,7 +64,7 @@ public class WarpCommand {
 
                     if(type==1){
                         try {
-                            var exec = new CommandExecutionEvent(source.getPlayer(), "rtp");
+                            var exec = new CommandExecutionEvent(source.getPlayerOrException(), "rtp");
                             if(MinecraftForge.EVENT_BUS.post(exec))
                             {
                                 return;
@@ -78,7 +78,12 @@ public class WarpCommand {
                         }
                     }
 
-                    var exec = new CommandExecutionEvent(source.getPlayer(), "warp");
+                    CommandExecutionEvent exec = null;
+                    try {
+                        exec = new CommandExecutionEvent(source.getPlayerOrException(), "warp");
+                    } catch (CommandSyntaxException e) {
+                        throw new RuntimeException(e);
+                    }
                     if(MinecraftForge.EVENT_BUS.post(exec))
                     {
                         return;

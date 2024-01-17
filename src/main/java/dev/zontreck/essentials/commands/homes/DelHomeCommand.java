@@ -3,6 +3,7 @@ package dev.zontreck.essentials.commands.homes;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.zontreck.essentials.AriasEssentials;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.events.CommandExecutionEvent;
@@ -36,7 +37,12 @@ public class DelHomeCommand {
     private static int rmHome(CommandSourceStack ctx, String homeName)
     {
 
-        var exec = new CommandExecutionEvent(ctx.getPlayer(), "delhome");
+        CommandExecutionEvent exec = null;
+        try {
+            exec = new CommandExecutionEvent(ctx.getPlayerOrException(), "delhome");
+        } catch (CommandSyntaxException e) {
+            throw new RuntimeException(e);
+        }
         if(MinecraftForge.EVENT_BUS.post(exec))
         {
             return 0;

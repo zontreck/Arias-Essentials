@@ -4,7 +4,9 @@ import dev.zontreck.essentials.AriasEssentials;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.commands.teleport.TeleportActioner;
 import dev.zontreck.essentials.events.RTPFoundEvent;
+import dev.zontreck.libzontreck.LibZontreck;
 import dev.zontreck.libzontreck.util.ChatHelpers;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -19,6 +21,7 @@ public class RTPCachesEventHandlers
     {
         if(!AriasEssentials.ALIVE) return;
         lastTick++;
+        MinecraftServer server = LibZontreck.THE_SERVER;
         if(lastTick>=400)
         {
             lastTick=0;
@@ -31,7 +34,7 @@ public class RTPCachesEventHandlers
 
                     firstRun=false;
                     AriasEssentials.LOGGER.info("Aria's Essentials startup is running. Scanning for initial RTP locations");
-                    for(ServerLevel level : event.getServer().getAllLevels())
+                    for(ServerLevel level : server.getAllLevels())
                     {
                         if(AriasEssentials.DEBUG)
                         {

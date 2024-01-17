@@ -2,6 +2,7 @@ package dev.zontreck.essentials.commands.gui;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.essentials.networking.ModMessages;
@@ -9,6 +10,7 @@ import dev.zontreck.essentials.networking.packets.s2c.S2CUpdateHearts;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
 
 public class HeartsCommand
@@ -20,24 +22,31 @@ public class HeartsCommand
 
     private static int hearts(CommandSourceStack stack, boolean compressHearts)
     {
-        var exec = new CommandExecutionEvent(stack.getPlayer(), "hearts");
+
+        ServerPlayer player = null;
+        try {
+            player = stack.getPlayerOrException();
+        } catch (CommandSyntaxException e) {
+            throw new RuntimeException(e);
+        }
+        var exec = new CommandExecutionEvent(player, "hearts");
         if(MinecraftForge.EVENT_BUS.post(exec))
         {
             return 0;
         }
         // Send the state to the client, then update the config
         // Send feedback to the user
-        ChatHelpers.broadcastTo(stack.getPlayer().getUUID(), ChatHelpers.macro(Messages.HEARTS_UPDATED), stack.getServer());
+        ChatHelpers.broadcastTo(player.getUUID(), ChatHelpers.macro(Messages.HEARTS_UPDATED), stack.getServer());
 
         S2CUpdateHearts update = new S2CUpdateHearts(compressHearts);
-        ModMessages.sendToPlayer(update, stack.getPlayer());
+        ModMessages.sendToPlayer(update, player);
 
         return 0;
     }
 
     private static int usage(CommandSourceStack stack)
     {
-        ChatHelpers.broadcastTo(stack.getPlayer().getUUID(), ChatHelpers.macro(Messages.HEARTS_USAGE), stack.getServer());
+        ChatHelpers.broadcastTo(stack.getEntity().getUUID(), ChatHelpers.macro(Messages.HEARTS_USAGE), stack.getServer());
 
 
         return 0;

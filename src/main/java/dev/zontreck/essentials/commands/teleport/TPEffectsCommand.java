@@ -2,6 +2,7 @@ package dev.zontreck.essentials.commands.teleport;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.zontreck.libzontreck.chestgui.ChestGUI;
 import dev.zontreck.libzontreck.chestgui.ChestGUIButton;
 import dev.zontreck.libzontreck.chestgui.ChestGUIIdentifier;
@@ -25,7 +26,12 @@ public class TPEffectsCommand
 
     public static int tpeffects(CommandSourceStack source, boolean enabled)
     {
-        ServerPlayer player = source.getPlayer();
+        ServerPlayer player = null;
+        try {
+            player = source.getPlayerOrException();
+        } catch (CommandSyntaxException e) {
+            throw new RuntimeException(e);
+        }
 
         try {
             Profile prof = Profile.get_profile_of(player.getStringUUID());
