@@ -25,7 +25,7 @@ public class RTP {
     private static final List<Block> BLACKLIST = Lists.of(Blocks.LAVA, Blocks.WATER, Blocks.BEDROCK);
     private final int SEARCH_DIRECTION;
     private final Heightmap.Types heightMapType;
-    private final WorldPosition position;
+    public WorldPosition position;
     private final ServerLevel dimension;
     private int tries;
 
@@ -99,7 +99,7 @@ public class RTP {
     }
 
     public void newPosition() {
-        if (!AriasEssentials.ALIVE || tries >= 25) return;
+        if (!AriasEssentials.ALIVE || tries >= 5) return;
 
         AriasEssentials.LOGGER.info("RTP starts looking for a new position");
 
@@ -109,17 +109,12 @@ public class RTP {
         BlockPos bpos;
 
         do {
-            pos = new Vector3(rng.nextDouble(0xFFFF), 150, rng.nextDouble(0xFFFF));
+            pos = new Vector3(rng.nextDouble(0xFFFF), -60, rng.nextDouble(0xFFFF));
 
             pos = spiralPositions(pos);
             position.Position = pos;
             bpos = pos.asBlockPos();
         } while (!isValidPosition(bpos));
-
-        if (pos.y < -30 || pos.y >= position.getActualDimension().getLogicalHeight()) {
-            newPosition();
-            return;
-        }
 
         tries++;
         AriasEssentials.LOGGER.info("RTP returns a new position");
