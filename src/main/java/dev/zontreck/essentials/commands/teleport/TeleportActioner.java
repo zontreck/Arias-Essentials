@@ -33,7 +33,7 @@ public class TeleportActioner
     public static void ApplyTeleportEffect(ServerPlayer player){
         try {
             Profile prof = Profile.get_profile_of(player.getStringUUID());
-            if(!prof.NBT.getBoolean("tpeffects"))
+            if(prof.NBT.getBoolean("tpeffects"))
             {
                 return;
             }

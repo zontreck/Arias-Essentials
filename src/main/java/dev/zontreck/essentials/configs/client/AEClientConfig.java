@@ -1,8 +1,9 @@
 package dev.zontreck.essentials.configs.client;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import dev.zontreck.ariaslib.util.FileIO;
 import dev.zontreck.essentials.util.EssentialsDatastore;
-import dev.zontreck.essentials.util.FileHandler;
+import dev.zontreck.libzontreck.util.SNbtIo;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 
@@ -30,16 +31,7 @@ public class AEClientConfig
         Path serverConfig = EssentialsDatastore.of("client.snbt");
         if(serverConfig.toFile().exists())
         {
-
-            try {
-                String snbt = FileHandler.readFile(serverConfig.toFile().getAbsolutePath());
-
-                inst = deserialize(NbtUtils.snbtToStructure(snbt));
-
-
-            } catch (CommandSyntaxException e) {
-                throw new RuntimeException(e);
-            }
+            inst = deserialize(SNbtIo.loadSnbt(serverConfig));
         }else {
             initNewConfig();
         }
@@ -68,9 +60,8 @@ public class AEClientConfig
 
         CompoundTag tag = inst.serialize();
 
-        var snbt = NbtUtils.structureToSnbt(tag);
 
-        FileHandler.writeFile(serverConfig.toFile().getAbsolutePath(), snbt);
+        SNbtIo.writeSnbt(serverConfig, tag);
     }
 
     public CompoundTag serialize()
