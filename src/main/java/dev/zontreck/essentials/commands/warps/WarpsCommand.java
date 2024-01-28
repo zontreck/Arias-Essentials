@@ -140,11 +140,8 @@ public class WarpsCommand {
                     )
                     .withInfo(new LoreEntry.Builder().text(ChatHelpers.macro(appendType, warp.destination.Dimension).getString()).build());
 
-            if(warps.size() > (2*9))
-            {
-                // Say to person
-                ChatHelpers.broadcastTo(p, warpMsg, p.server);
-            }else
+            ChatHelpers.broadcastTo(p, warpMsg, p.server);
+            if(!(warps.size() > (2*9)))
                 chestGui.withButton(button);
 
             iconY++;
