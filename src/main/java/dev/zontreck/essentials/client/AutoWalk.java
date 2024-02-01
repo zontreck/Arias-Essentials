@@ -22,7 +22,7 @@ public class AutoWalk {
     static long lastPress;
 
     @SubscribeEvent
-    public static void onKeyPress(InputEvent.KeyInputEvent event) {
+    public static void onKeyPress(InputEvent.Key event) {
         if(Keybindings.AUTOWALK.matches(event.getKey(), event.getScanCode()) && Minecraft.getInstance().screen == null && Keybindings.AUTOWALK.isDown())
         {
             lastPress = Instant.now().getEpochSecond();
@@ -36,10 +36,11 @@ public class AutoWalk {
 
     private static void startWalking() {
         isWalking=true;
-        autoJump = Minecraft.getInstance().options.autoJump;
-        Minecraft.getInstance().options.autoJump = true;
+        autoJump = Minecraft.getInstance().options.autoJump().get();
+        Minecraft.getInstance().options.autoJump().set(true);
 
-        Minecraft.getInstance().player.sendMessage(ChatHelpers.macro(Messages.ESSENTIALS_PREFIX + "!Dark_Green!AutoWalking started"), new UUID(0,0));
+
+        Minecraft.getInstance().player.displayClientMessage(ChatHelpers.macro(Messages.ESSENTIALS_PREFIX + "!Dark_Green!AutoWalking started"), false);
 
         runner = new Thread(()->{
             while(AutoWalk.isWalking)
@@ -55,10 +56,10 @@ public class AutoWalk {
         isWalking=false;
         runner.interrupt();
         runner=null;
-        Minecraft.getInstance().options.autoJump = autoJump;
+        Minecraft.getInstance().options.autoJump().set(autoJump);
         Minecraft.getInstance().options.keyUp.setDown(false);
 
-        Minecraft.getInstance().player.sendMessage(ChatHelpers.macro(Messages.ESSENTIALS_PREFIX + "!Dark_Green!AutoWalking stopped"), new UUID(0,0));
+        Minecraft.getInstance().player.displayClientMessage(ChatHelpers.macro(Messages.ESSENTIALS_PREFIX + "!Dark_Green!AutoWalking stopped"), false);
 
     }
 }
