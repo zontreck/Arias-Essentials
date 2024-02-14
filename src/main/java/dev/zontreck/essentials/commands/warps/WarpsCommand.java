@@ -140,6 +140,7 @@ public class WarpsCommand {
                     )
                     .withInfo(new LoreEntry.Builder().text(ChatHelpers.macro(appendType, warp.destination.Dimension).getString()).build());
 
+            ChatHelpers.broadcastTo(p, warpMsg, p.server);
             if(warps.size() > (2*9))
             {
                 // Say to person

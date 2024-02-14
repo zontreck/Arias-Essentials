@@ -24,6 +24,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
@@ -69,6 +70,7 @@ public class SetHomeCommand {
             Vec2 rot = p.getRotationVector();
     
             TeleportDestination dest = new TeleportDestination(new Vector3(position), new Vector2(rot), p.serverLevel());
+            BlockState bs = p.serverLevel().getBlockState(dest.Position.moveDown().asBlockPos());
     
             Home newhome = new Home(p, homeName, dest, new ItemStack(p.getBlockStateOn().getBlock().asItem()));
             AriasEssentials.player_homes.get(p.getUUID()).add(newhome);

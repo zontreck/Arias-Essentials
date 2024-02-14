@@ -20,6 +20,7 @@ public class HeartsCommand
 
     private static int hearts(CommandSourceStack stack, boolean compressHearts)
     {
+
         var exec = new CommandExecutionEvent(stack.getPlayer(), "hearts");
         if(MinecraftForge.EVENT_BUS.post(exec))
         {

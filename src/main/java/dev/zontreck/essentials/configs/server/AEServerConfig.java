@@ -1,17 +1,14 @@
 package dev.zontreck.essentials.configs.server;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import dev.zontreck.ariaslib.util.Lists;
 import dev.zontreck.essentials.configs.server.sections.*;
 import dev.zontreck.essentials.util.EssentialsDatastore;
-import dev.zontreck.essentials.util.FileHandler;
 import dev.zontreck.essentials.util.Maps;
+import dev.zontreck.libzontreck.util.SNbtIo;
 import net.minecraft.nbt.*;
 
-import java.io.*;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AEServerConfig
@@ -51,16 +48,7 @@ public class AEServerConfig
         Path serverConfig = EssentialsDatastore.of("server.snbt");
         if(serverConfig.toFile().exists())
         {
-
-            try {
-                String snbt = FileHandler.readFile(serverConfig.toFile().getAbsolutePath());
-
-                inst = deserialize(NbtUtils.snbtToStructure(snbt));
-
-
-            } catch (CommandSyntaxException e) {
-                throw new RuntimeException(e);
-            }
+            inst = deserialize(SNbtIo.loadSnbt(serverConfig));
         }else {
             initNewConfig();
         }
@@ -111,10 +99,7 @@ public class AEServerConfig
         Path serverConfig = EssentialsDatastore.of("server.snbt", false);
 
         CompoundTag tag = inst.serialize();
-
-        var snbt = NbtUtils.structureToSnbt(tag);
-
-        FileHandler.writeFile(serverConfig.toFile().getAbsolutePath(), snbt);
+        SNbtIo.writeSnbt(serverConfig, tag);
     }
 
     public CompoundTag serialize()

@@ -51,7 +51,7 @@ public class RTPWarpCommand {
         Vec2 rot = p.getRotationVector();
 
         TeleportDestination dest = new TeleportDestination(new Vector3(position), new Vector2(rot), p.serverLevel());
-        Warp warp = new Warp(p.getUUID(), string, true, true, dest, new ItemStack(p.getBlockStateOn().getBlock().asItem()));
+        Warp warp = new Warp(p.getUUID(), string, true, true, dest, new ItemStack(p.getFeetBlockState().getBlock().asItem()));
         WarpCreatedEvent event = new WarpCreatedEvent(warp);
         if(MinecraftForge.EVENT_BUS.post(event))
         {
