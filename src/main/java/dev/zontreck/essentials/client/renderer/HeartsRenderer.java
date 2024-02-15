@@ -7,7 +7,7 @@
  *
  */
 
-package dev.zontreck.essentials.gui;
+package dev.zontreck.essentials.client.renderer;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;

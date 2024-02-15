@@ -1,4 +1,9 @@
 {
+  "itemGroup.tabs.ariasessentials": "Aria's Essentials",
+
+  "item.ariasessentials.tiab": "Time in a Bottle",
+  "item.ariasessentials.eiab": "Energy in a Bottle",
+
   "key.category.ariasessentials": "Aria's Essentials",
   "key.ariasessentials.autowalk": "Auto Walk"
 }

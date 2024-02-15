@@ -8,11 +8,15 @@ import java.util.UUID;
 
 import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.client.Keybindings;
+import dev.zontreck.essentials.client.renderer.TimeBoostEntityRenderer;
 import dev.zontreck.essentials.commands.teleport.TeleportActioner;
 import dev.zontreck.essentials.configs.client.AEClientConfig;
 import dev.zontreck.essentials.configs.server.AEServerConfig;
+import dev.zontreck.essentials.entities.ModEntities;
 import dev.zontreck.essentials.events.TeleportEvent;
-import dev.zontreck.essentials.gui.HeartsRenderer;
+import dev.zontreck.essentials.client.renderer.HeartsRenderer;
+import dev.zontreck.essentials.items.CreativeModeTabs;
+import dev.zontreck.essentials.items.ModItems;
 import dev.zontreck.essentials.networking.ModMessages;
 import dev.zontreck.essentials.rtp.RTPCaches;
 import dev.zontreck.essentials.rtp.RTPCachesEventHandlers;
@@ -21,6 +25,7 @@ import dev.zontreck.essentials.util.CommandCooldowns;
 import dev.zontreck.libzontreck.util.ChatHelpers;
 import dev.zontreck.libzontreck.util.ServerUtilities;
 import dev.zontreck.libzontreck.vectors.WorldPosition;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
@@ -76,6 +81,10 @@ public class AriasEssentials {
         MinecraftForge.EVENT_BUS.register(new RTPCachesEventHandlers());
         MinecraftForge.EVENT_BUS.register(new CommandCooldowns());
         MinecraftForge.EVENT_BUS.register(RTPCachesEventHandlers.class);
+
+        ModItems.register(bus);
+        ModEntities.register(bus);
+        CreativeModeTabs.register(bus);
     }
 
     @SubscribeEvent
@@ -142,6 +151,7 @@ public class AriasEssentials {
 
             LOGGER.info("Client setup");
 
+            EntityRenderers.register(ModEntities.TIAB_ENTITY.get(), TimeBoostEntityRenderer::new);
             MinecraftForge.EVENT_BUS.register(new HeartsRenderer());
         }
 

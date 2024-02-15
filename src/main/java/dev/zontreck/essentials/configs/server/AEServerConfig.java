@@ -4,6 +4,7 @@ import dev.zontreck.ariaslib.util.Lists;
 import dev.zontreck.essentials.configs.server.sections.*;
 import dev.zontreck.essentials.util.EssentialsDatastore;
 import dev.zontreck.essentials.util.Maps;
+import dev.zontreck.libzontreck.chat.ChatColor;
 import dev.zontreck.libzontreck.util.SNbtIo;
 import net.minecraft.nbt.*;
 
@@ -20,6 +21,7 @@ public class AEServerConfig
     public Back back;
     public Teleportation teleport;
     public Messages messages;
+    public Bottles bottles;
 
 
 
@@ -38,6 +40,10 @@ public class AEServerConfig
         config.back = Back.deserialize(tag.getCompound(Back.TAG_NAME));
         config.teleport = Teleportation.deserialize(tag.getCompound(Teleportation.TAG_NAME));
         config.messages = Messages.deserialize(tag.getCompound(Messages.TAG_NAME));
+        if(tag.contains(Bottles.TAG_NAME))
+        {
+            config.bottles = Bottles.deserialize(tag.getCompound(Bottles.TAG_NAME));
+        } else config.bottles = new Bottles();
 
 
         return config;
@@ -88,6 +94,7 @@ public class AEServerConfig
                 "witherstormmod:bowels"
         );
         messages = new Messages();
+        bottles = new Bottles();
 
 
 
@@ -116,6 +123,7 @@ public class AEServerConfig
         tag.put(Back.TAG_NAME, back.serialize());
         tag.put(Teleportation.TAG_NAME, teleport.serialize());
         tag.put(Messages.TAG_NAME, messages.serialize());
+        tag.put(Bottles.TAG_NAME, bottles.serialize());
 
 
 
