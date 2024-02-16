@@ -12,6 +12,7 @@ public class Bottles {
 
     public static final String TAG_MESSAGE_STORED_TIME = "msg_storedTime";
     public static final String TAG_MESSAGE_ACCUMULATED_TIME = "msg_accumulatedTime";
+    public static final String TAG_TOTAL_USES = "msg_totalUses";
 
 
 
@@ -21,8 +22,9 @@ public class Bottles {
     public int avgRandomTicks = 512;
     public int maxTimeRate = 8;
     public int maxTime = (60 * 60 * 24 * 30); // 30 days is the default
-    public String storedTimeStr = "!Dark_Green!Stored Time: [0]:[1]:[2]";
-    public String accumulatedTimeStr = "!Gray!Total Accumulated Time: [0]:[1]:[2]";
+    public String storedTimeStr = "!Dark_Green!Stored Time: [0]";
+    public String accumulatedTimeStr = "!Gray!Total Accumulated Time: [0]";
+    public String totalUses = "!Dark_Red!Total available uses: [0]";
 
 
 
@@ -35,6 +37,7 @@ public class Bottles {
         tag.putInt(TAG_MAX_TIME_RATE, maxTimeRate);
         tag.putString(TAG_MESSAGE_STORED_TIME, storedTimeStr);
         tag.putString(TAG_MESSAGE_ACCUMULATED_TIME, accumulatedTimeStr);
+        tag.putString(TAG_TOTAL_USES, totalUses);
         tag.putInt(TAG_STORED_TIME, maxTime);
 
 
@@ -66,6 +69,9 @@ public class Bottles {
 
         if(tag.contains(TAG_STORED_TIME))
             bottles.maxTime = tag.getInt(TAG_STORED_TIME);
+
+        if(tag.contains(TAG_TOTAL_USES))
+            bottles.totalUses = tag.getString(TAG_TOTAL_USES);
 
 
 

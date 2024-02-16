@@ -1,5 +1,6 @@
 package dev.zontreck.essentials.items.implementation;
 
+import dev.zontreck.ariaslib.util.TimeUtil;
 import dev.zontreck.essentials.configs.NBTKeys;
 import dev.zontreck.essentials.configs.server.AEServerConfig;
 import dev.zontreck.essentials.items.abstraction.AbstractBottle;
@@ -42,20 +43,14 @@ public class TimeBottle extends AbstractBottle
         super.appendHoverText(itemStack, world, tooltip, flag);
 
         int storedTime = this.getStoredEnergy(itemStack);
-        int storedSeconds = storedTime / AEServerConfig.getInstance().bottles.ticks;
-        int hours = storedSeconds / 3600;
-        int minutes = (storedSeconds % 3600) / 60;
-        int seconds = storedSeconds % 60;
 
         int totalAccumulatedTime = this.getTotalAccumulatedTime(itemStack);
-        int totalAccumulatedTimeSeconds = totalAccumulatedTime / AEServerConfig.getInstance().bottles.ticks;
-        int totalAccumulatedHours = totalAccumulatedTimeSeconds / 3600;
-        int totalAccumulatedMinutes = (totalAccumulatedTimeSeconds % 3600) / 60;
-        int totalAccumulatedSeconds = totalAccumulatedTimeSeconds % 60;
 
-        tooltip.add(ChatHelpers.macro(AEServerConfig.getInstance().bottles.storedTimeStr, "" + hours, "" + minutes, "" + seconds));
+        tooltip.add(ChatHelpers.macro(AEServerConfig.getInstance().bottles.storedTimeStr, TimeUtil.secondsToTimeNotation(TimeUtil.ticksToSeconds(storedTime, AEServerConfig.getInstance().bottles.ticks)).toString()));
 
-        tooltip.add(ChatHelpers.macro(AEServerConfig.getInstance().bottles.accumulatedTimeStr, "" + totalAccumulatedHours, "" + totalAccumulatedMinutes, "" + totalAccumulatedSeconds));
+        tooltip.add(ChatHelpers.macro(AEServerConfig.getInstance().bottles.accumulatedTimeStr, TimeUtil.secondsToTimeNotation(TimeUtil.ticksToSeconds(totalAccumulatedTime, AEServerConfig.getInstance().bottles.ticks)).toString()));
+
+        tooltip.add(ChatHelpers.macro(AEServerConfig.getInstance().bottles.totalUses, "" + TimeUtil.ticksToSeconds(storedTime, AEServerConfig.getInstance().bottles.ticks) / AEServerConfig.getInstance().bottles.eachUseDuration));
     }
 
     @Override
