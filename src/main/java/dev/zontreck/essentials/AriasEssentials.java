@@ -15,6 +15,7 @@ import dev.zontreck.essentials.configs.server.AEServerConfig;
 import dev.zontreck.essentials.entities.ModEntities;
 import dev.zontreck.essentials.events.TeleportEvent;
 import dev.zontreck.essentials.client.renderer.HeartsRenderer;
+import dev.zontreck.essentials.imc.Events;
 import dev.zontreck.essentials.items.CreativeModeTabs;
 import dev.zontreck.essentials.items.ModItems;
 import dev.zontreck.essentials.networking.ModMessages;
@@ -81,6 +82,7 @@ public class AriasEssentials {
         MinecraftForge.EVENT_BUS.register(new RTPCachesEventHandlers());
         MinecraftForge.EVENT_BUS.register(new CommandCooldowns());
         MinecraftForge.EVENT_BUS.register(RTPCachesEventHandlers.class);
+        MinecraftForge.EVENT_BUS.register(Events.class);
 
         ModItems.register(bus);
         ModEntities.register(bus);
