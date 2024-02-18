@@ -66,6 +66,7 @@ public class AriasEssentials {
     {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::setup);
+        DelayedExecutorService.setup();
 
         AEServerConfig.loadFromFile();
         AEClientConfig.loadFromFile();
@@ -108,6 +109,7 @@ public class AriasEssentials {
     public void onServerStart(final ServerStartedEvent ev)
     {
         ALIVE=true;
+        DelayedExecutorService.start();
 
     }
 
@@ -117,6 +119,7 @@ public class AriasEssentials {
     {
         ALIVE=false;
         LOGGER.info("Tearing down Aria's Essentials functions and tasks");
+        DelayedExecutorService.stop();
         RTPCaches.Locations.clear();
     }
 
