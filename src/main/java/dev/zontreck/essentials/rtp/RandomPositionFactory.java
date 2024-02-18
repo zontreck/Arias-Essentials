@@ -1,6 +1,5 @@
 package dev.zontreck.essentials.rtp;
 
-import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.commands.teleport.TeleportActioner;
 import dev.zontreck.essentials.commands.teleport.TeleportContainer;
 import dev.zontreck.libzontreck.vectors.Vector3;
@@ -22,7 +21,7 @@ public class RandomPositionFactory {
         RTP tmp = new RTP(level);
         tmp.position = new WorldPosition(new Vector3(0,0,0), WorldPosition.getDim(level));
         Thread tx = new Thread(new RandomPositionLocator(tmp));
-        tx.setName("RTPTask-"+ DelayedExecutorService.getNext());
+        tx.setName("RTPTask");
         tx.start();
 
         return tmp;

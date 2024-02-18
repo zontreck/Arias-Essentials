@@ -1,6 +1,5 @@
 package dev.zontreck.essentials.commands.teleport;
 
-import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.AriasEssentials;
 import dev.zontreck.essentials.configs.server.AEServerConfig;
 import dev.zontreck.libzontreck.vectors.Vector3;
@@ -20,7 +19,8 @@ public class TeleportActioner
 {
     public static void PerformTeleport(TeleportContainer contain, boolean eventless){
         //sub_runnable run = new sub_runnable(contain);
-        DelayedExecutorService.getInstance().schedule(new TeleportRunnable(contain, eventless), 2);
+        Thread tx = new Thread(new TeleportRunnable(contain, eventless));
+        tx.start();
     }
 
     public static boolean isBlacklistedDimension(ServerLevel level)

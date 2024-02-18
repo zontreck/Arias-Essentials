@@ -3,7 +3,6 @@ package dev.zontreck.essentials.commands.teleport;
 import com.mojang.brigadier.CommandDispatcher;
 
 import dev.zontreck.ariaslib.terminal.Task;
-import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.Messages;
 import dev.zontreck.essentials.events.CommandExecutionEvent;
 import dev.zontreck.libzontreck.chat.ChatColor;
@@ -102,17 +101,23 @@ public class TPACommand {
             append(ChatHelpers.macro(Messages.TELEPORT_DENY).setStyle(s2)), serverPlayer.server);
         
         TeleportRegistry.get().add(cont);
-        DelayedExecutorService.getInstance().schedule(new Task("tpa_expire",true){
+        Thread tx = new Thread(new Task("tpa_expire",true){
             @Override
             public void run()
             {
+                try {
+                    Thread.sleep(30 * 1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 if(!(TeleportRegistry.get().contains(cont)))return;
                 TeleportRegistry.get().remove(cont);
 
                 ChatHelpers.broadcastTo(cont.ToPlayer, ChatHelpers.macro("!Dark_Red!Teleport request has expired"), cont.Dimension.getServer());
                 ChatHelpers.broadcastTo(cont.FromPlayer, ChatHelpers.macro("!Dark_Red!Teleport request has expired"), cont.Dimension.getServer());
             }
-        }, 30);
+        });
+        tx.start();
         return 0;
     }
 

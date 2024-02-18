@@ -2,7 +2,6 @@ package dev.zontreck.essentials.commands.teleport;
 
 
 import dev.zontreck.ariaslib.terminal.Task;
-import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.events.TeleportEvent;
 import dev.zontreck.libzontreck.vectors.WorldPosition;
 import net.minecraftforge.common.MinecraftForge;
@@ -35,15 +34,23 @@ public class TeleportRunnable extends Task
 
         Action.PlayerInst.onUpdateAbilities();
 
-        DelayedExecutorService.getInstance().schedule(new Task("tp_action",true){
+
+        Thread tx = new Thread(new Task("tp_action",true){
             public final TeleportContainer container=Action;
             @Override
             public void run()
             {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 container.PlayerInst.onUpdateAbilities();
                 container.PlayerInst.setPos(container.Position);
                 container.PlayerInst.giveExperiencePoints(1);
             }
-        }, 1);
+        });
+
+        tx.start();
     }
 }

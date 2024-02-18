@@ -1,7 +1,6 @@
 package dev.zontreck.essentials.rtp;
 
 import dev.zontreck.ariaslib.terminal.Task;
-import dev.zontreck.ariaslib.util.DelayedExecutorService;
 import dev.zontreck.essentials.AriasEssentials;
 import dev.zontreck.essentials.events.RTPFoundEvent;
 import net.minecraft.server.level.ServerLevel;
