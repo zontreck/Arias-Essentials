@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "ariasessentials:steel_catwalk"
+    }
+  ],
+  "result": {
+    "item": "ariasessentials:steel_catwalk_top"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "RSR"
+  ],
+  "key": {
+    "S": {
+      "item": "ariasessentials:steel_catwalk"
+    },
+    "R": {
+      "item": "ariasessentials:steel_railing"
+    }
+  },
+  "result": {
+    "item": "ariasessentials:steel_catwalk_stairs_dr",
+    "count": 6
+  }
+}
