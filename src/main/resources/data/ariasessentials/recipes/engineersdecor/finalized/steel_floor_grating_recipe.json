@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SS",
+    "SS"
+  ],
+  "key": {
+    "S": {
+      "item": "ariasessentials:steel_catwalk"
+    }
+  },
+  "result": {
+    "item": "ariasessentials:steel_floor_grating",
+    "count": 2
+  }
+}

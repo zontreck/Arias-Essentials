@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "CSC",
+    "SCS"
+  ],
+  "key": {
+    "C": {
+      "item": "immersiveengineering:concrete"
+    },
+    "S": {
+      "item": "ariasessentials:metal_bar"
+    }
+  },
+  "result": {
+    "item": "ariasessentials:rebar_concrete",
+    "count": 4
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BAB",
+    "ASA",
+    "BAB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:brick"
+    },
+    "A": {
+      "tag": "ariasessentials:brick_ingots"
+    },
+    "S": {
+      "item": "minecraft:nether_bricks"
+    }
+  },
+  "result": {
+    "item": "ariasessentials:slag_brick_block",
+    "count": 8
+  }
+}

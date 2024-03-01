@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CC",
+    "CC"
+  ],
+  "key": {
+    "C": {
+      "item": "ariasessentials:rebar_concrete"
+    }
+  },
+  "result": {
+    "item": "ariasessentials:rebar_concrete_tile",
+    "count": 4
+  }
+}

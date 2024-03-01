@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "ariasessentials:clinker_brick_vertically_slit"
+    }
+  ],
+  "result": {
+    "item": "ariasessentials:clinker_brick_recessed"
+  }
+}

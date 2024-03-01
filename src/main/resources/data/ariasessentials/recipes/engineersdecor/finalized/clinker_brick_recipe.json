@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BAB",
+    "ANA",
+    "BAB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:brick"
+    },
+    "A": {
+      "tag": "ariasessentials:brick_ingots"
+    },
+    "N": {
+      "item": "minecraft:bricks"
+    }
+  },
+  "result": {
+    "item": "ariasessentials:clinker_brick_block",
+    "count": 8
+  }
+}

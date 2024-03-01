@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SS",
+    "SS"
+  ],
+  "key": {
+    "S": {
+      "item": "ariasessentials:rebar_concrete_stairs"
+    }
+  },
+  "result": {
+    "item": "ariasessentials:rebar_concrete",
+    "count": 4
+  }
+}

@@ -17,4 +17,6 @@ public class ModItems
     }
 
     public static RegistryObject<Item> TIME_IN_A_BOTTLE = CreativeModeTabs.addToAETab(REGISTRY.register("tiab", ()->new TimeBottle()));
+
+    public static RegistryObject<Item> METAL_BAR = CreativeModeTabs.addToAETab(REGISTRY.register("metal_bar", ()->new Item(new Item.Properties())));
 }

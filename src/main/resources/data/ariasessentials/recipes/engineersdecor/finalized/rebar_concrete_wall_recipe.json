@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "CCC",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "ariasessentials:rebar_concrete"
+    }
+  },
+  "result": {
+    "item": "ariasessentials:rebar_concrete_wall",
+    "count": 6
+  }
+}

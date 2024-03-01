@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "ariasessentials:block/engineersdecor/clinker_brick/clinker_brick_texture0",
+    "down": "ariasessentials:block/engineersdecor/clinker_brick/clinker_brick_texture0",
+    "up": "ariasessentials:block/engineersdecor/clinker_brick/clinker_brick_sastor_upplate_top_texture",
+    "north": "ariasessentials:block/engineersdecor/clinker_brick/clinker_brick_sastor_upplate_side_texture",
+    "south": "ariasessentials:block/engineersdecor/clinker_brick/clinker_brick_sastor_upplate_side_texture",
+    "west": "ariasessentials:block/engineersdecor/clinker_brick/clinker_brick_sastor_upplate_side_texture",
+    "east": "ariasessentials:block/engineersdecor/clinker_brick/clinker_brick_sastor_upplate_side_texture"
+  }
+}

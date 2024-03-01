@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "ariasessentials:clinker_brick_block"
+  },
+  "result": "ariasessentials:clinker_brick_slab",
+  "count": 2
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BS",
+    "BS",
+    "BS"
+  ],
+  "key": {
+    "B": {
+      "item": "ariasessentials:clinker_brick_block"
+    },
+    "S": {
+      "item": "ariasessentials:clinker_brick_vertical_slab_structured"
+    }
+  },
+  "result": {
+    "item": "ariasessentials:clinker_brick_vertically_slit",
+    "count": 3
+  }
+}

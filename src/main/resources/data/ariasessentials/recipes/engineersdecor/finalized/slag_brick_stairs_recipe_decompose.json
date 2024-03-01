@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SS",
+    "SS"
+  ],
+  "key": {
+    "S": {
+      "item": "ariasessentials:slag_brick_stairs"
+    }
+  },
+  "result": {
+    "item": "ariasessentials:slag_brick_block",
+    "count": 4
+  }
+}

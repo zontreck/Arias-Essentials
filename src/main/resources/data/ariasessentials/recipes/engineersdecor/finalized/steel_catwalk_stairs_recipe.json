@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S  ",
+    "SS ",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "ariasessentials:steel_catwalk"
+    }
+  },
+  "result": {
+    "item": "ariasessentials:steel_catwalk_stairs",
+    "count": 6
+  }
+}

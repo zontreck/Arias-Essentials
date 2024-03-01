@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "BS",
+    "SB"
+  ],
+  "key": {
+    "B": {
+      "item": "ariasessentials:clinker_brick_block"
+    },
+    "S": {
+      "item": "minecraft:sandstone_stairs"
+    }
+  },
+  "result": {
+    "item": "ariasessentials:clinker_brick_sastor_corner_block",
+    "count": 4
+  }
+}

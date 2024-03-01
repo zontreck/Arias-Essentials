@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WW",
+    "WW"
+  ],
+  "key": {
+    "W": {
+      "item": "ariasessentials:clinker_brick_wall"
+    }
+  },
+  "result": {
+    "item": "ariasessentials:clinker_brick_block",
+    "count": 4
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "ariasessentials:clinker_brick_stained_block"
+    }
+  },
+  "result": {
+    "item": "ariasessentials:clinker_brick_stained_slab",
+    "count": 6
+  }
+}
