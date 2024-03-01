@@ -50,14 +50,12 @@ public abstract class AbstractBottle extends Item {
         if (o.isPresent()) {
             TimeBoostEntity entityTA = o.get();
             int currentRate = entityTA.getTimeRate();
-            int usedUpTime = getEachUseDuration() - entityTA.getRemainingTime();
 
             if (currentRate >= Math.pow(2, AEServerConfig.getInstance().bottles.maxTimeRate - 1)) {
                 return InteractionResult.SUCCESS;
             }
 
             nextRate = currentRate * 2;
-            int timeAdded = usedUpTime / 2;
             energyRequired = getEnergyCost(nextRate);
 
             if (!canUse(stack, isCreativeMode, energyRequired)) {
@@ -65,7 +63,7 @@ public abstract class AbstractBottle extends Item {
             }
 
             entityTA.setTimeRate(nextRate);
-            entityTA.setRemainingTime(entityTA.getRemainingTime() + timeAdded);
+            entityTA.setRemainingTime(entityTA.getRemainingTime() + AEServerConfig.getInstance().bottles.eachUseDuration);
         } else {
             // First use
             if (!canUse(stack, isCreativeMode, energyRequired)) {
