@@ -1,14 +1,15 @@
 {
+  "replace": false,
   "values": [
 
-    "otemod:panzerglass_block",
-    "otemod:panzerglass_slab",
-    "otemod:rebar_concrete",
-    "otemod:rebar_concrete_slab",
-    "otemod:rebar_concrete_stairs",
-    "otemod:rebar_concrete_wall",
-    "otemod:rebar_concrete_tile",
-    "otemod:rebar_concrete_tile_slab",
-    "otemod:rebar_concrete_tile_stairs"
+    "ariasessentials:panzerglass_block",
+    "ariasessentials:panzerglass_slab",
+    "ariasessentials:rebar_concrete",
+    "ariasessentials:rebar_concrete_slab",
+    "ariasessentials:rebar_concrete_stairs",
+    "ariasessentials:rebar_concrete_wall",
+    "ariasessentials:rebar_concrete_tile",
+    "ariasessentials:rebar_concrete_tile_slab",
+    "ariasessentials:rebar_concrete_tile_stairs"
   ]
 }
