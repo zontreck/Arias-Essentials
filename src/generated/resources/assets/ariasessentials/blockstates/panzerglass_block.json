@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "ariasessentials:block/panzerglass_block_model0"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_block_model1"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_block_model2"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_block_model3"
+      }
+    ]
+  }
+}

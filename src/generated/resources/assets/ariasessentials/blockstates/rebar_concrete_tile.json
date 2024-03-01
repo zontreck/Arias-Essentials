@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "ariasessentials:block/rebar_concrete_tile_model0"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_tile_model1"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_tile_model2"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_tile_model3"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_tile_model4"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_tile_model5"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_tile_model6"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_tile_model7"
+      }
+    ]
+  }
+}

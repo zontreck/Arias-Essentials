@@ -1,0 +1,88 @@
+{
+  "variants": {
+    "type=bottom,waterlogged=false": [
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model0_bottom"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model1_bottom"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model2_bottom"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model3_bottom"
+      }
+    ],
+    "type=bottom,waterlogged=true": [
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model0_bottom"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model1_bottom"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model2_bottom"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model3_bottom"
+      }
+    ],
+    "type=double,waterlogged=false": [
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model0_double"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model1_double"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model2_double"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model3_double"
+      }
+    ],
+    "type=double,waterlogged=true": [
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model0_double"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model1_double"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model2_double"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model3_double"
+      }
+    ],
+    "type=top,waterlogged=false": [
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model0_top"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model1_top"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model2_top"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model3_top"
+      }
+    ],
+    "type=top,waterlogged=true": [
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model0_top"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model1_top"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model2_top"
+      },
+      {
+        "model": "ariasessentials:block/panzerglass_slab_model3_top"
+      }
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "bottom": "ariasessentials:block/engineersdecor/glass/panzerglass_block_texture2",
+    "side": "ariasessentials:block/engineersdecor/glass/panzerglass_block_texture2",
+    "top": "ariasessentials:block/engineersdecor/glass/panzerglass_block_texture2"
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "variants": {
+    "type=bottom,waterlogged=false": [
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model0_bottom"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model1_bottom"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model2_bottom"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model3_bottom"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model4_bottom"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model5_bottom"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model6_bottom"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model7_bottom"
+      }
+    ],
+    "type=bottom,waterlogged=true": [
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model0_bottom"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model1_bottom"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model2_bottom"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model3_bottom"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model4_bottom"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model5_bottom"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model6_bottom"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model7_bottom"
+      }
+    ],
+    "type=double,waterlogged=false": [
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model0_double"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model1_double"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model2_double"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model3_double"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model4_double"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model5_double"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model6_double"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model7_double"
+      }
+    ],
+    "type=double,waterlogged=true": [
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model0_double"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model1_double"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model2_double"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model3_double"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model4_double"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model5_double"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model6_double"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model7_double"
+      }
+    ],
+    "type=top,waterlogged=false": [
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model0_top"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model1_top"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model2_top"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model3_top"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model4_top"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model5_top"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model6_top"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model7_top"
+      }
+    ],
+    "type=top,waterlogged=true": [
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model0_top"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model1_top"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model2_top"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model3_top"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model4_top"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model5_top"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model6_top"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_slab_model7_top"
+      }
+    ]
+  }
+}

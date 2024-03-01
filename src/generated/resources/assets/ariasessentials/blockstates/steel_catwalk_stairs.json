@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ariasessentials:block/steel_catwalk_stairs",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ariasessentials:block/steel_catwalk_stairs"
+    },
+    "facing=south": {
+      "model": "ariasessentials:block/steel_catwalk_stairs",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ariasessentials:block/steel_catwalk_stairs",
+      "y": 270
+    }
+  }
+}

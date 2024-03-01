@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "ariasessentials:block/rebar_concrete_model0"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_model1"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_model2"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_model3"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_model4"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_model5"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_model6"
+      },
+      {
+        "model": "ariasessentials:block/rebar_concrete_model7"
+      }
+    ]
+  }
+}

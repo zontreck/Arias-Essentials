@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "ariasessentials:block/engineersdecor/concrete/rebar_concrete_texture1",
+    "side": "ariasessentials:block/engineersdecor/concrete/rebar_concrete_texture1",
+    "top": "ariasessentials:block/engineersdecor/concrete/rebar_concrete_texture1"
+  }
+}

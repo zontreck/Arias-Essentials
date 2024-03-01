@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left",
+  "textures": {
+    "bottom": "ariasessentials:block/engineersdecor/door/old_industrial_door_texture_top",
+    "top": "ariasessentials:block/engineersdecor/door/old_industrial_door_texture_bottom"
+  }
+}

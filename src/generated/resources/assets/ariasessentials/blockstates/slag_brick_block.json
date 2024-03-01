@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "ariasessentials:block/slag_brick_block_model0"
+      },
+      {
+        "model": "ariasessentials:block/slag_brick_block_model1"
+      },
+      {
+        "model": "ariasessentials:block/slag_brick_block_model2"
+      },
+      {
+        "model": "ariasessentials:block/slag_brick_block_model3"
+      },
+      {
+        "model": "ariasessentials:block/slag_brick_block_model4"
+      },
+      {
+        "model": "ariasessentials:block/slag_brick_block_model5"
+      },
+      {
+        "model": "ariasessentials:block/slag_brick_block_model6"
+      },
+      {
+        "model": "ariasessentials:block/slag_brick_block_model7"
+      }
+    ]
+  }
+}

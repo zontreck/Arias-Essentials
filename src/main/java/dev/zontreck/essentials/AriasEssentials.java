@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import dev.zontreck.essentials.blocks.ModBlocks;
 import dev.zontreck.essentials.client.Keybindings;
 import dev.zontreck.essentials.client.renderer.TimeBoostEntityRenderer;
 import dev.zontreck.essentials.commands.teleport.TeleportActioner;
@@ -83,6 +84,7 @@ public class AriasEssentials {
         MinecraftForge.EVENT_BUS.register(Events.class);
 
         ModItems.register(bus);
+        ModBlocks.register(bus);
         ModEntities.register(bus);
         CreativeModeTabs.register(bus);
     }

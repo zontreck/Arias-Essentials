@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "ariasessentials:block/steel_railing",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "ariasessentials:block/steel_railing"
+    },
+    "facing=south": {
+      "model": "ariasessentials:block/steel_railing",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "ariasessentials:block/steel_railing",
+      "y": 270
+    }
+  }
+}
