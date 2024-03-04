@@ -1,0 +1,45 @@
+{
+  "values": [
+    "ariasessentials:clinker_brick_block",
+    "ariasessentials:clinker_brick_recessed",
+    "ariasessentials:clinker_brick_vertically_slit",
+    "ariasessentials:clinker_brick_slab",
+    "ariasessentials:clinker_brick_stairs",
+    "ariasessentials:clinker_brick_wall",
+
+    "ariasessentials:clinker_brick_stained_block",
+    "ariasessentials:clinker_brick_stained_slab",
+    "ariasessentials:clinker_brick_stained_stairs",
+
+    "ariasessentials:clinker_brick_sastor_corner_block",
+
+    "ariasessentials:slag_brick_block",
+    "ariasessentials:slag_brick_slab",
+    "ariasessentials:slag_brick_stairs",
+    "ariasessentials:slag_brick_wall",
+
+    "ariasessentials:rebar_concrete",
+    "ariasessentials:rebar_concrete_slab",
+    "ariasessentials:rebar_concrete_stairs",
+    "ariasessentials:rebar_concrete_wall",
+
+    "ariasessentials:rebar_concrete_tile",
+    "ariasessentials:rebar_concrete_tile_slab",
+    "ariasessentials:rebar_concrete_tile_stairs",
+
+    "ariasessentials:panzerglass_block",
+    "ariasessentials:panzerglass_slab",
+
+    "ariasessentials:steel_catwalk",
+    "ariasessentials:steel_catwalk_top",
+    "ariasessentials:steel_floor_grating",
+    "ariasessentials:steel_floor_grating_top",
+    "ariasessentials:steel_catwalk_stairs",
+    "ariasessentials:steel_railing",
+    "ariasessentials:steel_catwalk_stairs_lr",
+    "ariasessentials:steel_catwalk_stairs_rr",
+    "ariasessentials:steel_catwalk_stairs_dr",
+    "ariasessentials:steel_table",
+    "ariasessentials:steel_catwalk_block"
+  ]
+}
