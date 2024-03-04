@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench",
+	"render_type": "cutout",
 	"textures": {
 		"0": "ariasessentials:block/engineersdecor/material/steel_texture",
 		"1": "ariasessentials:block/engineersdecor/furniture/steel_catwalk_top",
