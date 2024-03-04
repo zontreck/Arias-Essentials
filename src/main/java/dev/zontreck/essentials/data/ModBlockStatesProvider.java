@@ -136,7 +136,7 @@ public class ModBlockStatesProvider extends BlockStateProvider {
         blockWithExistingModel(ModBlocks.STEEL_CATWALK_STAIRS_RR, "block/engineersdecor/furniture/steel_catwalk_stairs_rr", true);
         blockWithExistingModel(ModBlocks.STEEL_CATWALK_STAIRS_DR, "block/engineersdecor/furniture/steel_catwalk_stairs_dr", true);
 
-        blockWithExistingModel(ModBlocks.STEEL_CATWALK_BLOCK, "block/steel_catwalk_block", false);
+        blockWithExistingModel(ModBlocks.STEEL_CATWALK_BLOCK, "block/engineersdecor/steel_catwalk_block", false);
 
     }
 
