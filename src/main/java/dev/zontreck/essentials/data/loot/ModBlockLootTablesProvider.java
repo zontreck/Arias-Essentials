@@ -75,6 +75,8 @@ public class ModBlockLootTablesProvider extends BlockLootSubProvider
         dropSelf(ModBlocks.STEEL_GRATING_TOP.get());
         dropSelf(ModBlocks.STEEL_CATWALK_TOP.get());
 
+        dropSelf(ModBlocks.STEEL_CATWALK_BLOCK.get());
+
 
 
     }

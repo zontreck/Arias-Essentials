@@ -317,5 +317,7 @@ public class ModBlocks {
     private static final VoxelShape STEEL_RAILING_EAST = Block.box(0.25, 0.25, 0.25, 1.25, 16, 15.75);
     public static final RegistryObject<Block> STEEL_RAILING = registerWithItem(BLOCKS.register("steel_railing", ()->new RotatableBlockCustomVoxels(gratingBlock, STEEL_RAILING_NORTH, STEEL_RAILING_SOUTH, STEEL_RAILING_WEST, STEEL_RAILING_EAST)), new Item.Properties());
 
+    public static final RegistryObject<Block> STEEL_CATWALK_BLOCK = registerWithItem(BLOCKS.register("steel_catwalk_block", ()-> new Block(gratingBlock)), new Item.Properties());
+
 
 }

@@ -1,4 +1,4 @@
-// 1.20.1	2024-03-01T03:45:28.602551323	Loot Tables
+// 1.20.1	2024-03-03T19:28:53.134822461	Loot Tables
 2b4a329fcd0a69fdad6c43120bd5de86ad0565af data/ariasessentials/loot_tables/blocks/clinker_brick_block.json
 1ec32912180bc6bc4127ed7ddba8be226035858c data/ariasessentials/loot_tables/blocks/clinker_brick_recessed.json
 006e62eaf1f971fd385a92b5d6b5477d032c88e3 data/ariasessentials/loot_tables/blocks/clinker_brick_sastor_corner_block.json
@@ -27,6 +27,7 @@ a4399cd298680c12050003b4a90e46b12504048d data/ariasessentials/loot_tables/blocks
 3b1dd281eaa49d891c4263313723493768c92cda data/ariasessentials/loot_tables/blocks/slag_brick_stairs.json
 529f8223ba75cfbb394fe9e4b34b5ab74fc662da data/ariasessentials/loot_tables/blocks/slag_brick_wall.json
 5d3aebfbc97fe1ccbac140d2dfe281334529b91f data/ariasessentials/loot_tables/blocks/steel_catwalk.json
+a20e219af44834b9df1554cb55a4c41978c10aba data/ariasessentials/loot_tables/blocks/steel_catwalk_block.json
 3efdf8a024befe876584ee1062286265a8d0c223 data/ariasessentials/loot_tables/blocks/steel_catwalk_stairs.json
 2b29a805c4e554ede394b497539cf5481d2fb092 data/ariasessentials/loot_tables/blocks/steel_catwalk_stairs_dr.json
 f21d881578dd6d51e10faefa28f31c37c7d1ebcf data/ariasessentials/loot_tables/blocks/steel_catwalk_stairs_lr.json

@@ -42,6 +42,7 @@
   "block.ariasessentials.steel_catwalk_stairs_lr": "Steel Catwalk Left Rail",
   "block.ariasessentials.steel_catwalk_stairs_rr": "Steel Catwalk Right Rail",
   "block.ariasessentials.steel_catwalk_stairs_dr": "Steel Catwalk Double Rail",
+  "block.ariasessentials.steel_catwalk_block": "Steel Catwalk Block",
 
   "key.category.ariasessentials": "Aria's Essentials",
   "key.ariasessentials.autowalk": "Auto Walk"
